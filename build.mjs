@@ -75,8 +75,8 @@ ${jsonLd(p)}
 <body>
 <a class="skip" href="#main">Skip to main content</a>
 <header>
-<p class="site-name"><a href="/">${WORDMARK}</a></p>
-<nav aria-label="Main">
+${p.path === '/' ? '' : `<p class="site-name"><a href="/">${WORDMARK}</a></p>
+`}<nav aria-label="Main">
 <ul>
 ${navHtml(p.path)}
 </ul>

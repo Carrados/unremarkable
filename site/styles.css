@@ -56,6 +56,7 @@ header {
 }
 .site-name { margin: 0; font-size: 1.6rem; line-height: 1; }
 .site-name a { color: var(--ink); text-decoration: none; }
+header nav { margin-left: auto; }
 header ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 1.5rem; }
 header a { color: var(--ink); }
 header a[aria-current="page"] { color: var(--accent); }
