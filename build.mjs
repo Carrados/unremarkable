@@ -17,7 +17,7 @@ const TRAINING = true;
 
 const pages = [
   {
-    path: '/', nav: 'Home', h1: SITE, title: `${SITE}: websites that never are`,
+    path: '/', nav: 'Home', h1: SITE, title: `${SITE}: website design and build`,
     description: 'Unremarkable designs and builds websites that impress everyone who meets them: by eye, by screen reader, by braille or by agent.',
     llms: 'What Unremarkable is, its one rule, how it builds, and the sites it has made.',
     body: () => read('src/home.html'), type: 'WebSite',
