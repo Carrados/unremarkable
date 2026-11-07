@@ -9,7 +9,7 @@ An accessibility statement is where most sites admit what they couldn't manage. 
 - Every page is plain, static HTML. No content depends on JavaScript, and the site uses none.
 - Each page has one main heading, headings in order, landmark regions and a skip link to the main content.
 - Text sizes are relative, so the site respects your browser's text size and zoom.
-- Colours meet WCAG AA contrast, rising further if your system asks for more contrast. A dark scheme follows your system setting.
+- All text meets WCAG AAA contrast, at least 7:1, in both the light scheme and the dark scheme, which follows your system setting. If your system asks for more contrast, secondary text and dividing lines change to the full text colour.
 - Nothing moves, so there is nothing to switch off for reduced motion.
 
 ## Standards and testing

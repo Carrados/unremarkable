@@ -1,23 +1,23 @@
 /* Unremarkable. It never is. */
 :root {
   color-scheme: light dark;
-  --paper: #f5f1e8;
+  --paper: #fbecef;
   --ink: #141312;
-  --muted: #4a4640;
-  --accent: #a3271c;
-  --rule: #d9d1c1;
-  --panel: #ebe4d6;
+  --muted: #4d3840;
+  --accent: #7d1734;
+  --rule: #e3c4cc;
+  --panel: #f4dde3;
   --display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
   --text: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --paper: #0f0e0d;
-    --ink: #f3eee4;
-    --muted: #bdb5a8;
-    --accent: #ff8f78;
-    --rule: #34302b;
-    --panel: #1b1916;
+    --paper: #150d11;
+    --ink: #f7eef0;
+    --muted: #cbb5bc;
+    --accent: #ff9cb8;
+    --rule: #3a2830;
+    --panel: #21151b;
   }
 }
 @media (prefers-contrast: more) {
