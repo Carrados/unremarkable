@@ -23,6 +23,14 @@ The finished site is written to `site/`. It is built to Zero Information Casualt
 - `build.mjs`: the page list, layout, Markdown mirrors, llms.txt, robots.txt and sitemap. The search and training declarations are the `SEARCH` and `TRAINING` settings near the top.
 - `wrangler.jsonc`: Cloudflare Workers deployment. Cloudflare serves the `site/` folder as it is in the repo, so run the build and commit `site/` before pushing.
 
+## The wordmark
+
+The wordmark is the one word "Unremarkable": "Un" in Fraunces italic (regular weight) in the accent colour, and "remarkable" in Fraunces Black. Fraunces is under the SIL Open Font License (`src/fonts/OFL.txt`).
+
+- On this site it is live text (`WORDMARK` in `build.mjs`), so screen readers read one word.
+- `brand/` holds it as SVG outlines that need no font: `unremarkable-wordmark.svg` (berry and near-black, for pale backgrounds), `-dark.svg` (rose and pink-white, for dark backgrounds), and one-colour `-black.svg` and `-white.svg`, plus `favicon.svg`. They are published at https://unremarkable.me/brand/.
+- `brand/make.mjs` redraws them. It needs `@fontsource/fraunces` and `opentype.js` installed next to it.
+
 ## The credit line
 
 On every site Unremarkable makes, the footer carries:

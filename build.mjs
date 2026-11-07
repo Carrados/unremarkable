@@ -1,7 +1,7 @@
 // Build unremarkable.me: static HTML pages, plus an agent surface
 // (llms.txt, llms-full.txt, Markdown mirrors) generated from the same pages.
 // Requires Node 18+. Run: node build.mjs
-import { readFileSync, writeFileSync, mkdirSync, rmSync, copyFileSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, rmSync, copyFileSync, existsSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 
 const ORIGIN = 'https://unremarkable.me';
@@ -30,6 +30,9 @@ const pages = [
     body: () => read('src/accessibility.html'), type: 'WebPage',
   },
 ];
+
+// The wordmark as live text: a screen reader reads one word, "Unremarkable".
+const WORDMARK = '<span class="wm"><span class="wm-un">Un</span>remarkable</span>';
 
 function read(p) { return readFileSync(p, 'utf8'); }
 
@@ -61,6 +64,8 @@ function layout(p, main) {
 <meta property="og:url" content="${url}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${SITE}">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/fraunces-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/styles.css">
 <link rel="alternate" type="text/markdown" href="${p.path}index.md" title="Markdown version of this page">
 <script type="application/ld+json">
@@ -70,7 +75,7 @@ ${jsonLd(p)}
 <body>
 <a class="skip" href="#main">Skip to main content</a>
 <header>
-<p class="site-name"><a href="/">${SITE}</a></p>
+<p class="site-name"><a href="/">${WORDMARK}</a></p>
 <nav aria-label="Main">
 <ul>
 ${navHtml(p.path)}
@@ -78,7 +83,7 @@ ${navHtml(p.path)}
 </nav>
 </header>
 <main id="main" tabindex="-1">
-<h1>${p.h1}</h1>
+<h1${p.path === '/' ? ' class="home-title"' : ''}>${p.path === '/' ? WORDMARK : p.h1}</h1>
 ${main}
 </main>
 <footer>
@@ -124,6 +129,10 @@ function write(rel, content) {
 if (existsSync(OUT)) rmSync(OUT, { recursive: true });
 mkdirSync(OUT, { recursive: true });
 copyFileSync('src/styles.css', join(OUT, 'styles.css'));
+for (const f of readdirSync('src/fonts')) write(`fonts/${f}`, readFileSync(join('src/fonts', f)));
+// The wordmark files are published at /brand/ so other sites can use them in their credit line.
+for (const f of readdirSync('brand').filter(f => f.endsWith('.svg'))) write(`brand/${f}`, readFileSync(join('brand', f)));
+copyFileSync('brand/favicon.svg', join(OUT, 'favicon.svg'));
 // Cloudflare static asset headers: serve the agent surface with honest content types.
 write('_headers', `/*.md
   Content-Type: text/markdown; charset=utf-8

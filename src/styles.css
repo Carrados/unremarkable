@@ -24,6 +24,13 @@
   :root { --muted: var(--ink); --rule: var(--ink); }
 }
 
+/* The wordmark: Fraunces (SIL Open Font License, see /fonts/OFL.txt). */
+@font-face { font-family: "Fraunces"; font-style: italic; font-weight: 400; font-display: swap; src: url("/fonts/fraunces-latin-400-italic.woff2") format("woff2"); }
+@font-face { font-family: "Fraunces"; font-style: normal; font-weight: 900; font-display: swap; src: url("/fonts/fraunces-latin-900-normal.woff2") format("woff2"); }
+.wm { font-family: "Fraunces", var(--display); font-weight: 900; font-style: normal; letter-spacing: -0.01em; white-space: nowrap; }
+.wm-un { font-style: italic; font-weight: 400; color: var(--accent); margin-right: 0.02em; }
+.home-title { font-size: clamp(2.6rem, 11.5vw, 8.5rem); letter-spacing: 0; }
+
 * { box-sizing: border-box; }
 html { font-size: 100%; }
 body {
@@ -46,7 +53,7 @@ header {
   display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 2rem;
   padding-top: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--rule);
 }
-.site-name { margin: 0; font-family: var(--display); font-size: 1.35rem; letter-spacing: 0.02em; }
+.site-name { margin: 0; font-size: 1.6rem; line-height: 1; }
 .site-name a { color: var(--ink); text-decoration: none; }
 header ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 1.5rem; }
 header a { color: var(--ink); }
