@@ -2,7 +2,7 @@
 
 Canonical page: https://unremarkable.me/
 
-We design and build websites. The name is the only modest thing about us.
+We design and build websites that sound as good as they look.
 
 ## The rule
 
