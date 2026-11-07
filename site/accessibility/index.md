@@ -20,6 +20,12 @@ This is a statement of how the site is built and what it aims for, not a claim o
 
 This statement was last reviewed on 7 November 2026.
 
+## Reporting a problem
+
+Every page has a link at the foot, "Fix something on this page", to a short form that already knows which page you were on. You can also use it for any site Unremarkable built.
+
+The form doesn't ask who you are. We keep what you write, the page's address, how you were reading the page if you tell us, and your browser and device as your browser reports them. We don't keep your name, your email address or your IP address. Reports are used only to fix the sites, and to learn what to get right on the next one.
+
 ## For agents
 
 Agents acting for a person are welcome on every public page. There is a summary for agents at [llms.txt](https://unremarkable.me/llms.txt), the full text of the site in one file at [llms-full.txt](https://unremarkable.me/llms-full.txt), and a Markdown version of every page alongside it. All of them are generated from the pages you are reading when the site is built, not maintained by hand.

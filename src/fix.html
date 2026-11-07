@@ -1,0 +1,56 @@
+<p class="lede">Tell us what went wrong, and we'll fix it.</p>
+{{ERROR}}
+<p>We don't ask who you are and we don't keep your IP address. Please don't put personal details in your report.</p>
+
+<form class="fix-form" method="post" action="/fix/">
+<div class="field">
+<label for="page">Page</label>
+<p class="hint" id="page-hint">The address of the page with the problem. We've filled it in from the link you followed.</p>
+<input type="url" id="page" name="page" value="{{PAGE}}" required maxlength="500" aria-describedby="page-hint" autocomplete="off">
+</div>
+
+<div class="field">
+<label for="what">What happened?</label>
+<p class="hint" id="what-hint">What you were doing, and what went wrong. Required.</p>
+<textarea id="what" name="what" rows="6" required maxlength="5000" aria-describedby="what-hint">{{WHAT}}</textarea>
+</div>
+
+<div class="field">
+<label for="expected">What did you expect? <span class="optional">(optional)</span></label>
+<textarea id="expected" name="expected" rows="3" maxlength="2000">{{EXPECTED}}</textarea>
+</div>
+
+<fieldset class="field">
+<legend>How were you reading the page? <span class="optional">(optional)</span></legend>
+<ul class="choices">
+<li><input type="radio" id="r-eye" name="reading" value="by-eye"{{R:by-eye}}> <label for="r-eye">Reading the screen</label></li>
+<li><input type="radio" id="r-sr" name="reading" value="screen-reader"{{R:screen-reader}}> <label for="r-sr">A screen reader</label></li>
+<li><input type="radio" id="r-mag" name="reading" value="magnifier"{{R:magnifier}}> <label for="r-mag">Magnification or zoom</label></li>
+<li><input type="radio" id="r-voice" name="reading" value="voice"{{R:voice}}> <label for="r-voice">Voice control</label></li>
+<li><input type="radio" id="r-kb" name="reading" value="keyboard"{{R:keyboard}}> <label for="r-kb">Keyboard only</label></li>
+<li><input type="radio" id="r-switch" name="reading" value="switch"{{R:switch}}> <label for="r-switch">Switch access</label></li>
+<li><input type="radio" id="r-braille" name="reading" value="braille"{{R:braille}}> <label for="r-braille">A braille display</label></li>
+<li><input type="radio" id="r-agent" name="reading" value="agent"{{R:agent}}> <label for="r-agent">An AI agent</label></li>
+<li><input type="radio" id="r-other" name="reading" value="other"{{R:other}}> <label for="r-other">Something else</label></li>
+</ul>
+</fieldset>
+
+<div class="field">
+<label for="setup">Anything more about your setup? <span class="optional">(optional)</span></label>
+<p class="hint" id="setup-hint">For example, "VoiceOver on iPhone" or "NVDA with Firefox". We read your browser and device from the request, so you needn't type those.</p>
+<input type="text" id="setup" name="setup" value="{{SETUP}}" maxlength="300" aria-describedby="setup-hint" autocomplete="off">
+</div>
+
+<div class="field">
+<label for="sent-to">Email</label>
+<p class="hint" id="sent-to-hint">Fixes go to the site's owner to test. We don't ask for your address.</p>
+<input type="email" id="sent-to" value="charli@unremarkable.me" readonly aria-describedby="sent-to-hint" class="readonly">
+</div>
+
+<div class="hp" aria-hidden="true">
+<label for="website">Leave this empty</label>
+<input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+</div>
+
+<p><button type="submit">Send report</button></p>
+</form>

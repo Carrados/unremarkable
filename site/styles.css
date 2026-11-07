@@ -101,7 +101,37 @@ footer { border-top: 1px solid var(--rule); padding-top: 2rem; padding-bottom: 3
 footer p { margin: 0 0 0.6rem; max-width: 70ch; }
 footer .credit { font-family: var(--display); font-size: 1.25rem; color: var(--ink); }
 
+/* The bug-report form. */
+.fix-link { font-size: 1.125rem; margin-bottom: 1.25rem; }
+.fix-form { max-width: 40rem; margin-top: 2.5rem; }
+.field { margin: 0 0 2rem; }
+fieldset.field { border: 0; padding: 0; }
+.fix-form label, .fix-form legend { display: block; font-weight: 600; margin-bottom: 0.3rem; padding: 0; }
+.fix-form .hint { color: var(--muted); margin: 0 0 0.5rem; font-size: 1rem; }
+.optional { font-weight: 400; color: var(--muted); }
+.fix-form input[type="url"], .fix-form input[type="text"], .fix-form input[type="email"], .fix-form textarea {
+  display: block; width: 100%; font: inherit; color: var(--ink); background: var(--paper);
+  border: 2px solid var(--ink); border-radius: 0; padding: 0.6rem 0.75rem;
+}
+.fix-form textarea { resize: vertical; }
+.fix-form input.readonly { background: var(--panel); border-style: dashed; }
+.choices { list-style: none; margin: 0.5rem 0 0; padding: 0; }
+.choices li { display: flex; align-items: center; gap: 0.6rem; margin: 0 0 0.5rem; }
+.choices input { width: 1.4rem; height: 1.4rem; margin: 0; accent-color: var(--accent); flex: none; }
+.choices label { display: inline; font-weight: 400; margin: 0; }
+.fix-form button {
+  font: inherit; font-weight: 600; color: var(--paper); background: var(--accent);
+  border: 2px solid var(--accent); padding: 0.75rem 1.75rem; cursor: pointer;
+}
+.fix-form button:hover { background: var(--ink); border-color: var(--ink); }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.error { border-left: 6px solid var(--accent); background: var(--panel); padding: 1rem 1.25rem; margin: 2rem 0; }
+.error .error-title { font-size: 1.5rem; margin: 0 0 0.5rem; }
+.error .error-title::before { display: none; }
+.error p { margin: 0; }
+
 @media (forced-colors: active) {
+  .fix-form button { border-color: ButtonText; }
   h2::before, .rule h2::before { background: CanvasText; }
   .rule { border: 2px solid CanvasText; }
 }

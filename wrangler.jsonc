@@ -2,9 +2,29 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "unremarkable",
   "compatibility_date": "2026-10-01",
+  // The site is static. The Worker only handles the bug-report form at /fix/;
+  // every other request goes straight to the static files.
+  "main": "fix/worker.js",
   "assets": {
     "directory": "./site",
+    "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "none"
-  }
+    "not_found_handling": "none",
+    "run_worker_first": ["/fix", "/fix/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "unremarkable-fix",
+      "database_id": "e033c54e-968d-4d54-93b4-fde6d64f6483"
+    }
+  ],
+  // Limits reports per sender without storing anything: the key is held in memory only.
+  "ratelimits": [
+    {
+      "name": "LIMITER",
+      "namespace_id": "1001",
+      "simple": { "limit": 5, "period": 60 }
+    }
+  ]
 }

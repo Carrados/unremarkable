@@ -29,14 +29,27 @@ const pages = [
     llms: 'How this site meets ZIC v1.7 and its agent surface.',
     body: () => read('src/accessibility.html'), type: 'WebPage',
   },
+  // The bug-report form. Not in the navigation, llms.txt or the sitemap, and not indexed.
+  // The Worker in fix/worker.js fills in the {{...}} placeholders.
+  {
+    path: '/fix/', h1: 'Fix something', title: `Fix something on a page: ${SITE}`,
+    description: 'Report a problem with a page on a site Unremarkable built, so it can be fixed.',
+    body: () => read('src/fix.html'), type: 'WebPage', hidden: true,
+  },
+  {
+    path: '/fix/sent/', h1: 'Thank you', title: `Report sent: ${SITE}`,
+    description: 'Your report about a page has been saved.',
+    body: () => read('src/fix-sent.html'), type: 'WebPage', hidden: true,
+  },
 ];
+const listed = pages.filter(p => !p.hidden);
 
 // The wordmark as live text: a screen reader reads one word, "Unremarkable".
 const WORDMARK = '<span class="wm"><span class="wm-un">Un</span>remarkable</span>';
 
 function read(p) { return readFileSync(p, 'utf8'); }
 
-const navHtml = (current) => pages.map(p =>
+const navHtml = (current) => listed.map(p =>
   `<li><a href="${p.path}"${p.path === current ? ' aria-current="page"' : ''}>${p.nav}</a></li>`).join('\n');
 
 function jsonLd(p) {
@@ -58,7 +71,7 @@ function layout(p, main) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${p.title}</title>
 <meta name="description" content="${p.description}">
-<link rel="canonical" href="${url}">
+${p.hidden ? '<meta name="robots" content="noindex">' : `<link rel="canonical" href="${url}">`}
 <meta property="og:title" content="${p.title}">
 <meta property="og:description" content="${p.description}">
 <meta property="og:url" content="${url}">
@@ -67,7 +80,7 @@ function layout(p, main) {
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/fraunces-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/styles.css">
-<link rel="alternate" type="text/markdown" href="${p.path}index.md" title="Markdown version of this page">
+${p.hidden ? '' : `<link rel="alternate" type="text/markdown" href="${p.path}index.md" title="Markdown version of this page">`}
 <script type="application/ld+json">
 ${jsonLd(p)}
 </script>
@@ -87,7 +100,8 @@ ${navHtml(p.path)}
 ${main}
 </main>
 <footer>
-<p class="credit">Site by Unremarkable. Naturally.</p>
+${p.hidden ? '' : `<p class="fix-link"><a href="/fix/?page=${encodeURIComponent(url)}">Fix something on this page</a></p>
+`}<p class="credit">Site by Unremarkable. Naturally.</p>
 <p>Content on this site is licensed under <a href="${LICENCE_URL}">${LICENCE_NAME}</a>.</p>
 <p>This site is built to <a href="${ZIC_URL}">Zero Information Casualty v1.7</a>. Read the <a href="/accessibility/">accessibility statement</a>. Information for agents is at <a href="/llms.txt">llms.txt</a>.</p>
 </footer>
@@ -146,6 +160,7 @@ const mirrors = [];
 for (const p of pages) {
   const main = p.body();
   write(`${p.path}index.html`, layout(p, main));
+  if (p.hidden) continue;
   const md = `# ${p.h1}\n\nCanonical page: ${ORIGIN}${p.path}\n\n${toMarkdown(main)}\n`;
   write(`${p.path}index.md`, md);
   mirrors.push(md);
@@ -165,7 +180,7 @@ This file, /llms-full.txt and the Markdown mirrors are generated from the site's
 
 ## Pages
 
-${pages.map(p => `- [${p.h1}](${ORIGIN}${p.path}): ${p.llms} Markdown: ${ORIGIN}${p.path}index.md`).join('\n')}
+${listed.map(p => `- [${p.h1}](${ORIGIN}${p.path}): ${p.llms} Markdown: ${ORIGIN}${p.path}index.md`).join('\n')}
 
 ## Optional
 
@@ -240,7 +255,7 @@ Sitemap: ${ORIGIN}/sitemap.xml
 
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${pages.map(p => `  <url><loc>${ORIGIN}${p.path}</loc></url>`).join('\n')}
+${listed.map(p => `  <url><loc>${ORIGIN}${p.path}</loc></url>`).join('\n')}
 </urlset>
 `);
 
