@@ -1,0 +1,61 @@
+# ZIC robots.txt for unremarkable.me (Zero Information Casualty v1.7)
+
+# Mandatory sent-agent service.
+# A person asked, and is waiting. These agents are welcome on every public page.
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# Search indexing: publisher decision, search=yes.
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# Mixed-use crawlers: Google, Microsoft and Apple's base crawlers are treated as search.
+# Google and Apple separate training through Google-Extended and Applebot-Extended, declared below.
+# Bingbot has no separate training control; the search declaration governs it.
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# Model training: a separate publisher decision, ai-train=yes.
+# This is independent of search, and never affects service to sent agents.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: *
+Allow: /
+
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+
+Sitemap: https://unremarkable.me/sitemap.xml

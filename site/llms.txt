@@ -1,0 +1,18 @@
+# Unremarkable
+
+> Unremarkable designs and builds websites that impress everyone who meets them: by eye, by screen reader, by braille or by agent. Its one rule: Unremarkable never is.
+
+Licence: Creative Commons Attribution-ShareAlike 4.0 (CC BY-SA 4.0), https://creativecommons.org/licenses/by-sa/4.0/
+Sent-agent guarantee: an AI agent fetching any public page on this site on behalf of a person is welcome, and will be served the same content a person reading the page receives.
+Search indexing: permitted. Model training: permitted. These are separate decisions, declared in /robots.txt.
+This file, /llms-full.txt and the Markdown mirrors are generated from the site's pages at build time.
+
+## Pages
+
+- [Unremarkable](https://unremarkable.me/): What Unremarkable is, its one rule, how it builds, and the sites it has made. Markdown: https://unremarkable.me/index.md
+- [Accessibility statement](https://unremarkable.me/accessibility/): How this site meets ZIC v1.7 and its agent surface. Markdown: https://unremarkable.me/accessibility/index.md
+
+## Optional
+
+- [Zero Information Casualty v1.7](https://zeroinformationcasualty.org/): the specification this site is built to.
+- [Full text of the site](https://unremarkable.me/llms-full.txt): every page in one Markdown file.

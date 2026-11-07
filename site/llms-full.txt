@@ -1,0 +1,65 @@
+# Unremarkable: full text
+
+Generated from the site's pages at build time. Licence: Creative Commons Attribution-ShareAlike 4.0 (CC BY-SA 4.0).
+
+# Unremarkable
+
+Canonical page: https://unremarkable.me/
+
+We design and build websites. The name is the only modest thing about us.
+
+## The rule
+
+Unremarkable has one rule, and it overrides every other: **it never is.**
+
+Every site we make has to impress everyone who meets it, whether they see it, hear it through a screen reader, feel it in braille or send an agent to fetch it for them. A site that dazzles the eye and stumbles in a screen reader isn't impressive. It's half finished.
+
+## How we build
+
+- **Built for people who hear the web.** Every site is tested with a screen reader by someone who uses one every day, not run through a checker and declared done.
+- **Built for the agents people send.** Every page has a Markdown twin, and every site has an llms.txt, so an AI agent sent by a person gets exactly what that person would.
+- **Built to a standard.** Our sites are built to [Zero Information Casualty v1.7](https://zeroinformationcasualty.org/): nothing published is lost on its way to any reader.
+- **Built to last.** Static pages, served fast from the edge, readable without a single line of JavaScript.
+
+## The work
+
+- [**carrados.com**](https://carrados.com/): The frameworks, the Papers and The Blind AI: writing about AI and blindness that is accountable for its evidence.
+- [**charli.info**](https://charli.info/): The front door of the CharliVerse, a shared fictional world, and CharliPedia, its memory.
+- [**blind-ant.com**](https://blind-ant.com/): Charlotte Joanne's making practice: design fiction, stories, games and the working objects behind them.
+- [**zeroinformationcasualty.org**](https://zeroinformationcasualty.org/): The web standard every one of these sites is built to.
+- [**charli-jo.com**](https://charli-jo.com/): Accessible service design for people and the agents they send.
+
+## Site by Unremarkable
+
+When you find those three words at the foot of a page, the site is ours. Hold it to the rule.
+
+
+---
+
+# Accessibility statement
+
+Canonical page: https://unremarkable.me/accessibility/
+
+An accessibility statement is where most sites admit what they couldn't manage. Ours is built to [Zero Information Casualty version 1.7](https://zeroinformationcasualty.org/), so that nobody, whether reading directly, using assistive technology or sending an agent, loses access to anything published here.
+
+## How it is built
+
+- Every page is plain, static HTML. No content depends on JavaScript, and the site uses none.
+- Each page has one main heading, headings in order, landmark regions and a skip link to the main content.
+- Text sizes are relative, so the site respects your browser's text size and zoom.
+- Colours meet WCAG AA contrast, rising further if your system asks for more contrast. A dark scheme follows your system setting.
+- Nothing moves, so there is nothing to switch off for reduced motion.
+
+## Standards and testing
+
+The site aims to meet WCAG 2.2 at level AA as a baseline, alongside Zero Information Casualty v1.7, and is tested with a screen reader as it changes.
+
+This is a statement of how the site is built and what it aims for, not a claim of certified conformance. No independent audit has been carried out.
+
+This statement was last reviewed on 7 November 2026.
+
+## For agents
+
+Agents acting for a person are welcome on every public page. There is a summary for agents at [llms.txt](https://unremarkable.me/llms.txt), the full text of the site in one file at [llms-full.txt](https://unremarkable.me/llms-full.txt), and a Markdown version of every page alongside it. All of them are generated from the pages you are reading when the site is built, not maintained by hand.
+
+The site's permissions for search indexing and model training are declared separately in its [robots.txt file](https://unremarkable.me/robots.txt).
