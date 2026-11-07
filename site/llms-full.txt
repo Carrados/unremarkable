@@ -23,11 +23,11 @@ Every site we make has to impress everyone who meets it, whether they see it, he
 
 ## The work
 
-- [**carrados.com**](https://carrados.com/): The frameworks, the Papers and The Blind AI: writing about AI and blindness that is accountable for its evidence.
-- [**charli.info**](https://charli.info/): The front door of the CharliVerse, a shared fictional world, and CharliPedia, its memory.
-- [**blind-ant.com**](https://blind-ant.com/): Charlotte Joanne's making practice: design fiction, stories, games and the working objects behind them.
-- [**zeroinformationcasualty.org**](https://zeroinformationcasualty.org/): The web standard every one of these sites is built to.
-- [**charli-jo.com**](https://charli-jo.com/): Accessible service design for people and the agents they send.
+1. [**carrados.com**](https://carrados.com/): The frameworks, the Papers and The Blind AI: writing about AI and blindness that is accountable for its evidence.
+2. [**charli.info**](https://charli.info/): The front door of the CharliVerse, a shared fictional world, and CharliPedia, its memory.
+3. [**blind-ant.com**](https://blind-ant.com/): Charlotte Joanne's making practice: design fiction, stories, games and the working objects behind them.
+4. [**zeroinformationcasualty.org**](https://zeroinformationcasualty.org/): The web standard every one of these sites is built to.
+5. [**charli-jo.com**](https://charli-jo.com/): Accessible service design for people and the agents they send.
 
 ## Site by Unremarkable
 

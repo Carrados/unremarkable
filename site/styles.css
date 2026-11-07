@@ -92,7 +92,7 @@ main p, main li { max-width: 62ch; }
   max-width: none; border-bottom: 1px solid var(--rule); counter-increment: work;
   display: grid; grid-template-columns: 3rem 1fr; gap: 0.25rem 1rem; padding: 1.5rem 0;
 }
-.work li::before { content: counter(work, decimal-leading-zero); grid-row: span 2; color: var(--accent); font-variant-numeric: tabular-nums; padding-top: 0.6rem; }
+.work li::before { content: counter(work, decimal-leading-zero) / ""; grid-row: span 2; color: var(--accent); font-variant-numeric: tabular-nums; padding-top: 0.6rem; }
 .work-name { font-family: var(--display); font-size: clamp(1.6rem, 4vw, 2.6rem); line-height: 1.1; color: var(--ink); text-decoration: none; justify-self: start; overflow-wrap: anywhere; }
 .work-name:hover, .work-name:focus-visible { color: var(--accent); text-decoration: underline; text-underline-offset: 0.12em; }
 .work-line { color: var(--muted); }

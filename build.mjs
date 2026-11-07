@@ -114,7 +114,7 @@ function toMarkdown(html) {
     if (tag === 'h2') blocks.push(`## ${inline(body)}`);
     else if (tag === 'h3') blocks.push(`### ${inline(body)}`);
     else if (tag === 'p') blocks.push(inline(body));
-    else blocks.push([...body.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(([, li]) => `- ${inline(li)}`).join('\n'));
+    else blocks.push([...body.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(([, li], i) => `${tag === 'ol' ? `${i + 1}.` : '-'} ${inline(li)}`).join('\n'));
   }
   return blocks.join('\n\n');
 }
