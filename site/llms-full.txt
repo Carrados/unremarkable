@@ -47,7 +47,7 @@ An accessibility statement is where most sites admit what they couldn't manage. 
 - Every page is plain, static HTML. No content depends on JavaScript, and the site uses none.
 - Each page has one main heading, headings in order, landmark regions and a skip link to the main content.
 - Text sizes are relative, so the site respects your browser's text size and zoom.
-- All text meets WCAG AAA contrast, at least 7:1, in both the light scheme and the dark scheme, which follows your system setting. If your system asks for more contrast, secondary text and dividing lines change to the full text colour.
+- All text meets WCAG AAA contrast, at least 7:1, in both the light scheme and the dark scheme, which follows your system setting. If your system asks for more contrast, secondary text and dividing lines change to the full text colour. Measured on 8 November 2026: body text 16.2:1 and 16.8:1, secondary text 9.4:1 and 9.9:1, the berry accent 9.0:1 and 9.7:1.
 - Nothing moves, so there is nothing to switch off for reduced motion.
 
 ## Standards and testing
@@ -56,7 +56,12 @@ The site aims to meet WCAG 2.2 at level AA as a baseline, alongside Zero Informa
 
 This is a statement of how the site is built and what it aims for, not a claim of certified conformance. No independent audit has been carried out.
 
-This statement was last reviewed on 7 November 2026.
+This statement was last reviewed on 8 November 2026.
+
+## Found and fixed
+
+- **7 November 2026: numbers read twice.** The list of work was numbered by the stylesheet, so VoiceOver read each number as well as the item's place in the list. It is now a real numbered list, and the numbers you can see are hidden from screen readers.
+- **7 November 2026: a link to the page you were on.** On the home page, the name at the top linked to the home page and repeated the heading below it. It was removed.
 
 ## Reporting a problem
 
