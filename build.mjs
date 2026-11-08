@@ -49,7 +49,8 @@ const WORDMARK = '<span class="wm"><span class="wm-un">Un</span>remarkable</span
 
 function read(p) { return readFileSync(p, 'utf8'); }
 
-const navHtml = (current) => listed.map(p =>
+// Accessibility always comes first in the menu, on every site Unremarkable builds.
+const navHtml = (current) => [...listed].sort((a, b) => (b.path === '/accessibility/') - (a.path === '/accessibility/')).map(p =>
   `<li><a href="${p.path}"${p.path === current ? ' aria-current="page"' : ''}>${p.nav}</a></li>`).join('\n');
 
 function jsonLd(p) {
