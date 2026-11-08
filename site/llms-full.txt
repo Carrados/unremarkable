@@ -29,9 +29,9 @@ Every site we make has to impress everyone who meets it, whether they see it, he
 4. [**zeroinformationcasualty.org**](https://zeroinformationcasualty.org/): The web standard every one of these sites is built to.
 5. [**charli-jo.com**](https://charli-jo.com/): Accessible service design for people and the agents they send.
 
-## Site by Unremarkable
+## This site is Unremarkable
 
-When you find those three words at the foot of a page, the site is ours. Hold it to the rule.
+When you find those four words at the foot of a page, the site is ours. Hold it to the rule. Next to them is a link, "Fix something on this page". Use it, and a person will.
 
 
 ---

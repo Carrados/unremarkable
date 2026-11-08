@@ -100,8 +100,7 @@ ${navHtml(p.path)}
 ${main}
 </main>
 <footer>
-${p.hidden ? '' : `<p class="fix-link"><a href="/fix/?page=${encodeURIComponent(url)}">Fix something on this page</a></p>
-`}<p class="credit">Site by Unremarkable. Naturally.</p>
+<p class="credit">This site is Unremarkable.${p.hidden ? '' : ` <a href="/fix/?page=${encodeURIComponent(url)}">Fix something on this page</a>`}</p>
 <p>Content on this site is licensed under <a href="${LICENCE_URL}">${LICENCE_NAME}</a>.</p>
 <p>This site is built to <a href="${ZIC_URL}">Zero Information Casualty v1.7</a>. Read the <a href="/accessibility/">accessibility statement</a>. Information for agents is at <a href="/llms.txt">llms.txt</a>.</p>
 </footer>

@@ -102,7 +102,7 @@ footer p { margin: 0 0 0.6rem; max-width: 70ch; }
 footer .credit { font-family: var(--display); font-size: 1.25rem; color: var(--ink); }
 
 /* The bug-report form. */
-.fix-link { font-size: 1.125rem; margin-bottom: 1.25rem; }
+footer .credit a { font-family: var(--text); font-size: 1.125rem; margin-left: 0.5rem; white-space: nowrap; }
 .fix-form { max-width: 40rem; margin-top: 2.5rem; }
 .field { margin: 0 0 2rem; }
 fieldset.field { border: 0; padding: 0; }
