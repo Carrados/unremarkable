@@ -100,12 +100,12 @@ ${navHtml(p.path)}
 <h1${p.path === '/' ? ' class="home-title"' : ''}>${p.path === '/' ? WORDMARK : p.h1}</h1>
 ${main}
 </main>
-<footer>
+<footer>${p.path === '/accessibility/' ? '' : `
+<p><a href="/accessibility/">Accessibility statement</a></p>`}
 <p class="credit">This site is Unremarkable${p.hidden ? '' : `<br>\n<a href="/fix/?page=${encodeURIComponent(url)}">Fix something on this page</a>`}</p>
-<p>Content on this site is licensed under <a href="${LICENCE_URL}">${LICENCE_NAME}</a></p>
-<p>This site is built to <a href="${ZIC_URL}">Zero Information Casualty v1.7</a><br>
-Read the <a href="/accessibility/">accessibility statement</a></p>
-<p>Information for agents is at <a href="/llms.txt">llms.txt</a></p>
+<p>Licensed under <a href="${LICENCE_URL}">Creative Commons Attribution-ShareAlike 4.0</a></p>
+<p>Built to <a href="${ZIC_URL}">Zero Information Casualty v1.7</a></p>
+<p>For agents: <a href="/llms.txt">llms.txt</a></p>
 </footer>
 </body>
 </html>
