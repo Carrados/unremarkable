@@ -94,11 +94,12 @@ const inMenu = listed.filter(p => p.nav);
 // When the business is real, set AS_IF to false and say so on /as-if/.
 const AS_IF = true;
 const AS_IF_TEXT = 'Unremarkable is written as if it were a business. It isn\'t taking work yet.';
-const asIfHtml = AS_IF ? `<aside class="as-if" aria-label="Design fiction">
+// A plain note, not a landmark: as a landmark named "Design fiction" that begins with those words, NVDA said them twice.
+const asIfHtml = AS_IF ? `<div class="as-if">
 <p><strong>Design fiction</strong><br>
 ${AS_IF_TEXT.replace("'", '&#39;')}<br>
 <a href="/as-if/">What that means</a></p>
-</aside>
+</div>
 ` : '';
 const asIfMarkdown = AS_IF ? `> **Design fiction.** ${AS_IF_TEXT} What that means: ${ORIGIN}/as-if/\n\n` : '';
 
@@ -112,7 +113,10 @@ function read(p) { return readFileSync(p, 'utf8'); }
 
 // Accessibility always comes first in the menu, on every site Unremarkable builds.
 const navHtml = (current) => [...inMenu].sort((a, b) => (b.path === '/accessibility/') - (a.path === '/accessibility/')).map(p =>
-  `<li><a href="${p.path}"${p.path === current ? ' aria-current="page"' : ''}>${p.nav}</a></li>`).join('\n');
+  (p.path === current
+    // The page you are on is named in the menu, but is not a link to itself (rulebook rule 2).
+    ? `<li><a aria-current="page">${p.nav}</a></li>`
+    : `<li><a href="${p.path}">${p.nav}</a></li>`)).join('\n');
 
 function jsonLd(p) {
   const url = ORIGIN + p.path;

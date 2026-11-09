@@ -36,6 +36,8 @@ This statement was last reviewed on 9 November 2026.
 - **7 November 2026: a link to the page you were on.** On the home page, the name at the top linked to the home page and repeated the heading below it. It was removed.
 - **9 November 2026: an email box nobody could fill in.** The fix form showed the owner's address in a read-only email field, straight after saying it doesn't ask who you are. It is now a sentence saying where reports go. Found in a review by another AI, Codex.
 - **9 November 2026: one way of reading.** The fix form let you choose only one way of reading the page, though many people use a screen reader with braille, or a magnifier with the keyboard. You can now choose all that apply. Found in the same review.
+- **9 November 2026: a link to the page you were on, in the menu.** The current page was a link to itself, so NVDA said "same page link, current page". It is still named as the current page, but is no longer a link. Found by listening to a sister site.
+- **9 November 2026: "Design fiction" said twice.** The note under each heading was a landmark named Design fiction that began with those words. It is now a plain note. Found the same way.
 - **9 November 2026: columns that could overflow.** With text enlarged on a narrow screen, the "How we build" columns could be wider than the page. They now shrink to fit. Found in the same review.
 
 ## Reporting a problem
