@@ -6,7 +6,11 @@ Generated from the site's pages at build time. Licence: Creative Commons Attribu
 
 Canonical page: https://unremarkable.me/
 
-We design and build websites that sound as good as they look.
+> **Design fiction.** Unremarkable is written as if it were a business. It isn't taking work yet. What that means: https://unremarkable.me/as-if/
+
+Websites that work for the people who use them, and for the agents they send.
+
+People come to your website to do something: find an answer, choose a service, book a place. Increasingly, they send an agent to do it for them. We design, build and look after websites for both.
 
 ## The rule
 
@@ -17,9 +21,13 @@ Every site we make has to impress everyone who meets it, whether they see it, he
 ## How we build
 
 - **Built for people who hear the web.** Every site is tested with a screen reader by someone who uses one every day, not run through a checker and declared done.
-- **Built for the agents people send.** Every page has a Markdown twin, and every site has an llms.txt, so an AI agent sent by a person gets exactly what that person would.
+- **Built for the agents people send.** Every page has a Markdown version, and every site has an llms.txt, so an AI agent sent by a person gets what that person would, from the menu to the footer.
 - **Built to a standard.** Our sites are built to [Zero Information Casualty v1.7](https://zeroinformationcasualty.org/): nothing published is lost on its way to any reader.
-- **Built to last.** Static pages, served fast from the edge, readable without a single line of JavaScript.
+- **Nothing to patch.** Plain pages served fast from the edge: no plugins to update, no database to break into, and not a line of JavaScript needed to read a word.
+- **Yours, all of it.** The site, its code, the hosting and the domain sit in your accounts. We work inside them, and you can show us out.
+- **A website that listens.** You don't edit your website. You tell it what you want, and it's done.
+
+[How it works](https://unremarkable.me/how-it-works/)
 
 ## The work
 
@@ -33,12 +41,129 @@ Every site we make has to impress everyone who meets it, whether they see it, he
 
 When you find those four words at the foot of a page, the site is ours. Hold it to the rule. Below them is a link, "Fix something on this page". Use it, and a person will fix it.
 
+## Start here
+
+Tell us what people come to you to do. That is where we start.
+
+[Start a website](https://unremarkable.me/start/)
+
+[See the prices](https://unremarkable.me/prices/)
+
+
+---
+
+# How it works
+
+Canonical page: https://unremarkable.me/how-it-works/
+
+> **Design fiction.** Unremarkable is written as if it were a business. It isn't taking work yet. What that means: https://unremarkable.me/as-if/
+
+You tell us what people come to you to do. We build the website that lets them do it.
+
+## From first conversation to live
+
+1. **A conversation.** What you offer, who comes to you and what they are trying to get done: book a place, find an answer, choose a service. That understanding shapes everything else.
+2. **Your accounts, in your name.** We help you open a Cloudflare account for hosting and a GitHub organisation for the code, and register the domain to you. You add us as a member of each. For email and files we recommend Google Workspace and set it up for you, including the records that keep your email out of spam. If you already use Microsoft 365, that works too.
+3. **Design and build.** A design made for you, not a theme. You see each version on a private preview address, and you can listen to it as well as look at it.
+4. **Tested by ear.** Before it goes live, the site is tested with a screen reader by someone who uses one every day, and it gets an accessibility statement that says what was checked and when.
+5. **Live, and handed over.** The site goes live with a short handover note: how it is published, where reports go, and how to remove us as a member if you ever want to.
+
+## After launch: tell it what you want
+
+You don't edit your website. You tell it what you want, and it's done.
+
+Every page of your site has a link only you and your team use, "Change something on this page". Write what you want in your own words: the opening hours are wrong, add the June event, say more about the new service. We make the change and email you a link to see it. Reply to approve it, and it goes live.
+
+Visitors get their own link, "Fix something on this page", for anything that stops them, whether they read by eye, by screen reader, by braille or by agent. A person reads every report.
+
+Things that change often, such as events, news and opening times, can live in a Google Sheet that your site reads when it is published. You edit something you already know how to use.
+
+## You own everything
+
+The site, its source code, the hosting account and the domain are all yours, and you pay the running costs directly. We work inside your accounts as a member. There is no platform to be locked into: the site is plain HTML and a short build script, so any developer, or any agent you send, can pick it up.
+
+## Nothing to patch
+
+Most of the cost of a website built on a platform comes after launch: plugin updates, security patches and cleaning up after break-ins. Our sites are plain pages served from the edge, with no plugins and no database behind them, so there is nothing to patch and very little that can break.
+
+## What we don't build
+
+Online shops. Shopify and WooCommerce are good at them. We build sites for organisations whose visitors come to find out, choose, book and ask: charities, practices, venues, clubs and small firms.
+
+
+---
+
+# Prices
+
+Canonical page: https://unremarkable.me/prices/
+
+> **Design fiction.** Unremarkable is written as if it were a business. It isn't taking work yet. What that means: https://unremarkable.me/as-if/
+
+One price to build your site, and one monthly price to look after it.
+
+## The build
+
+- **Price:** from £3,500, paid in two halves: one when we start and one when the site goes live
+- **Includes:** the conversation, the design, the build, setting up your accounts and email records, testing with a screen reader, the accessibility statement and the handover note
+- **Takes:** four to six weeks for most sites
+
+The price depends on how many kinds of page your site needs, not how many pages it has. A site with a hundred events costs no more than a site with ten.
+
+## Looking after it
+
+- **Price:** £75 a month, cancel with a month's notice
+- **Includes:** every change you ask for with "Change something on this page", every visitor report from "Fix something on this page", keeping your agent files up to date, and a check by ear each month
+- **Turnaround:** changes made within two working days, and anything that stops a visitor fixed within one
+
+If you stop, the site keeps running. It is in your accounts, and it doesn't need us to stay up.
+
+## Running costs, paid by you
+
+- **Domain:** usually £10 to £40 a year, depending on the ending
+- **Hosting:** nothing for most sites on Cloudflare's free plan, or about $5 a month on its paid plan for the busiest
+- **Email and files:** Google Workspace is charged per person per month, and is free for eligible charities through Google for Nonprofits
+
+You pay these to the providers directly. We never mark them up, because we never hold them.
+
+## Charities
+
+Registered charities get 20% off the build.
+
+## Next
+
+[Start a website](https://unremarkable.me/start/)
+
+
+---
+
+# Start a website
+
+Canonical page: https://unremarkable.me/start/
+
+> **Design fiction.** Unremarkable is written as if it were a business. It isn't taking work yet. What that means: https://unremarkable.me/as-if/
+
+Tell us what people come to you to do. That is where we start.
+
+## Before you send
+
+Unremarkable isn't taking work yet, and this form keeps nothing. When you send it, what you wrote is checked and then thrown away, and you'll see what would happen next. Nobody will reply.
+
+Only so we could reply. Here, it isn't kept.
+
+For example, "book a place on a course", "find out if we can help", "choose a holiday cottage".
+
+Your current website, if you have one, or a date you need to be live by.
+
+Send
+
 
 ---
 
 # Accessibility statement
 
 Canonical page: https://unremarkable.me/accessibility/
+
+> **Design fiction.** Unremarkable is written as if it were a business. It isn't taking work yet. What that means: https://unremarkable.me/as-if/
 
 An accessibility statement is where most sites admit what they couldn't manage. Ours is built to [Zero Information Casualty version 1.7](https://zeroinformationcasualty.org/), so that nobody, whether reading directly, using assistive technology or sending an agent, loses access to anything published here.
 
@@ -56,12 +181,15 @@ The site aims to meet WCAG 2.2 at level AA as a baseline, alongside Zero Informa
 
 This is a statement of how the site is built and what it aims for, not a claim of certified conformance. No independent audit has been carried out.
 
-This statement was last reviewed on 8 November 2026.
+This statement was last reviewed on 9 November 2026.
 
 ## Found and fixed
 
 - **7 November 2026: numbers read twice.** The list of work was numbered by the stylesheet, so VoiceOver read each number as well as the item's place in the list. It is now a real numbered list, and the numbers you can see are hidden from screen readers.
 - **7 November 2026: a link to the page you were on.** On the home page, the name at the top linked to the home page and repeated the heading below it. It was removed.
+- **9 November 2026: an email box nobody could fill in.** The fix form showed the owner's address in a read-only email field, straight after saying it doesn't ask who you are. It is now a sentence saying where reports go. Found in a review by another AI, Codex.
+- **9 November 2026: one way of reading.** The fix form let you choose only one way of reading the page, though many people use a screen reader with braille, or a magnifier with the keyboard. You can now choose all that apply. Found in the same review.
+- **9 November 2026: columns that could overflow.** With text enlarged on a narrow screen, the "How we build" columns could be wider than the page. They now shrink to fit. Found in the same review.
 
 ## Reporting a problem
 
@@ -69,8 +197,46 @@ Every page has a link at the foot, "Fix something on this page", to a short form
 
 The form doesn't ask who you are. We keep what you write, the page's address, how you were reading the page if you tell us, and your browser and device as your browser reports them. We don't keep your name, your email address or your IP address. Reports are used only to fix the sites, and to learn what to get right on the next one.
 
+The Start form, for starting a website, keeps nothing while Unremarkable is design fiction: what you write is checked and thrown away.
+
 ## For agents
 
 Agents acting for a person are welcome on every public page. There is a summary for agents at [llms.txt](https://unremarkable.me/llms.txt), the full text of the site in one file at [llms-full.txt](https://unremarkable.me/llms-full.txt), and a Markdown version of every page alongside it. All of them are generated from the pages you are reading when the site is built, not maintained by hand.
 
 The site's permissions for search indexing and model training are declared separately in its [robots.txt file](https://unremarkable.me/robots.txt).
+
+
+---
+
+# As if
+
+Canonical page: https://unremarkable.me/as-if/
+
+> **Design fiction.** Unremarkable is written as if it were a business. It isn't taking work yet. What that means: https://unremarkable.me/as-if/
+
+This site is written as if Unremarkable were a business. It isn't one yet.
+
+Unremarkable is real: it is the name at the foot of every site listed under "The work" on the home page, and those sites are real. What isn't real yet is the business those pages describe, a studio that designs, builds and looks after websites for organisations. This site works that business out by building it properly before it exists. That is design fiction, and this page is its standard.
+
+## The As If standard
+
+1. **Inside, everything is done for real.** Prices, terms and the way in are written as the real business would write them, and built to the same standard as everything else Unremarkable makes. Unremarkable never is, even when it is pretending.
+2. **Outside, every page says so.** Directly under each page's main heading, in the same words and the same place, a note says this is design fiction and that Unremarkable isn't taking work yet. It is part of the page, never small print, so a screen reader reaches it straight after the heading.
+3. **Nobody is misled.** Anything that would take something from you, your name, your email address or your money, tells you first that the business isn't trading, and keeps nothing until it is.
+4. **Agents are told too.** The site's llms.txt and the Markdown version of every page carry the same note, so an agent sent to hire Unremarkable reports back accurately.
+
+## What is real here
+
+- The sites listed under "The work" on the home page, each built to Zero Information Casualty and tested with a screen reader.
+- The "Fix something on this page" link on every page. A person reads every report, and fixes go live.
+- The accessibility statement, which describes this site as it actually is.
+
+## What is not real yet
+
+- The prices and the terms. They are worked out with care, but nobody can buy them.
+- The "Start" form. It works, checks what you write and shows you what would happen next, but it keeps nothing and sends nothing.
+- The "Change something" form for site owners, described under How it works. It is designed, not built.
+
+## When it becomes real
+
+This page will say so and give the date. The note will come off every page, and the Start form will begin keeping what you send, with a privacy notice that says exactly what, before you send it.

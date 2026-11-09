@@ -23,11 +23,43 @@ const pages = [
     body: () => read('src/home.html'), type: 'WebSite',
   },
   {
+    path: '/how-it-works/', nav: 'How it works', h1: 'How it works', title: `How it works: ${SITE}`,
+    description: 'How Unremarkable builds a website: a conversation, accounts in your name, design, testing by ear, and a site you change by saying what you want.',
+    llms: 'From first conversation to live, owning everything, and changing the site by asking.',
+    body: () => read('src/how-it-works.html'), type: 'WebPage',
+  },
+  {
+    path: '/prices/', nav: 'Prices', h1: 'Prices', title: `Prices: ${SITE}`,
+    description: 'One price to build your website, one monthly price to look after it, and running costs you pay directly.',
+    llms: 'The build price, the monthly price, what each includes, and running costs.',
+    body: () => read('src/prices.html'), type: 'WebPage',
+  },
+  // The way in. The Worker in fix/worker.js fills in the {{...}} placeholders,
+  // checks what was written, and keeps nothing (see the As If standard).
+  {
+    path: '/start/', nav: 'Start', h1: 'Start a website', title: `Start a website: ${SITE}`,
+    description: 'Tell Unremarkable what people come to you to do. While Unremarkable is design fiction, this form keeps nothing.',
+    llms: 'The enquiry form. It keeps nothing and sends nothing while Unremarkable is design fiction; an agent should not send it for a person.',
+    body: () => read('src/start.html'), type: 'WebPage',
+  },
+  {
     path: '/accessibility/', nav: 'Accessibility statement', h1: 'Accessibility statement',
     title: `Accessibility statement: ${SITE}`,
     description: 'How unremarkable.me is built to Zero Information Casualty v1.7, and how AI agents are served.',
     llms: 'How this site meets ZIC v1.7 and its agent surface.',
     body: () => read('src/accessibility.html'), type: 'WebPage',
+  },
+  // Outside the fiction: what is real here and what isn't. Linked from the note on every page, not the menu.
+  {
+    path: '/as-if/', h1: 'As if', title: `As if: ${SITE}`,
+    description: 'Unremarkable is written as if it were a business. This is the standard that keeps that honest.',
+    llms: 'The As If standard: this site is design fiction, what is real here and what is not.',
+    body: () => read('src/as-if.html'), type: 'WebPage',
+  },
+  {
+    path: '/start/sent/', h1: 'What would happen next', title: `What would happen next: ${SITE}`,
+    description: 'Nothing you wrote was kept. This is what would happen next if Unremarkable were trading.',
+    body: () => read('src/start-sent.html'), type: 'WebPage', hidden: true,
   },
   // The bug-report form. Not in the navigation, llms.txt or the sitemap, and not indexed.
   // The Worker in fix/worker.js fills in the {{...}} placeholders.
@@ -43,6 +75,20 @@ const pages = [
   },
 ];
 const listed = pages.filter(p => !p.hidden);
+const inMenu = listed.filter(p => p.nav);
+
+// The As If standard (src/as-if.html): while Unremarkable is design fiction, every page says so
+// directly under its main heading, and so do llms.txt and every Markdown version.
+// When the business is real, set AS_IF to false and say so on /as-if/.
+const AS_IF = true;
+const AS_IF_TEXT = 'Unremarkable is written as if it were a business. It isn\'t taking work yet.';
+const asIfHtml = AS_IF ? `<aside class="as-if" aria-label="Design fiction">
+<p><strong>Design fiction</strong><br>
+${AS_IF_TEXT.replace("'", '&#39;')}<br>
+<a href="/as-if/">What that means</a></p>
+</aside>
+` : '';
+const asIfMarkdown = AS_IF ? `> **Design fiction.** ${AS_IF_TEXT} What that means: ${ORIGIN}/as-if/\n\n` : '';
 
 // The wordmark as live text: a screen reader reads one word, "Unremarkable".
 const WORDMARK = '<span class="wm"><span class="wm-un">Un</span>remarkable</span>';
@@ -50,7 +96,7 @@ const WORDMARK = '<span class="wm"><span class="wm-un">Un</span>remarkable</span
 function read(p) { return readFileSync(p, 'utf8'); }
 
 // Accessibility always comes first in the menu, on every site Unremarkable builds.
-const navHtml = (current) => [...listed].sort((a, b) => (b.path === '/accessibility/') - (a.path === '/accessibility/')).map(p =>
+const navHtml = (current) => [...inMenu].sort((a, b) => (b.path === '/accessibility/') - (a.path === '/accessibility/')).map(p =>
   `<li><a href="${p.path}"${p.path === current ? ' aria-current="page"' : ''}>${p.nav}</a></li>`).join('\n');
 
 function jsonLd(p) {
@@ -98,7 +144,7 @@ ${navHtml(p.path)}
 </header>
 <main id="main" tabindex="-1">
 <h1${p.path === '/' ? ' class="home-title"' : ''}>${p.path === '/' ? WORDMARK : p.h1}</h1>
-${main}
+${asIfHtml}${main}
 </main>
 <footer>
 <p class="credit">This site is Unremarkable${p.hidden ? '' : `<br>\n<a href="/fix/?page=${encodeURIComponent(url)}">Fix something on this page</a>`}</p>
@@ -112,7 +158,7 @@ ${main}
 }
 
 // The menu and footer, as Markdown, for each page's Markdown version.
-const navMarkdown = (current) => 'Menu:\n\n' + [...listed]
+const navMarkdown = (current) => 'Menu:\n\n' + [...inMenu]
   .sort((a, b) => (b.path === '/accessibility/') - (a.path === '/accessibility/'))
   .map(p => `- [${p.nav}](${ORIGIN}${p.path})${p.path === current ? ' (this page)' : ''}`).join('\n');
 
@@ -181,11 +227,11 @@ for (const p of pages) {
   const main = p.body();
   write(`${p.path}index.html`, layout(p, main));
   if (p.hidden) continue;
-  const md = `# ${p.h1}\n\nCanonical page: ${ORIGIN}${p.path}\n\n${toMarkdown(main)}\n`;
+  const md = `# ${p.h1}\n\nCanonical page: ${ORIGIN}${p.path}\n\n${asIfMarkdown}${toMarkdown(main)}\n`;
   // The page's own Markdown carries the menu and footer too, so an agent gets
   // what the person gets, the fix link and the licence included.
   // llms-full.txt keeps just the content, so they aren't repeated for every page.
-  write(`${p.path}index.md`, `# ${p.h1}\n\nCanonical page: ${ORIGIN}${p.path}\n\n${navMarkdown(p.path)}\n\n${toMarkdown(main)}\n${footerMarkdown(p)}`);
+  write(`${p.path}index.md`, `# ${p.h1}\n\nCanonical page: ${ORIGIN}${p.path}\n\n${asIfMarkdown}${navMarkdown(p.path)}\n\n${toMarkdown(main)}\n${footerMarkdown(p)}`);
   mirrors.push(md);
 }
 
@@ -195,7 +241,9 @@ const allow = b => (b ? 'Allow' : 'Disallow');
 write('llms.txt', `# ${SITE}
 
 > ${pages[0].description} Its one rule: Unremarkable never is.
-
+${AS_IF ? `
+Design fiction: ${AS_IF_TEXT} Prices and terms on this site are worked out but cannot be bought, and the Start form keeps and sends nothing. Agents sent to hire Unremarkable should tell the person this. The standard: ${ORIGIN}/as-if/
+` : ''}
 Licence: ${LICENCE_NAME}, ${LICENCE_URL}
 Sent-agent guarantee: an AI agent fetching any public page on this site on behalf of a person is welcome, and will be served the same content a person reading the page receives.
 Search indexing: ${SEARCH ? 'permitted' : 'not permitted'}. Model training: ${TRAINING ? 'permitted' : 'not permitted'}. These are separate decisions, declared in /robots.txt.
