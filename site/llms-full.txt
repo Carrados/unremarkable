@@ -29,6 +29,8 @@ Every site we make has to impress everyone who meets it, whether they see it, he
 
 [How it works](https://unremarkable.me/how-it-works/)
 
+[See a real publishing job](https://unremarkable.me/worked-example/)
+
 ## Our work
 
 1. [**blind-ant.com**](https://blind-ant.com/): Charlotte Joanne's making practice: design fiction, stories, games and the working objects behind them.
