@@ -37,11 +37,13 @@ Every site we make has to impress everyone who meets it, whether they see it, he
 
 ## Our work
 
-1. [**blind-ant.com**](https://blind-ant.com/): Charlotte Joanne's making practice: design fiction, stories, games and the working objects behind them.
-2. [**carrados.com**](https://carrados.com/): The frameworks, the Papers and The Blind AI: writing about AI and blindness that is accountable for its evidence.
-3. [**charli-jo.com**](https://charli-jo.com/): Accessible service design for people and the agents they send.
-4. [**charli.info**](https://charli.info/): The front door of the CharliVerse, a shared fictional world, and CharliPedia, its memory.
-5. [**Zero Information Casualty**](https://zeroinformationcasualty.org/): The web standard every one of these sites is built to.
+These are our own sites: working publications where we develop and use the approach we offer here. We depend on them ourselves, and what we build gets used on them first.
+
+1. [**blind-ant.com**](https://blind-ant.com/): A making practice that publishes often: design fiction, stories, games and apps. Its pieces are published by our agent from an in-tray, twice a day, and the worked example is one of its jobs.
+2. [**carrados.com**](https://carrados.com/): Writing about AI and blindness that has to be accountable for its evidence: the frameworks, the Papers and The Blind AI, with a desk and an address of its own for each of its writers.
+3. [**charli-jo.com**](https://charli-jo.com/): A practice in accessible service design for people and the agents they send. Its principle and method began as Word documents and are now kept as the pages themselves.
+4. [**charli.info**](https://charli.info/): The front door of the CharliVerse, a shared fictional world, and CharliPedia, its memory: an encyclopaedia written for people and for agents, which any AI agent can also look things up in through a connector of its own.
+5. [**Zero Information Casualty**](https://zeroinformationcasualty.org/): The web standard every one of these sites is built to, published on a site built to it.
 
 ## This site is Unremarkable
 
