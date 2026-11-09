@@ -2,6 +2,11 @@
 
 Canonical page: https://unremarkable.me/
 
+Menu:
+
+- [Accessibility statement](https://unremarkable.me/accessibility/)
+- [Home](https://unremarkable.me/) (this page)
+
 We design and build websites that sound as good as they look.
 
 ## The rule
@@ -22,9 +27,21 @@ Every site we make has to impress everyone who meets it, whether they see it, he
 1. [**carrados.com**](https://carrados.com/): The frameworks, the Papers and The Blind AI: writing about AI and blindness that is accountable for its evidence.
 2. [**charli.info**](https://charli.info/): The front door of the CharliVerse, a shared fictional world, and CharliPedia, its memory.
 3. [**blind-ant.com**](https://blind-ant.com/): Charlotte Joanne's making practice: design fiction, stories, games and the working objects behind them.
-4. [**zeroinformationcasualty.org**](https://zeroinformationcasualty.org/): The web standard every one of these sites is built to.
+4. [**Zero Information Casualty**](https://zeroinformationcasualty.org/): The web standard every one of these sites is built to.
 5. [**charli-jo.com**](https://charli-jo.com/): Accessible service design for people and the agents they send.
 
 ## This site is Unremarkable
 
 When you find those four words at the foot of a page, the site is ours. Hold it to the rule. Below them is a link, "Fix something on this page". Use it, and a person will fix it.
+
+---
+
+This site is Unremarkable
+
+[Fix something on this page](https://unremarkable.me/fix/?page=https%3A%2F%2Funremarkable.me%2F)
+
+Licensed under [Creative Commons Attribution-ShareAlike 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+
+Built to [Zero Information Casualty v1.7](https://zeroinformationcasualty.org/)
+
+For agents: [llms.txt](https://unremarkable.me/llms.txt)

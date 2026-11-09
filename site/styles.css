@@ -83,7 +83,7 @@ h2::before { content: ""; display: block; width: 3rem; height: 4px; background: 
 
 main p, main li { max-width: 62ch; }
 
-.pillars { list-style: none; padding: 0; display: grid; gap: 1.5rem 2.5rem; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+.pillars { list-style: none; padding: 0; display: grid; gap: 1.5rem 2.5rem; grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr)); }
 .pillars li { max-width: none; border-top: 1px solid var(--rule); padding-top: 1rem; }
 .pillars strong { display: block; font-family: var(--display); font-size: 1.35rem; line-height: 1.2; margin-bottom: 0.4rem; }
 
@@ -103,7 +103,7 @@ footer p { margin: 0 0 1rem; max-width: 70ch; }
 footer .credit { font-family: var(--display); font-size: 1.25rem; color: var(--ink); }
 
 /* The bug-report form. */
-footer .credit a { font-family: var(--text); font-size: 1.125rem; white-space: nowrap; }
+footer .credit a { font-family: var(--text); font-size: 1.125rem; }
 .fix-form { max-width: 40rem; margin-top: 2.5rem; }
 .field { margin: 0 0 2rem; }
 fieldset.field { border: 0; padding: 0; }
@@ -115,7 +115,6 @@ fieldset.field { border: 0; padding: 0; }
   border: 2px solid var(--ink); border-radius: 0; padding: 0.6rem 0.75rem;
 }
 .fix-form textarea { resize: vertical; }
-.fix-form input.readonly { background: var(--panel); border-style: dashed; }
 .choices { list-style: none; margin: 0.5rem 0 0; padding: 0; }
 .choices li { display: flex; align-items: center; gap: 0.6rem; margin: 0 0 0.5rem; }
 .choices input { width: 1.4rem; height: 1.4rem; margin: 0; accent-color: var(--accent); flex: none; }

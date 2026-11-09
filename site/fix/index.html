@@ -73,17 +73,17 @@
 </div>
 
 <fieldset class="field">
-<legend>How were you reading the page? <span class="optional">(optional)</span></legend>
+<legend>How were you reading the page? <span class="optional">(optional, choose any that apply)</span></legend>
 <ul class="choices">
-<li><input type="radio" id="r-eye" name="reading" value="by-eye"{{R:by-eye}}> <label for="r-eye">Reading the screen</label></li>
-<li><input type="radio" id="r-sr" name="reading" value="screen-reader"{{R:screen-reader}}> <label for="r-sr">A screen reader</label></li>
-<li><input type="radio" id="r-mag" name="reading" value="magnifier"{{R:magnifier}}> <label for="r-mag">Magnification or zoom</label></li>
-<li><input type="radio" id="r-voice" name="reading" value="voice"{{R:voice}}> <label for="r-voice">Voice control</label></li>
-<li><input type="radio" id="r-kb" name="reading" value="keyboard"{{R:keyboard}}> <label for="r-kb">Keyboard only</label></li>
-<li><input type="radio" id="r-switch" name="reading" value="switch"{{R:switch}}> <label for="r-switch">Switch access</label></li>
-<li><input type="radio" id="r-braille" name="reading" value="braille"{{R:braille}}> <label for="r-braille">A braille display</label></li>
-<li><input type="radio" id="r-agent" name="reading" value="agent"{{R:agent}}> <label for="r-agent">An AI agent</label></li>
-<li><input type="radio" id="r-other" name="reading" value="other"{{R:other}}> <label for="r-other">Something else</label></li>
+<li><input type="checkbox" id="r-eye" name="reading" value="by-eye"{{R:by-eye}}> <label for="r-eye">Reading the screen</label></li>
+<li><input type="checkbox" id="r-sr" name="reading" value="screen-reader"{{R:screen-reader}}> <label for="r-sr">A screen reader</label></li>
+<li><input type="checkbox" id="r-mag" name="reading" value="magnifier"{{R:magnifier}}> <label for="r-mag">Magnification or zoom</label></li>
+<li><input type="checkbox" id="r-voice" name="reading" value="voice"{{R:voice}}> <label for="r-voice">Voice control</label></li>
+<li><input type="checkbox" id="r-kb" name="reading" value="keyboard"{{R:keyboard}}> <label for="r-kb">Keyboard only</label></li>
+<li><input type="checkbox" id="r-switch" name="reading" value="switch"{{R:switch}}> <label for="r-switch">Switch access</label></li>
+<li><input type="checkbox" id="r-braille" name="reading" value="braille"{{R:braille}}> <label for="r-braille">A braille display</label></li>
+<li><input type="checkbox" id="r-agent" name="reading" value="agent"{{R:agent}}> <label for="r-agent">An AI agent</label></li>
+<li><input type="checkbox" id="r-other" name="reading" value="other"{{R:other}}> <label for="r-other">Something else</label></li>
 </ul>
 </fieldset>
 
@@ -93,11 +93,7 @@
 <input type="text" id="setup" name="setup" value="{{SETUP}}" maxlength="300" aria-describedby="setup-hint" autocomplete="off">
 </div>
 
-<div class="field">
-<label for="sent-to">Email</label>
-<p class="hint" id="sent-to-hint">Fixes go to the site's owner to test. We don't ask for your address.</p>
-<input type="email" id="sent-to" value="charli@unremarkable.me" readonly aria-describedby="sent-to-hint" class="readonly">
-</div>
+<p>Your report goes to the site's owner, who fixes the problem and tests the fix.</p>
 
 <div class="hp" aria-hidden="true">
 <label for="website">Leave this empty</label>

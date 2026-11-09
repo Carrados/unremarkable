@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS reports (
   page TEXT NOT NULL,            -- full address of the reported page
   what_happened TEXT NOT NULL,
   expected TEXT,
-  reading TEXT,                  -- how they were reading the page (one of the form's choices)
+  reading TEXT,                  -- how they were reading the page: the form's choices, comma-separated
   setup TEXT,                    -- anything more about their setup, in their words
   user_agent TEXT,               -- browser and device, from the request
   -- What happened next, filled in as the report is worked on.

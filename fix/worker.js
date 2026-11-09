@@ -39,7 +39,7 @@ function fillForm(t, v, error) {
     .replace('{{WHAT}}', esc(v.what))
     .replace('{{EXPECTED}}', esc(v.expected))
     .replace('{{SETUP}}', esc(v.setup))
-    .replace(/\{\{R:([a-z-]+)\}\}/g, (_, r) => (r === v.reading ? ' checked' : ''));
+    .replace(/\{\{R:([a-z-]+)\}\}/g, (_, r) => ((v.reading || []).includes(r) ? ' checked' : ''));
   if (error) {
     out = out
       .replace('<title>', '<title>Error: ')
@@ -68,7 +68,8 @@ async function saveReport(request, env) {
     what: get('what', LIMITS.what),
     expected: get('expected', LIMITS.expected),
     setup: get('setup', LIMITS.setup),
-    reading: READINGS.includes(get('reading', 40)) ? get('reading', 40) : '',
+    // Ways of reading: any of the form's choices, in the form's order.
+    reading: READINGS.filter(r => form.getAll('reading').map(String).includes(r)),
   };
 
   // The hidden field only a bot fills in. Pretend it worked, store nothing.
@@ -84,7 +85,7 @@ async function saveReport(request, env) {
     `INSERT INTO reports (site, page, what_happened, expected, reading, setup, user_agent)
      VALUES (?, ?, ?, ?, ?, ?, ?)`
   ).bind(
-    page.hostname, page.href, v.what, v.expected || null, v.reading || null, v.setup || null,
+    page.hostname, page.href, v.what, v.expected || null, v.reading.join(',') || null, v.setup || null,
     (request.headers.get('User-Agent') || '').slice(0, LIMITS.ua) || null,
   ).run();
 
