@@ -23,7 +23,7 @@ const pages = [
     body: () => read('src/home.html'), type: 'WebSite',
   },
   {
-    path: '/accessibility/', nav: 'Accessibility', h1: 'Accessibility statement',
+    path: '/accessibility/', nav: 'Accessibility statement', h1: 'Accessibility statement',
     title: `Accessibility statement: ${SITE}`,
     description: 'How unremarkable.me is built to Zero Information Casualty v1.7, and how AI agents are served.',
     llms: 'How this site meets ZIC v1.7 and its agent surface.',
@@ -100,8 +100,7 @@ ${navHtml(p.path)}
 <h1${p.path === '/' ? ' class="home-title"' : ''}>${p.path === '/' ? WORDMARK : p.h1}</h1>
 ${main}
 </main>
-<footer>${p.path === '/accessibility/' ? '' : `
-<p><a href="/accessibility/">Accessibility statement</a></p>`}
+<footer>
 <p class="credit">This site is Unremarkable${p.hidden ? '' : `<br>\n<a href="/fix/?page=${encodeURIComponent(url)}">Fix something on this page</a>`}</p>
 <p>Licensed under <a href="${LICENCE_URL}">Creative Commons Attribution-ShareAlike 4.0</a></p>
 <p>Built to <a href="${ZIC_URL}">Zero Information Casualty v1.7</a></p>
