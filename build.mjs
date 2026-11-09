@@ -18,8 +18,8 @@ const TRAINING = true;
 const pages = [
   {
     path: '/', nav: 'Home', h1: SITE, title: `${SITE}: website design and build`,
-    description: 'Unremarkable designs and builds websites that impress everyone who meets them: by eye, by screen reader, by braille or by agent.',
-    llms: 'What Unremarkable is, its one rule, how it builds, and the sites it has made.',
+    description: 'Unremarkable designs, builds and looks after websites for the people who use them and the agents they send, tested by ear, owned by you, and changed by intention-based publishing.',
+    llms: 'What Unremarkable offers, its one rule, how it builds, intention-based publishing, and its own sites.',
     body: () => read('src/home.html'), type: 'WebSite',
   },
   {

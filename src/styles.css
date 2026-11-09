@@ -84,6 +84,7 @@ h2::before { content: ""; display: block; width: 3rem; height: 4px; background: 
 .rule-statement { font-family: var(--display); font-size: clamp(1.6rem, 4.2vw, 3.1rem); line-height: 1.15; margin: 0 0 1.5rem; max-width: 24ch; }
 .rule p:last-child { max-width: 60ch; margin-bottom: 0; }
 .start-panel .rule-statement { margin-bottom: 2rem; }
+.start-panel .belief { max-width: 60ch; margin: 0 0 1.5rem; }
 .start-panel p:not(.rule-statement) { margin: 0 0 0.75rem; font-size: 1.25rem; }
 
 .intro { max-width: 60ch; margin: 1.5rem 0 0; }
