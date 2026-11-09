@@ -22,7 +22,7 @@ You tell us what people come to you to do. We build the website that lets them d
 4. **Tested by ear.** Before it goes live, the site is tested with a screen reader by someone who uses one every day, and it gets an accessibility statement that says what was checked and when.
 5. **Live, and handed over.** The site goes live with a short handover note: how it is published, where reports go, and how to remove us as a member if you ever want to.
 
-## After launch: you say what you want
+## Intention-based publishing
 
 You say what you want. Agents do the work. You decide what goes live.
 
