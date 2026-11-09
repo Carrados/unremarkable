@@ -12,7 +12,7 @@ Websites for the people who use them, and the agents they send.
 
 People come to your website to do something: find an answer, choose a service, book a place. Increasingly, they send an agent to do it for them. We design, build and look after websites for both.
 
-We start with your organisation and what people come to you to achieve. Then we build a distinctive site that makes your offer clear and helps them get things done, however they arrive. Every site is tested by ear, by someone who uses a screen reader every day.
+We start with your organisation and what people come to you to achieve. Then we build a distinctive site that makes your offer clear and helps them get things done, however they arrive. Every design is tested by ear, by someone who uses a screen reader every day.
 
 ## The rule
 
@@ -22,7 +22,7 @@ Every site we make has to impress everyone who meets it, whether they see it, he
 
 ## How we build
 
-- **Built for people who hear the web.** Not run through a checker and declared done: listened to, page by page, before it goes live, and again every month after.
+- **Built for people who hear the web.** Not run through a checker and declared done. Every kind of page in your design is listened to before it goes live, every change is made within that design, and the design is heard again every month.
 - **Built for the agents people send.** Every page has a Markdown version, and every site has an llms.txt, so an AI agent sent by a person gets what that person would, from the menu to the footer.
 - **Built to a standard.** Our sites are built to [Zero Information Casualty v1.7](https://zeroinformationcasualty.org/): nothing published is lost on its way to any reader.
 - **No plugins to patch.** Plain pages served fast from the edge on Cloudflare: no plugins to update, no database to break into, and not a line of JavaScript needed to read a word.
@@ -79,7 +79,7 @@ You tell us what people come to you to do. We build the website that lets them d
 1. **A conversation.** What you offer, who comes to you and what they are trying to get done: book a place, find an answer, choose a service. That understanding shapes everything else.
 2. **Your accounts, in your name.** We help you open a Cloudflare account for hosting and a GitHub organisation for the code, and register the domain to you. You add us as a member of each. For email and files we recommend Google Workspace and set it up for you, including the records that keep your email out of spam. If you already use Microsoft 365, that works too.
 3. **Design and build.** A design made for you, not a theme. You see each version on a private preview address, and you can listen to it as well as look at it.
-4. **Tested by ear.** Before it goes live, the site is tested with a screen reader by someone who uses one every day, and it gets an accessibility statement that says what was checked and when.
+4. **Tested by ear.** Before it goes live, every kind of page in the design is tested with a screen reader by someone who uses one every day, and the site gets an accessibility statement that says what was checked and when.
 5. **Live, and handed over.** The site goes live with a handover note: how it is published, where reports go, how to remove us as a member, and instructions another developer or an AI agent could follow to look after it without us.
 
 ## Intention-based publishing
@@ -95,6 +95,8 @@ There is no editor and no content management system to learn. Your website is ch
 Fixing works the same way. Visitors get their own link, "Fix something on this page", for anything that stops them, whether they read by eye, by screen reader, by braille or by agent. The fix is made on a private copy, the person who found the problem tries it the way they found it, and when it works for them, you publish it. A person reads every report, and every fix leaves a test behind, so the same problem can't quietly come back.
 
 Our publishing agent, built on Claude, turns what you send into a proposed change. We build and run that process, handle anything that goes wrong, and stand behind every change it makes.
+
+Every change is made within the design you agreed, and that design has already been heard. Automated checks run on every change, and the receipt sets out anything the agent wrote itself, such as a picture's description, so you can check it. A new kind of page is heard before it goes live, and the whole design is heard again every month.
 
 No editor also means nothing for a screen reader to stumble over. If you can write an email, you can run your website.
 
@@ -138,7 +140,7 @@ The price depends on how many kinds of page your site needs, not how many pages 
 ## Looking after it
 
 - **Price:** £75 a month, cancel with a month's notice
-- **Includes:** changes to your content and pages within the agreed design, sent to your in-tray; every visitor report from "Fix something on this page"; keeping the build script, forms and agent files up to date; and a check by ear each month
+- **Includes:** changes to your content and pages within the agreed design, sent to your in-tray; every visitor report from "Fix something on this page"; keeping the build script, forms and agent files up to date; and the whole design heard again by ear each month
 - **Turnaround:** content changes made within two working days, and work started within one working day on anything that stops a visitor
 - **Not included:** new features, such as a booking system, and redesigns, which are priced before any work starts
 

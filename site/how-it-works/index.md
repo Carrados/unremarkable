@@ -19,7 +19,7 @@ You tell us what people come to you to do. We build the website that lets them d
 1. **A conversation.** What you offer, who comes to you and what they are trying to get done: book a place, find an answer, choose a service. That understanding shapes everything else.
 2. **Your accounts, in your name.** We help you open a Cloudflare account for hosting and a GitHub organisation for the code, and register the domain to you. You add us as a member of each. For email and files we recommend Google Workspace and set it up for you, including the records that keep your email out of spam. If you already use Microsoft 365, that works too.
 3. **Design and build.** A design made for you, not a theme. You see each version on a private preview address, and you can listen to it as well as look at it.
-4. **Tested by ear.** Before it goes live, the site is tested with a screen reader by someone who uses one every day, and it gets an accessibility statement that says what was checked and when.
+4. **Tested by ear.** Before it goes live, every kind of page in the design is tested with a screen reader by someone who uses one every day, and the site gets an accessibility statement that says what was checked and when.
 5. **Live, and handed over.** The site goes live with a handover note: how it is published, where reports go, how to remove us as a member, and instructions another developer or an AI agent could follow to look after it without us.
 
 ## Intention-based publishing
@@ -35,6 +35,8 @@ There is no editor and no content management system to learn. Your website is ch
 Fixing works the same way. Visitors get their own link, "Fix something on this page", for anything that stops them, whether they read by eye, by screen reader, by braille or by agent. The fix is made on a private copy, the person who found the problem tries it the way they found it, and when it works for them, you publish it. A person reads every report, and every fix leaves a test behind, so the same problem can't quietly come back.
 
 Our publishing agent, built on Claude, turns what you send into a proposed change. We build and run that process, handle anything that goes wrong, and stand behind every change it makes.
+
+Every change is made within the design you agreed, and that design has already been heard. Automated checks run on every change, and the receipt sets out anything the agent wrote itself, such as a picture's description, so you can check it. A new kind of page is heard before it goes live, and the whole design is heard again every month.
 
 No editor also means nothing for a screen reader to stumble over. If you can write an email, you can run your website.
 

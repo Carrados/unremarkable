@@ -16,7 +16,7 @@ Websites for the people who use them, and the agents they send.
 
 People come to your website to do something: find an answer, choose a service, book a place. Increasingly, they send an agent to do it for them. We design, build and look after websites for both.
 
-We start with your organisation and what people come to you to achieve. Then we build a distinctive site that makes your offer clear and helps them get things done, however they arrive. Every site is tested by ear, by someone who uses a screen reader every day.
+We start with your organisation and what people come to you to achieve. Then we build a distinctive site that makes your offer clear and helps them get things done, however they arrive. Every design is tested by ear, by someone who uses a screen reader every day.
 
 ## The rule
 
@@ -26,7 +26,7 @@ Every site we make has to impress everyone who meets it, whether they see it, he
 
 ## How we build
 
-- **Built for people who hear the web.** Not run through a checker and declared done: listened to, page by page, before it goes live, and again every month after.
+- **Built for people who hear the web.** Not run through a checker and declared done. Every kind of page in your design is listened to before it goes live, every change is made within that design, and the design is heard again every month.
 - **Built for the agents people send.** Every page has a Markdown version, and every site has an llms.txt, so an AI agent sent by a person gets what that person would, from the menu to the footer.
 - **Built to a standard.** Our sites are built to [Zero Information Casualty v1.7](https://zeroinformationcasualty.org/): nothing published is lost on its way to any reader.
 - **No plugins to patch.** Plain pages served fast from the edge on Cloudflare: no plugins to update, no database to break into, and not a line of JavaScript needed to read a word.
