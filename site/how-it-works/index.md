@@ -22,15 +22,23 @@ You tell us what people come to you to do. We build the website that lets them d
 4. **Tested by ear.** Before it goes live, the site is tested with a screen reader by someone who uses one every day, and it gets an accessibility statement that says what was checked and when.
 5. **Live, and handed over.** The site goes live with a short handover note: how it is published, where reports go, and how to remove us as a member if you ever want to.
 
-## After launch: tell it what you want
+## After launch: you say what you want
 
-You don't edit your website. You tell it what you want, and it's done.
+You say what you want. Agents do the work. You decide what goes live.
 
-Every page of your site has a link only you and your team use, "Change something on this page". Write what you want in your own words: the opening hours are wrong, add the June event, say more about the new service. We make the change and email you a link to see it. Reply to approve it, and it goes live.
+There is no editor and no content management system to learn. Your website is changed the way you would ask a person to change it, and an AI agent, Claude, does the work.
 
-Visitors get their own link, "Fix something on this page", for anything that stops them, whether they read by eye, by screen reader, by braille or by agent. A person reads every report.
+1. **Say what you want.** Every page of your site has a link only you and your team use, "Change something on this page". Write what you want in your own words: the opening hours are wrong, add the June event, say more about the new service.
+2. **See it on your own site.** The change is made on a private copy of your site, and you get a link to it. Open it on your own phone or computer, with your own screen reader or magnifier if you use one: the way your visitors will meet it, not a preview in somebody else's tool.
+3. **Publish, or change it again.** If it's right, publish it, and it's live. If it isn't, say what's still wrong, and it goes round again. Nothing reaches your visitors until you say so.
+
+Fixing works the same way. Visitors get their own link, "Fix something on this page", for anything that stops them, whether they read by eye, by screen reader, by braille or by agent. The fix is made on a private copy, the person who found the problem tries it the way they found it, and when it works for them, you publish it. A person reads every report, and every fix leaves a test behind, so the same problem can't quietly come back.
+
+No editor also means nothing for a screen reader to stumble over. If you can write an email, you can run your website.
 
 Things that change often, such as events, news and opening times, can live in a Google Sheet that your site reads when it is published. You edit something you already know how to use.
+
+[How the loop was designed: Works For Me, on blind-ant.com](https://blind-ant.com/pieces/works-for-me/)
 
 ## You own everything
 
