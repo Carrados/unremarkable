@@ -111,6 +111,25 @@ ${main}
 `;
 }
 
+// The menu and footer, as Markdown, for each page's Markdown version.
+const navMarkdown = (current) => 'Menu:\n\n' + [...listed]
+  .sort((a, b) => (b.path === '/accessibility/') - (a.path === '/accessibility/'))
+  .map(p => `- [${p.nav}](${ORIGIN}${p.path})${p.path === current ? ' (this page)' : ''}`).join('\n');
+
+const footerMarkdown = (p) => `
+---
+
+This site is Unremarkable
+
+[Fix something on this page](${ORIGIN}/fix/?page=${encodeURIComponent(ORIGIN + p.path)})
+
+Licensed under [${LICENCE_NAME.replace(/ \(.*\)$/, '')}](${LICENCE_URL})
+
+Built to [Zero Information Casualty v1.7](${ZIC_URL})
+
+For agents: [llms.txt](${ORIGIN}/llms.txt)
+`;
+
 // A small HTML-to-Markdown converter for the hand-written pages in src/.
 // It covers exactly the elements those pages use: h2, h3, p, ul/li, a, strong, em, section.
 function toMarkdown(html) {
@@ -163,7 +182,10 @@ for (const p of pages) {
   write(`${p.path}index.html`, layout(p, main));
   if (p.hidden) continue;
   const md = `# ${p.h1}\n\nCanonical page: ${ORIGIN}${p.path}\n\n${toMarkdown(main)}\n`;
-  write(`${p.path}index.md`, md);
+  // The page's own Markdown carries the menu and footer too, so an agent gets
+  // what the person gets, the fix link and the licence included.
+  // llms-full.txt keeps just the content, so they aren't repeated for every page.
+  write(`${p.path}index.md`, `# ${p.h1}\n\nCanonical page: ${ORIGIN}${p.path}\n\n${navMarkdown(p.path)}\n\n${toMarkdown(main)}\n${footerMarkdown(p)}`);
   mirrors.push(md);
 }
 

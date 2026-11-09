@@ -2,6 +2,11 @@
 
 Canonical page: https://unremarkable.me/accessibility/
 
+Menu:
+
+- [Accessibility statement](https://unremarkable.me/accessibility/) (this page)
+- [Home](https://unremarkable.me/)
+
 An accessibility statement is where most sites admit what they couldn't manage. Ours is built to [Zero Information Casualty version 1.7](https://zeroinformationcasualty.org/), so that nobody, whether reading directly, using assistive technology or sending an agent, loses access to anything published here.
 
 ## How it is built
@@ -36,3 +41,15 @@ The form doesn't ask who you are. We keep what you write, the page's address, ho
 Agents acting for a person are welcome on every public page. There is a summary for agents at [llms.txt](https://unremarkable.me/llms.txt), the full text of the site in one file at [llms-full.txt](https://unremarkable.me/llms-full.txt), and a Markdown version of every page alongside it. All of them are generated from the pages you are reading when the site is built, not maintained by hand.
 
 The site's permissions for search indexing and model training are declared separately in its [robots.txt file](https://unremarkable.me/robots.txt).
+
+---
+
+This site is Unremarkable
+
+[Fix something on this page](https://unremarkable.me/fix/?page=https%3A%2F%2Funremarkable.me%2Faccessibility%2F)
+
+Licensed under [Creative Commons Attribution-ShareAlike 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+
+Built to [Zero Information Casualty v1.7](https://zeroinformationcasualty.org/)
+
+For agents: [llms.txt](https://unremarkable.me/llms.txt)
