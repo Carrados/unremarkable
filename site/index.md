@@ -29,7 +29,7 @@ Every site we make has to impress everyone who meets it, whether they see it, he
 - **Built to a standard.** Our sites are built to [Zero Information Casualty v1.7](https://zeroinformationcasualty.org/): nothing published is lost on its way to any reader.
 - **No plugins to patch.** Plain pages served fast from the edge: no plugins to update, no database to break into, and not a line of JavaScript needed to read a word.
 - **Yours, all of it.** The site, its code, the hosting and the domain sit in your accounts. We work inside them, and you can show us out.
-- **A website that listens.** You don't edit your website. You tell it what you want, and it's done.
+- **A website that listens.** No editor to learn. You say what you want, see it on your own site, and publish it, or change it again.
 
 [How it works](https://unremarkable.me/how-it-works/)
 
