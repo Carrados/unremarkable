@@ -22,7 +22,7 @@ The finished site is written to `site/`. It is built to Zero Information Casualt
 
 ## Where things live
 
-- `src/*.html`: the pages, written by hand: home, how it works, prices, start (the enquiry form) and its sent page, the accessibility statement, as if, and the fix form and its sent page. Add a site to "The work" in `src/home.html`.
+- `src/*.html`: the pages, written by hand: home, how it works, prices, start (the enquiry form) and its sent page, the accessibility statement, as if, and the fix form and its sent page. Add a site to "Our work" in `src/home.html`.
 - `fix/worker.js`: the Worker for the two forms. `/fix/` saves reports to D1; `/start/` checks an enquiry and keeps nothing.
 - `src/styles.css`: the one stylesheet, with light, dark, high-contrast and forced-colours handling.
 - `build.mjs`: the page list, layout, Markdown mirrors, llms.txt, robots.txt and sitemap. The search and training declarations are the `SEARCH` and `TRAINING` settings near the top.

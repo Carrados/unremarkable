@@ -14,7 +14,7 @@ Menu:
 
 This site is written as if Unremarkable were a business. It isn't one yet.
 
-Unremarkable is real: it is the name at the foot of every site listed under "The work" on the home page, and those sites are real. What isn't real yet is the business those pages describe, a studio that designs, builds and looks after websites for organisations. This site works that business out by building it properly before it exists. That is design fiction, and this page is its standard.
+Unremarkable is real: it is the name at the foot of every site listed under "Our work" on the home page, and those sites are real. What isn't real yet is the business those pages describe, a studio that designs, builds and looks after websites for organisations. This site works that business out by building it properly before it exists. That is design fiction, and this page is its standard.
 
 ## The As If standard
 
@@ -25,7 +25,7 @@ Unremarkable is real: it is the name at the foot of every site listed under "The
 
 ## What is real here
 
-- The sites listed under "The work" on the home page, each built to Zero Information Casualty and tested with a screen reader.
+- The sites listed under "Our work" on the home page, each built to Zero Information Casualty and tested with a screen reader.
 - The "Fix something on this page" link on every page. A person reads every report, and fixes go live.
 - The accessibility statement, which describes this site as it actually is.
 
