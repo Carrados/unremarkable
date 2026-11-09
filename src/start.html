@@ -1,0 +1,43 @@
+<p class="lede">Tell us what people come to you to do. That is where we start.</p>
+{{ERROR}}
+<div class="before-you-send">
+<h2 id="before-you-send">Before you send</h2>
+<p>Unremarkable isn't taking work yet, and this form keeps nothing. When you send it, what you wrote is checked and then thrown away, and you'll see what would happen next. Nobody will reply.</p>
+</div>
+
+<form class="fix-form" method="post" action="/start/">
+<div class="field">
+<label for="name">Your name</label>
+<input type="text" id="name" name="name" value="{{NAME}}" required maxlength="200" autocomplete="name">
+</div>
+
+<div class="field">
+<label for="organisation">Your organisation</label>
+<input type="text" id="organisation" name="organisation" value="{{ORGANISATION}}" required maxlength="200" autocomplete="organization">
+</div>
+
+<div class="field">
+<label for="email">Your email address</label>
+<p class="hint" id="email-hint">Only so we could reply. Here, it isn't kept.</p>
+<input type="email" id="email" name="email" value="{{EMAIL}}" required maxlength="320" autocomplete="email" aria-describedby="email-hint">
+</div>
+
+<div class="field">
+<label for="what">What do people come to you to do?</label>
+<p class="hint" id="what-hint">For example, "book a place on a course", "find out if we can help", "choose a holiday cottage".</p>
+<textarea id="what" name="what" rows="6" required maxlength="5000" aria-describedby="what-hint">{{WHAT}}</textarea>
+</div>
+
+<div class="field">
+<label for="more">Anything else we should know? <span class="optional">(optional)</span></label>
+<p class="hint" id="more-hint">Your current website, if you have one, or a date you need to be live by.</p>
+<textarea id="more" name="more" rows="3" maxlength="2000" aria-describedby="more-hint">{{MORE}}</textarea>
+</div>
+
+<div class="hp" aria-hidden="true">
+<label for="website">Leave this empty</label>
+<input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+</div>
+
+<p><button type="submit">Send</button></p>
+</form>

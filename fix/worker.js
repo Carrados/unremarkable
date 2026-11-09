@@ -101,9 +101,52 @@ async function showSent(request, env) {
   return html(t.replace('{{BACK}}', back));
 }
 
+// The Start form, under the As If standard (src/as-if.html): Unremarkable isn't trading yet,
+// so what is written is checked and thrown away. Nothing is stored or sent.
+const START_LIMITS = { name: 200, organisation: 200, email: 320, what: 5000, more: 2000 };
+
+function fillStart(t, v, error) {
+  let out = t;
+  for (const k of Object.keys(START_LIMITS)) out = out.replace(`{{${k.toUpperCase()}}}`, esc(v[k]));
+  if (error) {
+    return out
+      .replace('<title>', '<title>Error: ')
+      .replace('{{ERROR}}', `<div class="error" role="alert"><h2 class="error-title">There's a problem</h2><p>${esc(error)}</p></div>`);
+  }
+  return out.replace('{{ERROR}}', '');
+}
+
+async function showStart(request, env) {
+  const t = await template(env, request, '/start/');
+  return new Response(fillStart(t, {}), { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+}
+
+async function checkStart(request, env) {
+  const form = await request.formData();
+  const get = k => String(form.get(k) || '').trim().slice(0, START_LIMITS[k] || 200);
+  const v = Object.fromEntries(Object.keys(START_LIMITS).map(k => [k, get(k)]));
+  const sent = new URL('/start/sent/', request.url);
+  if (String(form.get('website') || '').trim()) return Response.redirect(sent, 303);
+  let error = '';
+  if (!v.name) error = 'Please give your name.';
+  else if (!v.organisation) error = 'Please give the name of your organisation.';
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.email)) error = 'Please give an email address, like name@example.org.';
+  else if (!v.what) error = 'Please say what people come to you to do.';
+  if (error) return html(fillStart(await template(env, request, '/start/'), v, error), 400);
+  // Checked, and now thrown away: nothing is stored or sent.
+  return Response.redirect(sent, 303);
+}
+
 export default {
   async fetch(request, env) {
     const { pathname } = new URL(request.url);
+    if (pathname === '/start') return Response.redirect(new URL('/start/', request.url), 301);
+    if (pathname === '/start/') {
+      if (request.method === 'POST') return checkStart(request, env);
+      if (request.method === 'GET' || request.method === 'HEAD') return showStart(request, env);
+      return new Response('Method not allowed', { status: 405, headers: { Allow: 'GET, HEAD, POST' } });
+    }
+    if (pathname === '/start/index.html') return Response.redirect(new URL('/start/', request.url), 302);
     if (pathname === '/fix') return Response.redirect(new URL('/fix/' + new URL(request.url).search, request.url), 301);
     if (pathname === '/fix/') {
       if (request.method === 'POST') return saveReport(request, env);

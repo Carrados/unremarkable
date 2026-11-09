@@ -2,12 +2,19 @@
 
 Canonical page: https://unremarkable.me/
 
+> **Design fiction.** Unremarkable is written as if it were a business. It isn't taking work yet. What that means: https://unremarkable.me/as-if/
+
 Menu:
 
 - [Accessibility statement](https://unremarkable.me/accessibility/)
 - [Home](https://unremarkable.me/) (this page)
+- [How it works](https://unremarkable.me/how-it-works/)
+- [Prices](https://unremarkable.me/prices/)
+- [Start](https://unremarkable.me/start/)
 
-We design and build websites that sound as good as they look.
+Websites that work for the people who use them, and for the agents they send.
+
+People come to your website to do something: find an answer, choose a service, book a place. Increasingly, they send an agent to do it for them. We design, build and look after websites for both.
 
 ## The rule
 
@@ -18,9 +25,13 @@ Every site we make has to impress everyone who meets it, whether they see it, he
 ## How we build
 
 - **Built for people who hear the web.** Every site is tested with a screen reader by someone who uses one every day, not run through a checker and declared done.
-- **Built for the agents people send.** Every page has a Markdown twin, and every site has an llms.txt, so an AI agent sent by a person gets exactly what that person would.
+- **Built for the agents people send.** Every page has a Markdown version, and every site has an llms.txt, so an AI agent sent by a person gets what that person would, from the menu to the footer.
 - **Built to a standard.** Our sites are built to [Zero Information Casualty v1.7](https://zeroinformationcasualty.org/): nothing published is lost on its way to any reader.
-- **Built to last.** Static pages, served fast from the edge, readable without a single line of JavaScript.
+- **Nothing to patch.** Plain pages served fast from the edge: no plugins to update, no database to break into, and not a line of JavaScript needed to read a word.
+- **Yours, all of it.** The site, its code, the hosting and the domain sit in your accounts. We work inside them, and you can show us out.
+- **A website that listens.** You don't edit your website. You tell it what you want, and it's done.
+
+[How it works](https://unremarkable.me/how-it-works/)
 
 ## The work
 
@@ -33,6 +44,14 @@ Every site we make has to impress everyone who meets it, whether they see it, he
 ## This site is Unremarkable
 
 When you find those four words at the foot of a page, the site is ours. Hold it to the rule. Below them is a link, "Fix something on this page". Use it, and a person will fix it.
+
+## Start here
+
+Tell us what people come to you to do. That is where we start.
+
+[Start a website](https://unremarkable.me/start/)
+
+[See the prices](https://unremarkable.me/prices/)
 
 ---
 

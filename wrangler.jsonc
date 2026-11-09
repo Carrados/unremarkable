@@ -10,7 +10,7 @@
     "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "none",
-    "run_worker_first": ["/fix", "/fix/*"]
+    "run_worker_first": ["/fix", "/fix/*", "/start", "/start/*"]
   },
   "d1_databases": [
     {
