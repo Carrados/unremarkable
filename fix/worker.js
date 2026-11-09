@@ -10,7 +10,7 @@ const LIMITS = { page: 500, what: 5000, expected: 2000, setup: 300, ua: 500 };
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 // Only pages on sites Unremarkable built are accepted as the reported page.
-const SITES = ['unremarkable.me', 'carrados.com', 'charli.info', 'zeroinformationcasualty.org', 'blind-ant.com', 'aegisdynamics.blind-ant.com', 'charli-jo.com'];
+const SITES = ['unremarkable.me', 'carrados.com', 'charli.info', 'zeroinformationcasualty.org', 'blind-ant.com', 'aegisdynamics.blind-ant.com', 'charli-jo.com', 'tka.unremarkable.me'];
 function pageUrl(raw) {
   try {
     const u = new URL(String(raw || '').trim().slice(0, LIMITS.page));
