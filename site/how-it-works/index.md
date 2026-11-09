@@ -20,7 +20,7 @@ You tell us what people come to you to do. We build the website that lets them d
 2. **Your accounts, in your name.** We help you open a Cloudflare account for hosting and a GitHub organisation for the code, and register the domain to you. You add us as a member of each. For email and files we recommend Google Workspace and set it up for you, including the records that keep your email out of spam. If you already use Microsoft 365, that works too.
 3. **Design and build.** A design made for you, not a theme. You see each version on a private preview address, and you can listen to it as well as look at it.
 4. **Tested by ear.** Before it goes live, the site is tested with a screen reader by someone who uses one every day, and it gets an accessibility statement that says what was checked and when.
-5. **Live, and handed over.** The site goes live with a short handover note: how it is published, where reports go, and how to remove us as a member if you ever want to.
+5. **Live, and handed over.** The site goes live with a handover note: how it is published, where reports go, how to remove us as a member, and instructions another developer or an AI agent could follow to look after it without us.
 
 ## Intention-based publishing
 

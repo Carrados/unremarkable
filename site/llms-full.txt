@@ -66,7 +66,7 @@ You tell us what people come to you to do. We build the website that lets them d
 2. **Your accounts, in your name.** We help you open a Cloudflare account for hosting and a GitHub organisation for the code, and register the domain to you. You add us as a member of each. For email and files we recommend Google Workspace and set it up for you, including the records that keep your email out of spam. If you already use Microsoft 365, that works too.
 3. **Design and build.** A design made for you, not a theme. You see each version on a private preview address, and you can listen to it as well as look at it.
 4. **Tested by ear.** Before it goes live, the site is tested with a screen reader by someone who uses one every day, and it gets an accessibility statement that says what was checked and when.
-5. **Live, and handed over.** The site goes live with a short handover note: how it is published, where reports go, and how to remove us as a member if you ever want to.
+5. **Live, and handed over.** The site goes live with a handover note: how it is published, where reports go, how to remove us as a member, and instructions another developer or an AI agent could follow to look after it without us.
 
 ## Intention-based publishing
 
@@ -126,7 +126,15 @@ The price depends on how many kinds of page your site needs, not how many pages 
 
 Most fixes are made the same day. Some causes sit outside the site, with a browser, a screen reader or a provider, and then we tell you what we found and what we are doing about it.
 
-If you stop, the site keeps running. It is in your accounts, and it doesn't need us to stay up.
+## If you leave
+
+You own the website. The monthly price pays for the service that changes and looks after it. So when you stop:
+
+- Your site stays live. It is in your accounts, and it doesn't need us to stay up.
+- We stop watching your in-tray, and changes stop being made for you.
+- You keep the complete repository, with written instructions that another developer, or an AI agent you trust, can follow to change and publish it.
+- We take our "Fix something on this page" link off your pages, or hand its reports over to whoever looks after the site next.
+- We remove ourselves as members of your accounts, and tell you when it's done.
 
 ## Running costs, paid by you
 
