@@ -105,6 +105,9 @@ const asIfMarkdown = AS_IF ? `> **Design fiction.** ${AS_IF_TEXT} What that mean
 // The wordmark as live text: a screen reader reads one word, "Unremarkable".
 const WORDMARK = '<span class="wm"><span class="wm-un">Un</span>remarkable</span>';
 
+// Security headers. The site runs no JavaScript, so the policy allows none. fix/worker.js sends the same policy.
+const CSP = "default-src 'self'; script-src 'none'; style-src 'self'; img-src 'self' data:; font-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'";
+
 function read(p) { return readFileSync(p, 'utf8'); }
 
 // Accessibility always comes first in the menu, on every site Unremarkable builds.
@@ -159,7 +162,7 @@ ${navHtml(p.path)}
 ${asIfHtml}${main}
 </main>
 <footer>
-<p class="credit">This site is Unremarkable${p.hidden ? '' : `<br>\n<a href="/fix/?page=${encodeURIComponent(url)}">Fix something on this page</a>`}</p>
+<p class="credit">This site is Unremarkable${p.path.startsWith('/fix/') || p.path === '/404/' ? '' : `<br>\n<a href="/fix/?page=${encodeURIComponent(url)}">Fix something on this page</a>`}</p>
 <p>Licensed under <a href="${LICENCE_URL}">Creative Commons Attribution-ShareAlike 4.0</a></p>
 <p>Built to <a href="${ZIC_URL}">Zero Information Casualty v1.7</a></p>
 <p>For agents: <a href="/llms.txt">llms.txt</a></p>
@@ -226,7 +229,13 @@ for (const f of readdirSync('src/fonts')) write(`fonts/${f}`, readFileSync(join(
 for (const f of readdirSync('brand').filter(f => f.endsWith('.svg'))) write(`brand/${f}`, readFileSync(join('brand', f)));
 copyFileSync('brand/favicon.svg', join(OUT, 'favicon.svg'));
 // Cloudflare static asset headers: serve the agent surface with honest content types.
-write('_headers', `/*.md
+write('_headers', `/*
+  Strict-Transport-Security: max-age=31536000
+  Content-Security-Policy: ${CSP}
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+/*.md
   Content-Type: text/markdown; charset=utf-8
 /llms.txt
   Content-Type: text/plain; charset=utf-8
