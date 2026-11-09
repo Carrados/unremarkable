@@ -31,7 +31,15 @@ The price depends on how many kinds of page your site needs, not how many pages 
 
 Most fixes are made the same day. Some causes sit outside the site, with a browser, a screen reader or a provider, and then we tell you what we found and what we are doing about it.
 
-If you stop, the site keeps running. It is in your accounts, and it doesn't need us to stay up.
+## If you leave
+
+You own the website. The monthly price pays for the service that changes and looks after it. So when you stop:
+
+- Your site stays live. It is in your accounts, and it doesn't need us to stay up.
+- We stop watching your in-tray, and changes stop being made for you.
+- You keep the complete repository, with written instructions that another developer, or an AI agent you trust, can follow to change and publish it.
+- We take our "Fix something on this page" link off your pages, or hand its reports over to whoever looks after the site next.
+- We remove ourselves as members of your accounts, and tell you when it's done.
 
 ## Running costs, paid by you
 
