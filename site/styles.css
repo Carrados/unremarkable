@@ -98,11 +98,12 @@ main p, main li { max-width: 62ch; }
 .work-line { color: var(--muted); }
 
 footer { border-top: 1px solid var(--rule); padding-top: 2rem; padding-bottom: 3rem; color: var(--muted); font-size: 1rem; }
-footer p { margin: 0 0 0.6rem; max-width: 70ch; }
+/* Footer lines are labels, not prose: short groups with no full stop after a link, so VoiceOver on iPhone has no lone "period" to stop on. */
+footer p { margin: 0 0 1rem; max-width: 70ch; }
 footer .credit { font-family: var(--display); font-size: 1.25rem; color: var(--ink); }
 
 /* The bug-report form. */
-footer .credit a { font-family: var(--text); font-size: 1.125rem; margin-left: 0.5rem; white-space: nowrap; }
+footer .credit a { font-family: var(--text); font-size: 1.125rem; white-space: nowrap; }
 .fix-form { max-width: 40rem; margin-top: 2.5rem; }
 .field { margin: 0 0 2rem; }
 fieldset.field { border: 0; padding: 0; }
