@@ -22,13 +22,13 @@ You tell us what people come to you to do. We build the website that lets them d
 4. **Tested by ear.** Before it goes live, the site is tested with a screen reader by someone who uses one every day, and it gets an accessibility statement that says what was checked and when.
 5. **Live, and handed over.** The site goes live with a short handover note: how it is published, where reports go, and how to remove us as a member if you ever want to.
 
-## After launch: you say what you want
+## Intention-based publishing
 
 You say what you want. Agents do the work. You decide what goes live.
 
 There is no editor and no content management system to learn. Your website is changed the way you would ask a person to change it, and an AI agent, Claude, does the work.
 
-1. **Say what you want.** Every page of your site has a link only you and your team use, "Change something on this page". Write what you want in your own words: the opening hours are wrong, add the June event, say more about the new service.
+1. **Say what you want.** Put it in your in-tray: a shared folder in your own Google Drive, or one email address. Write it in your own words, or drop in what you already have, a flyer, a document, the photos from the event: the opening hours are wrong, add the June event, put this on the services page.
 2. **See it on your own site.** The change is made on a private copy of your site, and you get a link to it. Open it on your own phone or computer, with your own screen reader or magnifier if you use one: the way your visitors will meet it, not a preview in somebody else's tool.
 3. **Publish, or change it again.** If it's right, publish it, and it's live. If it isn't, say what's still wrong, and it goes round again. Nothing reaches your visitors until you say so.
 

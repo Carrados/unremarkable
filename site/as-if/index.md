@@ -33,7 +33,7 @@ Unremarkable is real: it is the name at the foot of every site listed under "Our
 
 - The prices and the terms. They are worked out with care, but nobody can buy them.
 - The "Start" form. It works, checks what you write and shows you what would happen next, but it keeps nothing and sends nothing.
-- The "Change something" form for site owners, described under How it works. It is designed, not built.
+- The automatic in-tray for site owners, described under How it works. This studio's own sites are already changed this way, by putting things in an in-tray for a conversation with Claude; the version that runs on its own is designed, not built.
 
 ## When it becomes real
 
