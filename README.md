@@ -21,7 +21,7 @@ The finished site is written to `site/`. It is built to Zero Information Casualt
 - `src/home.html` and `src/accessibility.html`: the pages, written by hand. Add a site to "The work" in `src/home.html`.
 - `src/styles.css`: the one stylesheet, with light, dark, high-contrast and forced-colours handling.
 - `build.mjs`: the page list, layout, Markdown mirrors, llms.txt, robots.txt and sitemap. The search and training declarations are the `SEARCH` and `TRAINING` settings near the top.
-- `wrangler.jsonc`: Cloudflare Workers deployment. Cloudflare serves the `site/` folder as it is in the repo, so run the build and commit `site/` before pushing.
+- `wrangler.jsonc`: Cloudflare Workers deployment. Publishing is Cloudflare Workers Builds from GitHub, like the other sites (since 9 November 2026): merging to `main` runs `node build.mjs` and then `npx wrangler deploy` on Cloudflare (Worker `unremarkable`, trigger "unremarkable main", previews off). Still run the build and commit `site/`, so the repo matches the live site. `npx wrangler deploy` from the laptop is an emergency fallback only.
 
 ## The wordmark
 
