@@ -24,15 +24,17 @@ You tell us what people come to you to do. We build the website that lets them d
 
 ## Intention-based publishing
 
-You say what you want. Agents do the work. You decide what goes live.
+Tell us what you want. We prepare it on a private copy of your site. You decide what goes live.
 
-There is no editor and no content management system to learn. Your website is changed the way you would ask a person to change it, and an AI agent, Claude, does the work.
+There is no editor and no content management system to learn. Your website is changed the way you would ask a person to change it.
 
 1. **Say what you want.** Put it in your in-tray: a shared folder in your own Google Drive, or one email address. Write it in your own words, or drop in what you already have, a flyer, a document, the photos from the event: the opening hours are wrong, add the June event, put this on the services page.
-2. **See it on your own site.** The change is made on a private copy of your site, and you get a link to it. Open it on your own phone or computer, with your own screen reader or magnifier if you use one: the way your visitors will meet it, not a preview in somebody else's tool.
+2. **See it on your own site.** We make the change on a private copy of your site and send you a link to it. Open it on your own phone or computer, with your own screen reader or magnifier if you use one: the way your visitors will meet it, not a preview in somebody else's tool.
 3. **Publish, or change it again.** If it's right, publish it, and it's live. If it isn't, say what's still wrong, and it goes round again. Nothing reaches your visitors until you say so.
 
 Fixing works the same way. Visitors get their own link, "Fix something on this page", for anything that stops them, whether they read by eye, by screen reader, by braille or by agent. The fix is made on a private copy, the person who found the problem tries it the way they found it, and when it works for them, you publish it. A person reads every report, and every fix leaves a test behind, so the same problem can't quietly come back.
+
+Our publishing agent, built on Claude, turns what you send into a proposed change. We build and run that process, handle anything that goes wrong, and stand behind every change it makes.
 
 No editor also means nothing for a screen reader to stumble over. If you can write an email, you can run your website.
 
