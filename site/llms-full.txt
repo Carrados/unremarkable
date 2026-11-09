@@ -23,7 +23,7 @@ Every site we make has to impress everyone who meets it, whether they see it, he
 - **Built for people who hear the web.** Every site is tested with a screen reader by someone who uses one every day, not run through a checker and declared done.
 - **Built for the agents people send.** Every page has a Markdown version, and every site has an llms.txt, so an AI agent sent by a person gets what that person would, from the menu to the footer.
 - **Built to a standard.** Our sites are built to [Zero Information Casualty v1.7](https://zeroinformationcasualty.org/): nothing published is lost on its way to any reader.
-- **Nothing to patch.** Plain pages served fast from the edge: no plugins to update, no database to break into, and not a line of JavaScript needed to read a word.
+- **No plugins to patch.** Plain pages served fast from the edge: no plugins to update, no database to break into, and not a line of JavaScript needed to read a word.
 - **Yours, all of it.** The site, its code, the hosting and the domain sit in your accounts. We work inside them, and you can show us out.
 - **A website that listens.** You don't edit your website. You tell it what you want, and it's done.
 
@@ -80,11 +80,11 @@ Things that change often, such as events, news and opening times, can live in a 
 
 ## You own everything
 
-The site, its source code, the hosting account and the domain are all yours, and you pay the running costs directly. We work inside your accounts as a member. There is no platform to be locked into: the site is plain HTML and a short build script, so any developer, or any agent you send, can pick it up.
+The site, its source code, the hosting account and the domain are all yours, and you pay the running costs directly. We work inside your accounts as a member. Your pages are plain HTML and a short build script in your own repository, so any developer, or any agent you send, can pick them up. The forms run on Cloudflare, and would need adapting to move them anywhere else.
 
-## Nothing to patch
+## No plugins to patch
 
-Most of the cost of a website built on a platform comes after launch: plugin updates, security patches and cleaning up after break-ins. Our sites are plain pages served from the edge, with no plugins and no database behind them, so there is nothing to patch and very little that can break.
+Most of the cost of a website built on a platform comes after launch: plugin updates, security patches and cleaning up after break-ins. Our sites are plain pages served from the edge, with no plugins and no database behind them, so there are no plugins to patch and very little that can break. What little code there is, the build script and the forms, we keep up to date as part of looking after your site.
 
 ## What we don't build
 
@@ -112,15 +112,18 @@ The price depends on how many kinds of page your site needs, not how many pages 
 ## Looking after it
 
 - **Price:** £75 a month, cancel with a month's notice
-- **Includes:** every change you ask for with "Change something on this page", every visitor report from "Fix something on this page", keeping your agent files up to date, and a check by ear each month
-- **Turnaround:** changes made within two working days, and anything that stops a visitor fixed within one
+- **Includes:** changes to your content and pages within the agreed design, asked for with "Change something on this page"; every visitor report from "Fix something on this page"; keeping the build script, forms and agent files up to date; and a check by ear each month
+- **Turnaround:** content changes made within two working days, and work started within one working day on anything that stops a visitor
+- **Not included:** new features, such as a booking system, and redesigns, which are priced before any work starts
+
+Most fixes are made the same day. Some causes sit outside the site, with a browser, a screen reader or a provider, and then we tell you what we found and what we are doing about it.
 
 If you stop, the site keeps running. It is in your accounts, and it doesn't need us to stay up.
 
 ## Running costs, paid by you
 
 - **Domain:** usually £10 to £40 a year, depending on the ending
-- **Hosting:** nothing for most sites on Cloudflare's free plan, or about $5 a month on its paid plan for the busiest
+- **Hosting:** nothing for most sites on Cloudflare's free plan, because visits to plain pages aren't charged; about $5 a month on its paid plan if your forms get very busy, and we tell you before you need it
 - **Email and files:** Google Workspace is charged per person per month, and is free for eligible charities through Google for Nonprofits
 
 You pay these to the providers directly. We never mark them up, because we never hold them.

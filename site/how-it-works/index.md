@@ -34,11 +34,11 @@ Things that change often, such as events, news and opening times, can live in a 
 
 ## You own everything
 
-The site, its source code, the hosting account and the domain are all yours, and you pay the running costs directly. We work inside your accounts as a member. There is no platform to be locked into: the site is plain HTML and a short build script, so any developer, or any agent you send, can pick it up.
+The site, its source code, the hosting account and the domain are all yours, and you pay the running costs directly. We work inside your accounts as a member. Your pages are plain HTML and a short build script in your own repository, so any developer, or any agent you send, can pick them up. The forms run on Cloudflare, and would need adapting to move them anywhere else.
 
-## Nothing to patch
+## No plugins to patch
 
-Most of the cost of a website built on a platform comes after launch: plugin updates, security patches and cleaning up after break-ins. Our sites are plain pages served from the edge, with no plugins and no database behind them, so there is nothing to patch and very little that can break.
+Most of the cost of a website built on a platform comes after launch: plugin updates, security patches and cleaning up after break-ins. Our sites are plain pages served from the edge, with no plugins and no database behind them, so there are no plugins to patch and very little that can break. What little code there is, the build script and the forms, we keep up to date as part of looking after your site.
 
 ## What we don't build
 

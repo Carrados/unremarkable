@@ -27,7 +27,7 @@ Every site we make has to impress everyone who meets it, whether they see it, he
 - **Built for people who hear the web.** Every site is tested with a screen reader by someone who uses one every day, not run through a checker and declared done.
 - **Built for the agents people send.** Every page has a Markdown version, and every site has an llms.txt, so an AI agent sent by a person gets what that person would, from the menu to the footer.
 - **Built to a standard.** Our sites are built to [Zero Information Casualty v1.7](https://zeroinformationcasualty.org/): nothing published is lost on its way to any reader.
-- **Nothing to patch.** Plain pages served fast from the edge: no plugins to update, no database to break into, and not a line of JavaScript needed to read a word.
+- **No plugins to patch.** Plain pages served fast from the edge: no plugins to update, no database to break into, and not a line of JavaScript needed to read a word.
 - **Yours, all of it.** The site, its code, the hosting and the domain sit in your accounts. We work inside them, and you can show us out.
 - **A website that listens.** You don't edit your website. You tell it what you want, and it's done.
 
