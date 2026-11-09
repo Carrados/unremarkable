@@ -25,7 +25,7 @@ The price depends on how many kinds of page your site needs, not how many pages 
 ## Looking after it
 
 - **Price:** £75 a month, cancel with a month's notice
-- **Includes:** changes to your content and pages within the agreed design, asked for with "Change something on this page"; every visitor report from "Fix something on this page"; keeping the build script, forms and agent files up to date; and a check by ear each month
+- **Includes:** changes to your content and pages within the agreed design, sent to your in-tray; every visitor report from "Fix something on this page"; keeping the build script, forms and agent files up to date; and a check by ear each month
 - **Turnaround:** content changes made within two working days, and work started within one working day on anything that stops a visitor
 - **Not included:** new features, such as a booking system, and redesigns, which are priced before any work starts
 

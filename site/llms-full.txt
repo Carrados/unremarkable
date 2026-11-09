@@ -74,7 +74,7 @@ You say what you want. Agents do the work. You decide what goes live.
 
 There is no editor and no content management system to learn. Your website is changed the way you would ask a person to change it, and an AI agent, Claude, does the work.
 
-1. **Say what you want.** Every page of your site has a link only you and your team use, "Change something on this page". Write what you want in your own words: the opening hours are wrong, add the June event, say more about the new service.
+1. **Say what you want.** Put it in your in-tray: a shared folder in your own Google Drive, or one email address. Write it in your own words, or drop in what you already have, a flyer, a document, the photos from the event: the opening hours are wrong, add the June event, put this on the services page.
 2. **See it on your own site.** The change is made on a private copy of your site, and you get a link to it. Open it on your own phone or computer, with your own screen reader or magnifier if you use one: the way your visitors will meet it, not a preview in somebody else's tool.
 3. **Publish, or change it again.** If it's right, publish it, and it's live. If it isn't, say what's still wrong, and it goes round again. Nothing reaches your visitors until you say so.
 
@@ -120,7 +120,7 @@ The price depends on how many kinds of page your site needs, not how many pages 
 ## Looking after it
 
 - **Price:** £75 a month, cancel with a month's notice
-- **Includes:** changes to your content and pages within the agreed design, asked for with "Change something on this page"; every visitor report from "Fix something on this page"; keeping the build script, forms and agent files up to date; and a check by ear each month
+- **Includes:** changes to your content and pages within the agreed design, sent to your in-tray; every visitor report from "Fix something on this page"; keeping the build script, forms and agent files up to date; and a check by ear each month
 - **Turnaround:** content changes made within two working days, and work started within one working day on anything that stops a visitor
 - **Not included:** new features, such as a booking system, and redesigns, which are priced before any work starts
 
@@ -246,7 +246,7 @@ Unremarkable is real: it is the name at the foot of every site listed under "Our
 
 - The prices and the terms. They are worked out with care, but nobody can buy them.
 - The "Start" form. It works, checks what you write and shows you what would happen next, but it keeps nothing and sends nothing.
-- The "Change something" form for site owners, described under How it works. It is designed, not built.
+- The automatic in-tray for site owners, described under How it works. This studio's own sites are already changed this way, by putting things in an in-tray for a conversation with Claude; the version that runs on its own is designed, not built.
 
 ## When it becomes real
 
