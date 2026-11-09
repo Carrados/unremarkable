@@ -25,15 +25,18 @@ The price depends on how many kinds of page your site needs, not how many pages 
 ## Looking after it
 
 - **Price:** £75 a month, cancel with a month's notice
-- **Includes:** every change you ask for with "Change something on this page", every visitor report from "Fix something on this page", keeping your agent files up to date, and a check by ear each month
-- **Turnaround:** changes made within two working days, and anything that stops a visitor fixed within one
+- **Includes:** changes to your content and pages within the agreed design, asked for with "Change something on this page"; every visitor report from "Fix something on this page"; keeping the build script, forms and agent files up to date; and a check by ear each month
+- **Turnaround:** content changes made within two working days, and work started within one working day on anything that stops a visitor
+- **Not included:** new features, such as a booking system, and redesigns, which are priced before any work starts
+
+Most fixes are made the same day. Some causes sit outside the site, with a browser, a screen reader or a provider, and then we tell you what we found and what we are doing about it.
 
 If you stop, the site keeps running. It is in your accounts, and it doesn't need us to stay up.
 
 ## Running costs, paid by you
 
 - **Domain:** usually £10 to £40 a year, depending on the ending
-- **Hosting:** nothing for most sites on Cloudflare's free plan, or about $5 a month on its paid plan for the busiest
+- **Hosting:** nothing for most sites on Cloudflare's free plan, because visits to plain pages aren't charged; about $5 a month on its paid plan if your forms get very busy, and we tell you before you need it
 - **Email and files:** Google Workspace is charged per person per month, and is free for eligible charities through Google for Nonprofits
 
 You pay these to the providers directly. We never mark them up, because we never hold them.
