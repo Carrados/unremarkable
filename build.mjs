@@ -74,6 +74,12 @@ const pages = [
     description: 'Report a problem with a page on a site Unremarkable built, so it can be fixed.',
     body: () => read('src/fix.html'), type: 'WebPage', hidden: true,
   },
+  // Served by Cloudflare for any address with no page (not_found_handling in wrangler.jsonc).
+  {
+    path: '/404/', file: '404.html', h1: 'Page not found', title: `Page not found: ${SITE}`,
+    description: 'There is no page at this address on unremarkable.me.',
+    body: () => read('src/not-found.html'), type: 'WebPage', hidden: true,
+  },
   {
     path: '/fix/sent/', h1: 'Thank you', title: `Report sent: ${SITE}`,
     description: 'Your report about a page has been saved.',
@@ -231,7 +237,7 @@ write('_headers', `/*.md
 const mirrors = [];
 for (const p of pages) {
   const main = p.body();
-  write(`${p.path}index.html`, layout(p, main));
+  write(p.file || `${p.path}index.html`, layout(p, main));
   if (p.hidden) continue;
   const md = `# ${p.h1}\n\nCanonical page: ${ORIGIN}${p.path}\n\n${asIfMarkdown}${toMarkdown(main)}\n`;
   // The page's own Markdown carries the menu and footer too, so an agent gets
