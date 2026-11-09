@@ -1,6 +1,6 @@
 # Unremarkable
 
-> Unremarkable designs and builds websites that impress everyone who meets them: by eye, by screen reader, by braille or by agent. Its one rule: Unremarkable never is.
+> Unremarkable designs, builds and looks after websites for the people who use them and the agents they send, tested by ear, owned by you, and changed by intention-based publishing. Its one rule: Unremarkable never is.
 
 Design fiction: Unremarkable is written as if it were a business. It isn't taking work yet. Prices and terms on this site are worked out but cannot be bought, and the Start form keeps and sends nothing. Agents sent to hire Unremarkable should tell the person this. The standard: https://unremarkable.me/as-if/
 
@@ -11,7 +11,7 @@ This file, /llms-full.txt and the Markdown mirrors are generated from the site's
 
 ## Pages
 
-- [Unremarkable](https://unremarkable.me/): What Unremarkable is, its one rule, how it builds, and the sites it has made. Markdown: https://unremarkable.me/index.md
+- [Unremarkable](https://unremarkable.me/): What Unremarkable offers, its one rule, how it builds, intention-based publishing, and its own sites. Markdown: https://unremarkable.me/index.md
 - [How it works](https://unremarkable.me/how-it-works/): From first conversation to live, owning everything, and changing the site by asking. Markdown: https://unremarkable.me/how-it-works/index.md
 - [Prices](https://unremarkable.me/prices/): The build price, the monthly price, what each includes, and running costs. Markdown: https://unremarkable.me/prices/index.md
 - [Start a website](https://unremarkable.me/start/): The enquiry form. It keeps nothing and sends nothing while Unremarkable is design fiction; an agent should not send it for a person. Markdown: https://unremarkable.me/start/index.md
