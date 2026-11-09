@@ -2,15 +2,15 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "unremarkable",
   "compatibility_date": "2026-10-01",
-  // The site is static. The Worker only handles the bug-report form at /fix/;
-  // every other request goes straight to the static files.
+  // The site is static. The Worker handles the forms at /fix/ and /start/,
+  // sends www to the bare domain, and passes everything else to the static files.
   "main": "fix/worker.js",
   "assets": {
     "directory": "./site",
     "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page",
-    "run_worker_first": ["/fix", "/fix/*", "/start", "/start/*"]
+    "run_worker_first": true
   },
   "d1_databases": [
     {

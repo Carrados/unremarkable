@@ -9,11 +9,13 @@ const LIMITS = { page: 500, what: 5000, expected: 2000, setup: 300, ua: 500 };
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-// Only http(s) addresses are accepted as the reported page.
+// Only pages on sites Unremarkable built are accepted as the reported page.
+const SITES = ['unremarkable.me', 'carrados.com', 'charli.info', 'zeroinformationcasualty.org', 'blind-ant.com', 'aegisdynamics.blind-ant.com', 'charli-jo.com'];
 function pageUrl(raw) {
   try {
     const u = new URL(String(raw || '').trim().slice(0, LIMITS.page));
-    return u.protocol === 'https:' || u.protocol === 'http:' ? u : null;
+    const host = u.hostname.replace(/^www./, '');
+    return (u.protocol === 'https:' || u.protocol === 'http:') && SITES.includes(host) ? u : null;
   } catch { return null; }
 }
 
@@ -22,6 +24,14 @@ async function template(env, request, path) {
   return res.text();
 }
 
+const SECURITY = {
+  'Strict-Transport-Security': 'max-age=31536000',
+  'Content-Security-Policy': "default-src 'self'; script-src 'none'; style-src 'self'; img-src 'self' data:; font-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'",
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'X-Frame-Options': 'DENY',
+};
+
 function html(body, status = 200) {
   return new Response(body, {
     status,
@@ -29,6 +39,7 @@ function html(body, status = 200) {
       'Content-Type': 'text/html; charset=utf-8',
       'Cache-Control': 'no-store',
       'X-Robots-Tag': 'noindex',
+      ...SECURITY,
     },
   });
 }
@@ -77,7 +88,7 @@ async function saveReport(request, env) {
 
   const page = pageUrl(v.page);
   let error = '';
-  if (!page) error = 'Please give the address of the page with the problem, starting with https://.';
+  if (!page) error = 'Please give the address of the page with the problem, starting with https://. It needs to be a page on a site Unremarkable built, such as unremarkable.me or blind-ant.com.';
   else if (!v.what) error = 'Please say what happened.';
   if (error) return html(fillForm(await template(env, request, '/fix/'), v, error), 400);
 
@@ -118,7 +129,7 @@ function fillStart(t, v, error) {
 
 async function showStart(request, env) {
   const t = await template(env, request, '/start/');
-  return new Response(fillStart(t, {}), { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+  return new Response(fillStart(t, {}), { headers: { 'Content-Type': 'text/html; charset=utf-8', ...SECURITY } });
 }
 
 async function checkStart(request, env) {
@@ -139,7 +150,13 @@ async function checkStart(request, env) {
 
 export default {
   async fetch(request, env) {
-    const { pathname } = new URL(request.url);
+    const url = new URL(request.url);
+    const { pathname } = url;
+    // One address for the site: www goes to the bare domain.
+    if (url.hostname === 'www.unremarkable.me') {
+      url.hostname = 'unremarkable.me';
+      return Response.redirect(url.toString(), 301);
+    }
     if (pathname === '/start') return Response.redirect(new URL('/start/', request.url), 301);
     if (pathname === '/start/') {
       if (request.method === 'POST') return checkStart(request, env);
