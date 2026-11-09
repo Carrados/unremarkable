@@ -28,12 +28,13 @@ Unremarkable is real: it is the name at the foot of every site listed under "Our
 - The sites listed under "Our work" on the home page, each built to Zero Information Casualty and tested with a screen reader.
 - The "Fix something on this page" link on every page. A person reads every report, and fixes go live.
 - The accessibility statement, which describes this site as it actually is.
+- The worked example: a real job our publishing agent did for blind-ant.com, with its receipt.
 
 ## What is not real yet
 
 - The prices and the terms. They are worked out with care, but nobody can buy them.
 - The "Start" form. It works, checks what you write and shows you what would happen next, but it keeps nothing and sends nothing.
-- The automatic in-tray for site owners, described under How it works. This studio's own sites are already changed this way, by putting things in an in-tray for a conversation with Claude; the version that runs on its own is designed, not built.
+- The in-tray for clients' sites, with a private copy before anything goes live. Blind Ant's publishing already runs from an in-tray on its own, twice a day, in live mode: that is the worked example. The version with a private copy for a client is designed, not built.
 
 ## When it becomes real
 

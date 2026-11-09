@@ -40,6 +40,8 @@ No editor also means nothing for a screen reader to stumble over. If you can wri
 
 Things that change often, such as events, news and opening times, can live in a Google Sheet that your site reads when it is published. You edit something you already know how to use.
 
+[A real job, start to finish](https://unremarkable.me/worked-example/)
+
 [How the loop was designed: Works For Me, on blind-ant.com](https://blind-ant.com/pieces/works-for-me/)
 
 ## You own everything
