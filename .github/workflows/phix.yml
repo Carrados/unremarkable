@@ -57,8 +57,9 @@ jobs:
           bot_id: "200772005"
           display_report: "true"
           prompt: |
-            Read phix/PHIX.md in this repository and follow it. Start by claiming your work.
+            Read phix/PHIX.md in this repository and follow it. Start by claiming your work with
+            `node phix/api.mjs claim`.
           claude_args: >-
             --model claude-opus-5-5
             --max-turns 200
-            --allowedTools "Read,Edit,Write,Glob,Grep,Bash(curl:*),Bash(git:*),Bash(gh:*),Bash(node:*),Bash(npm:*),Bash(npx:*),Bash(cd:*),Bash(ls:*)"
+            --allowedTools "Read,Edit,Write,Glob,Grep,Bash(node phix/api.mjs:*),Bash(curl:*),Bash(git:*),Bash(gh:*),Bash(node:*),Bash(npm:*),Bash(npx:*),Bash(cd:*),Bash(ls:*),Bash(cat:*),Bash(head:*),Bash(tail:*),Bash(wc:*),Bash(find:*),Bash(diff:*),Bash(mkdir:*),Bash(cp:*),Bash(mv:*),Bash(pwd),Bash(jq:*),Bash(echo:*)"
