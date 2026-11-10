@@ -148,6 +148,10 @@ fieldset.field { border: 0; padding: 0; min-width: 0; }
 }
 .fix-form button:hover { background: var(--ink); border-color: var(--ink); }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+/* The reporter's own page. The link is long, so it may break anywhere. */
+.report-link { font-weight: 600; overflow-wrap: anywhere; }
+.notice { border-left: 6px solid var(--accent); background: var(--panel); padding: 1rem 1.25rem; margin: 0 0 2rem; }
+.notice p { margin: 0; }
 .error { border-left: 6px solid var(--accent); background: var(--panel); padding: 1rem 1.25rem; margin: 2rem 0; }
 .error .error-title { font-size: 1.5rem; margin: 0 0 0.5rem; }
 .error .error-title::before { display: none; }
@@ -157,5 +161,5 @@ fieldset.field { border: 0; padding: 0; min-width: 0; }
   .fix-form button { border-color: ButtonText; }
   h2::before, .rule h2::before { background: CanvasText; }
   .rule { border: 2px solid CanvasText; }
-  .as-if, .before-you-send, .from-page { border: 2px solid CanvasText; }
+  .as-if, .before-you-send, .from-page, .notice { border: 2px solid CanvasText; }
 }

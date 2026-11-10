@@ -1,48 +1,15 @@
 // unremarkable.me: static site, plus the "Fix something on this page" form.
 // GET  /fix/        the form, with the reported page filled in from ?page=
 // POST /fix/        save a report to D1, then go to /fix/sent/
-// GET  /fix/sent/   the thank-you page, with a link back to the reported page
-// Nothing stored identifies the reporter: no name, no email, no IP address.
+// GET  /fix/sent/   the thank-you page: the reporter's own link, and a way back to the reported page
+// GET  /fix/r/<k>/  the reporter's own page for one report: what they wrote, where it stands
+// POST /fix/r/<k>/  the reporter says "it works for me", or "it still doesn't work"
+// Nothing stored identifies the reporter: no name, no email, no IP address. Instead of asking
+// for an email so we can reply, every report gets a long random key, and whoever holds the link
+// can follow it. The key is the only way in, so it is never shown anywhere else.
 
-const READINGS = ['by-eye', 'screen-reader', 'magnifier', 'voice', 'keyboard', 'switch', 'braille', 'agent', 'other'];
-const LIMITS = { page: 500, what: 5000, expected: 2000, setup: 300, ua: 500 };
-
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-
-// Only pages on sites Unremarkable built are accepted as the reported page.
-const SITES = ['unremarkable.me', 'carrados.com', 'charli.info', 'zeroinformationcasualty.org', 'blind-ant.com', 'aegisdynamics.blind-ant.com', 'charli-jo.com', 'tka.unremarkable.me'];
-function pageUrl(raw) {
-  try {
-    const u = new URL(String(raw || '').trim().slice(0, LIMITS.page));
-    const host = u.hostname.replace(/^www./, '');
-    return (u.protocol === 'https:' || u.protocol === 'http:') && SITES.includes(host) ? u : null;
-  } catch { return null; }
-}
-
-async function template(env, request, path) {
-  const res = await env.ASSETS.fetch(new URL(path, request.url));
-  return res.text();
-}
-
-const SECURITY = {
-  'Strict-Transport-Security': 'max-age=31536000',
-  'Content-Security-Policy': "default-src 'self'; script-src 'none'; style-src 'self'; img-src 'self' data:; font-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'",
-  'X-Content-Type-Options': 'nosniff',
-  'Referrer-Policy': 'strict-origin-when-cross-origin',
-  'X-Frame-Options': 'DENY',
-};
-
-function html(body, status = 200) {
-  return new Response(body, {
-    status,
-    headers: {
-      'Content-Type': 'text/html; charset=utf-8',
-      'Cache-Control': 'no-store',
-      'X-Robots-Tag': 'noindex',
-      ...SECURITY,
-    },
-  });
-}
+import { READINGS, LIMITS, esc, SITES, pageUrl, template, SECURITY, html, PRIVATE, newKey, KEY, reportUrl, CONFIRM_DAYS, DAY, dateText, now, paras, READING_TEXT } from './common.js';
+import { scheduled, phixApi, ownerPage, phixLine, step, OWNER_KEY } from './phix.js';
 
 // The reported page. When we know it from the link the visitor followed, it is a sentence, not a
 // field: a pre-filled address box was one more stop for VoiceOver on iPhone ("Page, text field, h t t p s...")
@@ -111,25 +78,147 @@ async function saveReport(request, env) {
   else if (!v.what) error = 'Please say what happened.';
   if (error) return html(fillForm(await template(env, request, '/fix/'), v, error), 400);
 
+  const key = newKey();
   await env.DB.prepare(
-    `INSERT INTO reports (site, page, what_happened, expected, reading, setup, user_agent)
-     VALUES (?, ?, ?, ?, ?, ?, ?)`
+    `INSERT INTO reports (token, site, page, what_happened, expected, reading, setup, user_agent)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
   ).bind(
-    page.hostname, page.href, v.what, v.expected || null, v.reading.join(',') || null, v.setup || null,
+    key, page.hostname, page.href, v.what, v.expected || null, v.reading.join(',') || null, v.setup || null,
     (request.headers.get('User-Agent') || '').slice(0, LIMITS.ua) || null,
   ).run();
 
   const sent = new URL('/fix/sent/', request.url);
+  sent.searchParams.set('r', key);
   sent.searchParams.set('page', page.href);
   return Response.redirect(sent, 303);
 }
 
 async function showSent(request, env) {
-  const page = pageUrl(new URL(request.url).searchParams.get('page'));
+  const q = new URL(request.url).searchParams;
+  const page = pageUrl(q.get('page'));
+  const key = String(q.get('r') || '');
   const t = await template(env, request, '/fix/sent/');
+  // A bot that filled in the hidden field lands here with no key: it gets the page without a link.
+  const link = /^[A-Za-z0-9_-]{22}$/.test(key)
+    ? `<h2 id="your-link">Your link</h2>
+<p>This link goes to your report's own page. Keep it: bookmark it, or copy it somewhere safe. We don't know who you are, so it's the only way back to your report.</p>
+<p class="report-link"><a href="/fix/r/${key}/">${esc(reportUrl(request, key))}</a></p>
+<p>On that page you can see what you sent and where it stands. When the fix is live, it asks whether it works for you now. Anyone with the link can see your report, so share it only with someone you'd show the report to.</p>`
+    : '';
   const back = page ? `<p><a href="${esc(page.href)}">Back to the page you were on</a></p>` : '';
-  return html(t.replace('{{BACK}}', back));
+  return html(t.replace('{{LINK}}', link).replace('{{BACK}}', back), 200, PRIVATE);
 }
+
+// The reporter's own page for one report.
+
+function standing(r) {
+  const fixedOn = r.fixed_at ? dateText(r.fixed_at) : '';
+  const closes = r.fixed_at ? new Date(Date.parse(r.fixed_at) + CONFIRM_DAYS * DAY) : null;
+  switch (r.status) {
+    case 'fixed':
+      if (r.confirmed_at) return { text: `<p class="lede">Fixed, and it works for you.</p>\n<p>The fix went live${fixedOn ? ` on ${fixedOn}` : ''}, and on ${dateText(r.confirmed_at)} you told us it works for you. This report is closed. Thank you.</p>` };
+      if (closes && Date.now() > closes.getTime()) return { text: `<p class="lede">Fixed. This report has closed.</p>\n<p>The fix went live on ${fixedOn}. We didn't hear whether it works for you, so after ${CONFIRM_DAYS} days the report closed by itself.</p>`, newReport: true };
+      return { text: `<p class="lede">Fixed, and live on the page.</p>\n<p>The fix went live${fixedOn ? ` on ${fixedOn}` : ''}. Please try the page again the way you were using it when it went wrong.</p>`, ask: true, closes };
+    case 'wont-fix': return { text: '<p class="lede">Closed: we\'re not changing this.</p>\n<p>We looked at it and decided to leave the page as it is. Why is below.</p>' };
+    case 'duplicate': return { text: '<p class="lede">Closed: we already knew about this.</p>\n<p>Someone else reported the same problem, and it is being fixed there. When it is, the fix goes live on the page.</p>' };
+    case 'spam': return { text: '<p class="lede">Closed.</p>' };
+    default:
+      if (r.reporter_notes) return { text: `<p class="lede">Open again.</p>\n<p>You told us it still didn't work, so we are on it again. This page will say when the new fix is live.</p>\n${phixLine(r)}` };
+      return { text: `<p class="lede">Open. We have your report.</p>\n<p>It hasn't been fixed yet. When the fix is live on the page, this page will say so and ask whether it works for you.</p>\n${phixLine(r)}` };
+  }
+}
+
+function reportPage(r, request, notice, steps = []) {
+  const s = standing(r);
+  const page = pageUrl(r.page);
+  const reading = String(r.reading || '').split(',').filter(Boolean).map(k => READING_TEXT[k] || k);
+  const out = [];
+  if (notice) out.push(`<div class="notice" role="status"><p>${notice}</p></div>`);
+  out.push('<h2 id="where-it-stands">Where it stands</h2>', s.text);
+  if (steps.length) {
+    out.push('<h2 id="what-has-happened">What has happened</h2>', `<ul class="steps">\n${steps.map(st => `<li>${esc(dateText(st.at))}: ${esc(st.text)}</li>`).join('\n')}\n</ul>`);
+  }
+  // Phix's account of the fix is shown once it has been decided on, not while it waits for the owner.
+  if ((r.understood || r.did) && (r.status !== 'open' || r.phix === 'done')) {
+    out.push('<h2 id="what-we-did">What we did</h2>');
+    // When the owner leaves the page as it is, the reporter sees the owner's reasons, not Phix's notes.
+    if (r.understood && r.status !== 'wont-fix') out.push('<h3>What we understood</h3>', paras(r.understood));
+    if (r.did) out.push(`<h3>${r.status === 'wont-fix' ? 'Why' : 'What we changed'}</h3>`, paras(r.did));
+  }
+  if (s.ask) {
+    out.push(`<h2 id="does-it-work">Does it work for you now?</h2>
+<form class="fix-form" method="post" action="/fix/r/${r.token}/">
+<p><button type="submit" name="answer" value="works">It works for me</button></p>
+</form>
+<form class="fix-form" method="post" action="/fix/r/${r.token}/">
+<div class="field">
+<label for="note">What's still wrong? <span class="optional">(only if it still doesn't work)</span></label>
+<textarea id="note" name="note" rows="4" maxlength="${LIMITS.expected}"></textarea>
+</div>
+<p><button type="submit" name="answer" value="again">It still doesn't work</button></p>
+</form>
+<p>If we don't hear, this report closes by itself on ${dateText(s.closes.toISOString())}.</p>`);
+  }
+  if (s.newReport && page) out.push(`<p>If it still doesn't work, <a href="/fix/?page=${encodeURIComponent(page.href)}">send a new report about that page</a>.</p>`);
+  out.push(`<h2 id="what-you-sent">What you sent</h2>
+<p>On ${dateText(r.created_at)}, about ${page ? `<a href="${esc(page.href)}">${esc(page.hostname.replace(/^www\./, '') + (page.pathname === '/' ? '' : page.pathname))}</a>` : esc(r.page)}.</p>
+<h3>What happened</h3>
+${paras(r.what_happened)}`);
+  if (r.expected) out.push('<h3>What you expected</h3>', paras(r.expected));
+  if (reading.length) out.push('<h3>How you were reading the page</h3>', `<ul>\n${reading.map(x => `<li>${esc(x)}</li>`).join('\n')}\n</ul>`);
+  if (r.setup) out.push('<h3>Your setup</h3>', paras(r.setup));
+  if (r.reporter_notes) out.push('<h3>What you told us since</h3>', paras(r.reporter_notes));
+  out.push(`<h2 id="this-link">This page's link</h2>
+<p class="report-link">${esc(reportUrl(request, r.token))}</p>
+<p>Anyone with this link can see this report. We don't know who you are, so keep it if you want to come back.</p>`);
+  return out.join('\n');
+}
+
+async function findReport(env, key) {
+  return env.DB.prepare('SELECT * FROM reports WHERE token = ?').bind(key).first();
+}
+
+async function showReport(request, env, key, notice) {
+  const r = await findReport(env, key);
+  if (!r) {
+    const t = await template(env, request, '/fix/r/');
+    return html(t.replace('<title>', '<title>Not found: ').replace('{{REPORT}}',
+      '<p class="lede">There\'s no report at this address.</p>\n<p>Check the link is complete: it ends with a long run of letters, numbers and dashes, then a slash. If you copied it from somewhere, it may have been cut short.</p>\n<p><a href="/fix/">Send a new report</a></p>'), 404, PRIVATE);
+  }
+  const t = await template(env, request, '/fix/r/');
+  const { results: steps } = await env.DB.prepare('SELECT at, who, text FROM steps WHERE report_id = ? ORDER BY id').bind(r.id).all();
+  return html(t.replace('{{REPORT}}', reportPage(r, request, notice, steps)), 200, PRIVATE);
+}
+
+async function answerReport(request, env, key) {
+  const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+  const { success } = await env.LIMITER.limit({ key: ip });
+  if (!success) return html('<!doctype html><html lang="en-GB"><title>Too many answers</title><p>Too many answers in a minute. Please wait a moment and try again.</p></html>', 429);
+  const r = await findReport(env, key);
+  const back = new URL(`/fix/r/${key}/`, request.url);
+  // Answers only count while the fix is waiting for one.
+  if (!r || !standing(r).ask) return Response.redirect(back, 303);
+  const form = await request.formData();
+  const answer = String(form.get('answer') || '');
+  const note = String(form.get('note') || '').trim().slice(0, LIMITS.expected);
+  if (answer === 'works') {
+    await env.DB.prepare(`UPDATE reports SET confirmed_by = 'reporter', confirmed_at = ? WHERE id = ?`).bind(now(), r.id).run();
+    await step(env, r.id, 'reporter', 'You told us it works for you.');
+    back.searchParams.set('said', 'works');
+  } else if (answer === 'again') {
+    const line = `${dateText(now())}: it still didn't work.${note ? `\n${note}` : ''}`;
+    await env.DB.prepare(`UPDATE reports SET status = 'open', fixed_at = NULL, phix = 'retry', reporter_notes = CASE WHEN reporter_notes IS NULL THEN ? ELSE reporter_notes || char(10) || char(10) || ? END WHERE id = ?`)
+      .bind(line, line, r.id).run();
+    await step(env, r.id, 'reporter', 'You told us it still didn\'t work.');
+    back.searchParams.set('said', 'again');
+  }
+  return Response.redirect(back, 303);
+}
+
+const SAID = {
+  works: 'Thank you. We\'ve noted that it works for you, and closed the report.',
+  again: 'Thank you. We\'ve opened the report again, with what you told us.',
+};
 
 // The Start form, under the As If standard (src/as-if.html): Unremarkable isn't trading yet,
 // so what is written is checked and thrown away. Nothing is stored or sent.
@@ -190,8 +279,23 @@ export default {
       return new Response('Method not allowed', { status: 405, headers: { Allow: 'GET, HEAD, POST' } });
     }
     if (pathname === '/fix/sent/') return showSent(request, env);
+    if (pathname.startsWith('/phix/api/')) return phixApi(request, env);
+    const owner = OWNER_KEY.exec(pathname);
+    if (owner) {
+      if (!pathname.endsWith('/')) return Response.redirect(new URL(pathname + '/', request.url), 301);
+      return ownerPage(request, env, owner[1]);
+    }
+    const mine = KEY.exec(pathname);
+    if (mine) {
+      if (!pathname.endsWith('/')) return Response.redirect(new URL(pathname + '/', request.url), 301);
+      if (request.method === 'POST') return answerReport(request, env, mine[1]);
+      if (request.method === 'GET' || request.method === 'HEAD') return showReport(request, env, mine[1], SAID[url.searchParams.get('said')]);
+      return new Response('Method not allowed', { status: 405, headers: { Allow: 'GET, HEAD, POST' } });
+    }
     // The raw templates (/fix/index.html and so on) are never served as they are.
     if (pathname.startsWith('/fix/')) return Response.redirect(new URL('/fix/', request.url), 302);
     return env.ASSETS.fetch(request);
   },
+  // Phix wakes at 06:00 and midday, UK time (see the cron in wrangler.jsonc).
+  scheduled,
 };
