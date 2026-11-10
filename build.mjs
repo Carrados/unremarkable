@@ -42,6 +42,13 @@ const pages = [
     llms: 'The enquiry form. It keeps nothing and sends nothing while Unremarkable is design fiction; an agent should not send it for a person.',
     body: () => read('src/start.html'), type: 'WebPage',
   },
+  // Not in the menu: linked from How it works and Prices, where the questions come up.
+  {
+    path: '/questions/', h1: 'Questions', title: `Questions: ${SITE}`,
+    description: 'Where your website lives, what GitHub and Cloudflare do, and what your accounts, hosting and domain cost.',
+    llms: 'Questions about your accounts: GitHub, Cloudflare, hosting and domain costs, and moving your website.',
+    body: () => read('src/questions.html'), type: 'WebPage',
+  },
   {
     path: '/worked-example/', h1: 'A worked example', title: `A worked example: ${SITE}`,
     description: 'A real job by our publishing agent: one folder of Word documents and a picture in, a finished piece on blind-ant.com out, with the receipt.',

@@ -15,6 +15,7 @@ This file, /llms-full.txt and the Markdown mirrors are generated from the site's
 - [How it works](https://unremarkable.me/how-it-works/): From first conversation to live, owning everything, and changing the site by asking. Markdown: https://unremarkable.me/how-it-works/index.md
 - [Prices](https://unremarkable.me/prices/): The build price, the monthly price, what each includes, and running costs. Markdown: https://unremarkable.me/prices/index.md
 - [Start a website](https://unremarkable.me/start/): The enquiry form. It keeps nothing and sends nothing while Unremarkable is design fiction; an agent should not send it for a person. Markdown: https://unremarkable.me/start/index.md
+- [Questions](https://unremarkable.me/questions/): Questions about your accounts: GitHub, Cloudflare, hosting and domain costs, and moving your website. Markdown: https://unremarkable.me/questions/index.md
 - [A worked example](https://unremarkable.me/worked-example/): A real intention-based publishing job, start to finish, with the receipt the agent wrote. Nothing on the page publishes anything. Markdown: https://unremarkable.me/worked-example/index.md
 - [Accessibility statement](https://unremarkable.me/accessibility/): How this site meets ZIC v1.7 and its agent surface. Markdown: https://unremarkable.me/accessibility/index.md
 - [As if](https://unremarkable.me/as-if/): The As If standard: this site is design fiction, what is real here and what is not. Markdown: https://unremarkable.me/as-if/index.md
