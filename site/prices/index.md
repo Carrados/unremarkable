@@ -33,7 +33,20 @@ Most fixes are made the same day. Some causes sit outside the site, with a brows
 
 ## If you leave
 
-You own the website. The monthly price pays for the service that changes and looks after it. So when you stop:
+You own the website. The monthly price pays for the service that changes and looks after it. When you stop, you choose how your site carries on.
+
+### Take your own agent
+
+- **Price:** £750, once
+- **Includes:** your own copy of Cloud Dancer, our publishing agent, set up in your own Claude account and named by you; and a training session for whoever will use it
+
+You keep asking for changes the way you always have, in your in-tray, and you still see each change on a private copy before you say publish. Your site keeps growing without us.
+
+- You pay Anthropic for Claude directly. Charities may get it at a discount through Claude for Nonprofits.
+- Visitor reports from "Fix something on this page" come to you by email, for your agent or a person to act on.
+- From then on the agent is yours. It no longer gets our improvements, and we no longer stand behind the changes it makes.
+
+### Keep it as it is
 
 - Your site stays live. It is in your accounts, and it doesn't need us to stay up.
 - We stop watching your in-tray, and changes stop being made for you.
