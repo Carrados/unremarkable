@@ -63,11 +63,7 @@ Unremarkable is written as if it were a business. It isn&#39;t taking work yet.<
 <p>We don't ask who you are and we don't keep your IP address. Please don't put personal details in your report.</p>
 
 <form class="fix-form" method="post" action="/fix/">
-<div class="field">
-<label for="page">Page</label>
-<p class="hint" id="page-hint">The address of the page with the problem. We've filled it in from the link you followed.</p>
-<input type="url" id="page" name="page" value="{{PAGE}}" required maxlength="500" aria-describedby="page-hint" autocomplete="off">
-</div>
+{{PAGE_FIELD}}
 
 <div class="field">
 <label for="what">What happened?</label>
