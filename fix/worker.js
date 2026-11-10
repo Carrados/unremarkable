@@ -44,9 +44,28 @@ function html(body, status = 200) {
   });
 }
 
+// The reported page. When we know it from the link the visitor followed, it is a sentence, not a
+// field: a pre-filled address box was one more stop for VoiceOver on iPhone ("Page, text field, h t t p s...")
+// that nobody needed to change. The address travels in a hidden input. Only when we don't know the page
+// (someone came to /fix/ directly, or typed an address we can't accept) do we ask for it.
+function pageField(raw) {
+  const page = pageUrl(raw);
+  if (page) {
+    let shown = page.hostname.replace(/^www\./, '') + (page.pathname === '/' ? '' : page.pathname) + page.search;
+    try { shown = decodeURI(shown); } catch {}
+    return `<p class="from-page">This report is about the page you came from: <span class="from-page-address">${esc(shown)}</span></p>
+<input type="hidden" name="page" value="${esc(page.href)}">`;
+  }
+  return `<div class="field">
+<label for="page">Page</label>
+<p class="hint" id="page-hint">The address of the page with the problem, starting with https://</p>
+<input type="url" id="page" name="page" value="${esc(raw)}" required maxlength="500" aria-describedby="page-hint" autocomplete="off">
+</div>`;
+}
+
 function fillForm(t, v, error) {
   let out = t
-    .replace('{{PAGE}}', esc(v.page))
+    .replace('{{PAGE_FIELD}}', pageField(v.page))
     .replace('{{WHAT}}', esc(v.what))
     .replace('{{EXPECTED}}', esc(v.expected))
     .replace('{{SETUP}}', esc(v.setup))

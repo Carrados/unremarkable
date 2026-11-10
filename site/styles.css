@@ -128,6 +128,9 @@ footer .credit a { font-family: var(--text); font-size: 1.125rem; }
 .field { margin: 0 0 2rem; }
 fieldset.field { border: 0; padding: 0; min-width: 0; }
 .fix-form label, .fix-form legend { display: block; font-weight: 600; margin-bottom: 0.3rem; padding: 0; }
+/* The page being reported, when we know it: a sentence on a panel, not a field to tab through. */
+.from-page { background: var(--panel); border-left: 6px solid var(--accent); padding: 1rem 1.25rem; margin: 0 0 2rem; }
+.from-page-address { display: inline-block; font-weight: 600; color: var(--ink); overflow-wrap: anywhere; }
 .fix-form .hint { color: var(--muted); margin: 0 0 0.5rem; font-size: 1rem; }
 .optional { font-weight: 400; color: var(--muted); }
 .fix-form input[type="url"], .fix-form input[type="text"], .fix-form input[type="email"], .fix-form textarea {
@@ -154,5 +157,5 @@ fieldset.field { border: 0; padding: 0; min-width: 0; }
   .fix-form button { border-color: ButtonText; }
   h2::before, .rule h2::before { background: CanvasText; }
   .rule { border: 2px solid CanvasText; }
-  .as-if, .before-you-send { border: 2px solid CanvasText; }
+  .as-if, .before-you-send, .from-page { border: 2px solid CanvasText; }
 }
