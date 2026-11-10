@@ -82,8 +82,20 @@ const pages = [
   },
   {
     path: '/fix/sent/', h1: 'Thank you', title: `Report sent: ${SITE}`,
-    description: 'Your report about a page has been saved.',
+    description: 'Your report about a page has been saved, with its own link so you can follow it.',
     body: () => read('src/fix-sent.html'), type: 'WebPage', hidden: true,
+  },
+  // The reporter's own page for one report, at /fix/r/<key>/. The Worker fills in {{REPORT}}.
+  {
+    path: '/fix/r/', h1: 'Your report', title: `Your report: ${SITE}`,
+    description: 'A report about a page on a site Unremarkable built, and where it stands.',
+    body: () => read('src/fix-report.html'), type: 'WebPage', hidden: true,
+  },
+  // The owner's page for one fix from Phix, at /fix/owner/<key>/: Publish, or Reject with reasons. The Worker fills in {{OWNER}}.
+  {
+    path: '/fix/owner/', h1: 'Check a fix', title: `Check a fix: ${SITE}`,
+    description: 'A fix made by Phix, waiting for the owner to publish or reject it.',
+    body: () => read('src/fix-owner.html'), type: 'WebPage', hidden: true,
   },
 ];
 const listed = pages.filter(p => !p.hidden);

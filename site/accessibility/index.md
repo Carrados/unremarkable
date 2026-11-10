@@ -45,6 +45,8 @@ This statement was last reviewed on 10 November 2026.
 
 Every page has a link at the foot, "Fix something on this page", to a short form that already knows which page you were on. You can also use it for any site Unremarkable built.
 
+When you send a report, you get a link to its own page. It shows what you sent and where it stands, and once the fix is live it asks whether it works for you. You can answer there, so we never need your email address. Reports are read first by Phix (said "fix"), our fixing agent, built on Claude, and the site's owner decides every fix that goes live. The link ends in a long random key; anyone who has it can see the report, and nobody else can.
+
 The form doesn't ask who you are. We keep what you write, the page's address, how you were reading the page if you tell us, and your browser and device as your browser reports them. We don't keep your name, your email address or your IP address. Reports are used only to fix the sites, and to learn what to get right on the next one.
 
 The Start form, for starting a website, keeps nothing while Unremarkable is design fiction: what you write is checked and thrown away.

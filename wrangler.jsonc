@@ -19,6 +19,9 @@
       "database_id": "e033c54e-968d-4d54-93b4-fde6d64f6483"
     }
   ],
+  // Phix wakes at 06:00 and midday, UK time. Cron runs on UTC, so it fires at both hours either side
+  // and fix/phix.js keeps the one that is 06:00 or 12:00 in London, summer or winter.
+  "triggers": { "crons": ["0 5,6,11,12 * * *"] },
   // Limits reports per sender without storing anything: the key is held in memory only.
   "ratelimits": [
     {
