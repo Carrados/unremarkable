@@ -1,4 +1,4 @@
-# Who's behind Unremarkable
+# Who's Unremarkable
 
 Canonical page: https://unremarkable.me/about/
 

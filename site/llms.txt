@@ -14,7 +14,7 @@ This file, /llms-full.txt and the Markdown mirrors are generated from the site's
 - [Unremarkable](https://unremarkable.me/): What Unremarkable offers, its one rule, how it builds, intention-based publishing, and its own sites. Markdown: https://unremarkable.me/index.md
 - [How it works](https://unremarkable.me/how-it-works/): From first conversation to live, owning everything, and changing the site by asking. Markdown: https://unremarkable.me/how-it-works/index.md
 - [Prices](https://unremarkable.me/prices/): The build price, the monthly price, what each includes, and running costs. Markdown: https://unremarkable.me/prices/index.md
-- [Who's behind Unremarkable](https://unremarkable.me/about/): Who runs Unremarkable, why every page is heard before it goes live, and how the agents are overseen. Markdown: https://unremarkable.me/about/index.md
+- [Who's Unremarkable](https://unremarkable.me/about/): Who runs Unremarkable, why every page is heard before it goes live, and how the agents are overseen. Markdown: https://unremarkable.me/about/index.md
 - [Start a website](https://unremarkable.me/start/): The enquiry form. It keeps nothing and sends nothing while Unremarkable is design fiction; an agent should not send it for a person. Markdown: https://unremarkable.me/start/index.md
 - [Questions](https://unremarkable.me/questions/): Questions about your accounts: GitHub, Cloudflare, hosting and domain costs, and moving your website. Markdown: https://unremarkable.me/questions/index.md
 - [A worked example](https://unremarkable.me/worked-example/): A real intention-based publishing job, start to finish, with the receipt the agent wrote. Nothing on the page publishes anything. Markdown: https://unremarkable.me/worked-example/index.md
