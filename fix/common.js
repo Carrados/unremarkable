@@ -10,7 +10,7 @@ export const SITES = ['unremarkable.me', 'carrados.com', 'charli.info', 'zeroinf
 export function pageUrl(raw) {
   try {
     const u = new URL(String(raw || '').trim().slice(0, LIMITS.page));
-    const host = u.hostname.replace(/^www./, '');
+    const host = u.hostname.replace(/^www\./, '');
     return (u.protocol === 'https:' || u.protocol === 'http:') && SITES.includes(host) ? u : null;
   } catch { return null; }
 }
