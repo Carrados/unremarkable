@@ -77,6 +77,10 @@ Yes. You already have everything: the files, the accounts and the domain, with a
 
 A domain registered with Cloudflare uses Cloudflare to direct its visitors. You can point it at a new host whenever you like and keep it with Cloudflare. To manage it somewhere else entirely, you move the domain to another registrar.
 
+### Can I keep changing my website after I leave?
+
+Yes, two ways. Any developer, or an AI agent you trust, can follow the handover note. Or you can take your own copy of our publishing agent, set up in your own Claude account, and carry on asking for changes in your in-tray as before. That is a one-off price, on [Prices](https://unremarkable.me/prices/#take-your-own-agent).
+
 ## Where these figures come from
 
 Checked against GitHub's and Cloudflare's own pages on 10 November 2026. Prices change, so we check them again before you buy anything.
