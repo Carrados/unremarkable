@@ -191,7 +191,7 @@ ${navHtml(p.path)}
 ${asIfHtml}${main}
 </main>
 <footer>
-<p class="credit">This site is Unremarkable${p.path.startsWith('/fix/') || p.path === '/404/' ? '' : `<br>\n<a href="/fix/?page=${encodeURIComponent(url)}">Fix something on this page</a>`}</p>
+<p class="credit"><img class="trainer" src="/pictures/trainer.svg" width="120" height="70" alt="">This site is Unremarkable${p.path.startsWith('/fix/') || p.path === '/404/' ? '' : `<br>\n<a href="/fix/?page=${encodeURIComponent(url)}">Fix something on this page</a>`}</p>
 <p>Licensed under <a href="${LICENCE_URL}">Creative Commons Attribution-ShareAlike 4.0</a></p>
 <p>Built to <a href="${ZIC_URL}">Zero Information Casualty v1.7</a></p>
 <p>For agents: <a href="/llms.txt">llms.txt</a></p>
@@ -221,9 +221,11 @@ For agents: [llms.txt](${ORIGIN}/llms.txt)
 `;
 
 // A small HTML-to-Markdown converter for the hand-written pages in src/.
-// It covers exactly the elements those pages use: h2, h3, p, ul/li, a, strong, em, section.
+// It covers exactly the elements those pages use: h2, h3, p, ul/li, ol/li, figure, img, a, strong, em, section.
 function toMarkdown(html) {
   const inline = s => s
+    // Pictures keep their description; decorative ones (empty alt) are left out.
+    .replace(/<img [^>]*src="([^"]+)"[^>]*alt="([^"]*)"[^>]*>\s*/g, (_, src, alt) => alt ? `![${alt}](${src.startsWith('/') ? ORIGIN + src : src}) ` : '')
     .replace(/<a class="work-name" href="([^"]+)">([\s\S]*?)<\/a>\s*/g, (_, href, text) => `[**${text}**](${href}): `)
     .replace(/<a href="([^"]+)">([\s\S]*?)<\/a>/g, (_, href, text) => `[${inline(text)}](${href.startsWith('/') ? ORIGIN + href : href})`)
     .replace(/<strong>([\s\S]*?)<\/strong>/g, '**$1**')
@@ -234,8 +236,9 @@ function toMarkdown(html) {
     .trim();
   const blocks = [];
   html = html.replace(/<\/?section[^>]*>/g, '');
-  for (const [, tag, body] of html.matchAll(/<(h2|h3|p|ul|ol)\b[^>]*>([\s\S]*?)<\/\1>/g)) {
-    if (tag === 'h2') blocks.push(`## ${inline(body)}`);
+  for (const [, tag, body] of html.matchAll(/<(h2|h3|p|ul|ol|figure)\b[^>]*>([\s\S]*?)<\/\1>/g)) {
+    if (tag === 'figure') blocks.push(inline(body.replace(/<figcaption>([\s\S]*?)<\/figcaption>/, ' $1')));
+    else if (tag === 'h2') blocks.push(`## ${inline(body)}`);
     else if (tag === 'h3') blocks.push(`### ${inline(body)}`);
     else if (tag === 'p') blocks.push(inline(body));
     else blocks.push([...body.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(([, li], i) => `${tag === 'ol' ? `${i + 1}.` : '-'} ${inline(li)}`).join('\n'));

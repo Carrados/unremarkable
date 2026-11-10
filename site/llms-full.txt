@@ -14,6 +14,11 @@ People come to your website to do something: find an answer, choose a service, b
 
 We start with your organisation and what people come to you to achieve. Then we build a distinctive site that makes your offer clear and helps them get things done, however they arrive. Every design is tested by ear, by someone who uses a screen reader every day.
 
+- **AAA** contrast on every word, in light and dark
+- **0** cookies, so no cookie banner
+- **0** lines of JavaScript
+- **By ear** every kind of page heard with a screen reader before it goes live
+
 ## The rule
 
 Unremarkable has one rule, and it overrides every other: **it never is.**
@@ -33,7 +38,10 @@ Every site we make has to impress everyone who meets it, whether they see it, he
 
 Looking after your site is just as straightforward. Send us what you want changed: an email, a document, a flyer or some photographs. We prepare the change on a private copy of your site. Open it on your own device, see how it works, and tell us to publish it or change it again. No editor to learn.
 
-Cloud Dancer, our publishing agent, does the preparation. We run the service and stand behind the work.
+- ![A smiling cloud with arms and legs, kicking up one foot as it dances.](https://unremarkable.me/pictures/cloud-dancer.svg) **Cloud Dancer**, our publishing agent, prepares the changes you ask for.
+- ![A round, smiling character holding a spanner, with a sparkle beside it.](https://unremarkable.me/pictures/phix.svg) **Phix** (said "fix"), our fixing agent, looks into the problems your visitors report.
+
+Both are built on Claude. We run the service and stand behind the work.
 
 [See a real publishing job](https://unremarkable.me/worked-example/)
 
@@ -43,15 +51,15 @@ Cloud Dancer, our publishing agent, does the preparation. We run the service and
 
 These are our own sites: working publications where we develop and use the approach we offer here. We depend on them ourselves, and what we build gets used on them first.
 
-1. [**blind-ant.com**](https://blind-ant.com/): A making practice that publishes often: design fiction, stories, games and apps. Its pieces are published from an in-tray, twice a day, by its own agent, the one Cloud Dancer is modelled on, and the worked example is one of its jobs.
-2. [**carrados.com**](https://carrados.com/): Writing about AI and blindness that has to be accountable for its evidence: the frameworks, the Papers and The Blind AI, with a desk and an address of its own for each of its writers.
-3. [**charli-jo.com**](https://charli-jo.com/): A practice in accessible service design for people and the agents they send. Its principle and method began as Word documents and are now kept as the pages themselves.
-4. [**charli.info**](https://charli.info/): The front door of the CharliVerse, a shared fictional world, and CharliPedia, its memory: an encyclopaedia people and agents can read, with a connector that lets compatible AI tools look things up directly.
-5. [**Zero Information Casualty**](https://zeroinformationcasualty.org/): The web standard every one of these sites is built to, published on a site built to it.
+1. [**blind-ant.com**](https://blind-ant.com/): ![A grey page with a white card describing its ant logo in words.](https://unremarkable.me/pictures/work-blind-ant.webp) A making practice that publishes often: design fiction, stories, games and apps. Its pieces are published from an in-tray, twice a day, by its own agent, the one Cloud Dancer is modelled on, and the worked example is one of its jobs.
+2. [**carrados.com**](https://carrados.com/): ![The Carrados logo, a letter C with an eye inside it, on cream.](https://unremarkable.me/pictures/work-carrados.webp) Writing about AI and blindness that has to be accountable for its evidence: the frameworks, the Papers and The Blind AI, with a desk and an address of its own for each of its writers.
+3. [**charli-jo.com**](https://charli-jo.com/): ![Dark green headings on cream, starting with Charli-Jo Tyrer.](https://unremarkable.me/pictures/work-charli-jo.webp) A practice in accessible service design for people and the agents they send. Its principle and method began as Word documents and are now kept as the pages themselves.
+4. [**charli.info**](https://charli.info/): ![Deep purple headings on white, starting with The CharliVerse.](https://unremarkable.me/pictures/work-charli.webp) The front door of the CharliVerse, a shared fictional world, and CharliPedia, its memory: an encyclopaedia people and agents can read, with a connector that lets compatible AI tools look things up directly.
+5. [**Zero Information Casualty**](https://zeroinformationcasualty.org/): ![The title, Zero Information Casualty v1.7, in dark green.](https://unremarkable.me/pictures/work-zeroinformationcasualty.webp) The web standard every one of these sites is built to, published on a site built to it.
 
 ## This site is Unremarkable
 
-When you find those four words at the foot of a page, the site is ours. Hold it to the rule. Below them is a link, "Fix something on this page". Use it, and a person will fix it.
+When you find those four words at the foot of a page, the site is ours. Hold it to the rule. Below them is a link, "Fix something on this page". Use it, and Phix will look into it, and we will put it right.
 
 ## Start here
 
@@ -103,6 +111,14 @@ Things that change often, such as events, news and opening times, can live in a 
 [A real job, start to finish](https://unremarkable.me/worked-example/)
 
 Fixing works the same way. Visitors get their own link, "Fix something on this page", for anything that stops them, whether they read by eye, by screen reader, by braille or by agent. The fix is made on a private copy and tested the way the problem was described, and when it's right, you publish it. Nobody gives an email address: whoever reported it gets a link to their report's own page, which tells them when the fix is live and asks whether it works for them now. If it doesn't, it goes round again. Every report is read first by Phix (said "fix"), our fixing agent, built on Claude. It finds the problem, makes the fix on a private copy and sends it to you. You publish it or send it back with your reasons. Nothing Phix makes goes live without you, and every fix leaves a test behind, so the same problem can't quietly come back.
+
+### A fix, start to finish
+
+1. **Reported** A visitor uses "Fix something on this page" and says what went wrong.
+2. **Fixed** Phix finds the cause and fixes it on a private copy of your site.
+3. **Checked** You try the fix, then publish it, or send it back with your reasons.
+4. **Asked** The visitor's own page tells them it's live, and asks whether it works for them now.
+5. **Works for me** If it doesn't, it goes round again.
 
 [How the loop was designed: Works For Me, on blind-ant.com](https://blind-ant.com/pieces/works-for-me/)
 
@@ -198,6 +214,8 @@ Canonical page: https://unremarkable.me/about/
 
 > **Design fiction.** Unremarkable is written as if it were a business. It isn't taking work yet. What that means: https://unremarkable.me/as-if/
 
+![Charli, smiling, in a sunny coffee shop, in a pink shirt and pink trainers.](https://unremarkable.me/pictures/charli-full.webp) Charli. Photo tidied up with AI.
+
 I'm Charli. I build Unremarkable's websites, and I use a screen reader every day.
 
 That's why every page I build is heard before it goes live. I listen to it the way many of the people who use it will: reading from top to bottom, moving by headings, tabbing through the links. Most websites are made by eye and checked for accessibility at the end, if at all. Mine start with the ear.
@@ -208,9 +226,52 @@ I decide, and agents build. Claude writes the code. Cloud Dancer, our publishing
 
 I stand behind every change they make. If something goes wrong, it's mine to put right.
 
+Charli
+
 ## What I've built
 
 Every site listed under [Our work](https://unremarkable.me/#our-work) is mine, and this one too. Each ends with "Fix something on this page", and I read what comes back.
+
+## Hear what I hear
+
+This is what NVDA, my screen reader, said as I read this page from top to bottom on 10 November 2026, when its heading was still "Who's behind Unremarkable". It's how I check every page before it goes live. A recording is on its way, so you'll be able to hear it too.
+
+1. same page link Skip to main content
+2. banner landmark visited link Unremarkable
+3. Main navigation landmark list with 6 items link Accessibility statement
+4. visited link Home
+5. visited link How it works
+6. visited link Prices
+7. current page About
+8. visited link Start
+9. out of list main landmark heading level 1 Who's behind Unremarkable
+10. Design fiction
+11. Unremarkable is written as if it were a business. It isn't taking work yet.
+12. link What that means
+13. figure graphic Charli, smiling, standing in a sunny coffee shop in a pale pink shirt, cream trousers and pink
+14. graphic trainers.
+15. caption Charli. Photo tidied up with AI.
+16. out of caption out of figure I'm Charli. I build Unremarkable's websites, and I use a screen reader every day.
+17. That's why every page I build is heard before it goes live. I listen to it the way many of the
+18. people who use it will: reading from top to bottom, moving by headings, tabbing through the links.
+19. Most websites are made by eye and checked for accessibility at the end, if at all. Mine start with
+20. the ear.
+21. heading level 2 How I work
+22. I decide, and agents build. Claude writes the code. Cloud Dancer, our publishing agent, makes the
+23. changes you ask for, and Phix (said "fix"), our fixing agent, looks into the problems your visitors
+24. report. Both work on a private copy of your site, and nothing goes live until you say so.
+25. I stand behind every change they make. If something goes wrong, it's mine to put right.
+26. heading level 2 What I've built
+27. Every site listed under link Our work is mine, and this one too. Each ends with "Fix something on this
+28. page", and I read what comes back.
+29. heading level 2 Talk to me
+30. Tell me what people come to you to do. That is where we start.
+31. visited link Start a website
+32. content info landmark This site is Unremarkable
+33. link Fix something on this page
+34. Licensed under link Creative Commons Attribution-ShareAlike 4.0
+35. Built to link Zero Information Casualty v1.7
+36. For agents: link llms.txt
 
 ## Talk to me
 

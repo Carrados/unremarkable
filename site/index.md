@@ -19,6 +19,11 @@ People come to your website to do something: find an answer, choose a service, b
 
 We start with your organisation and what people come to you to achieve. Then we build a distinctive site that makes your offer clear and helps them get things done, however they arrive. Every design is tested by ear, by someone who uses a screen reader every day.
 
+- **AAA** contrast on every word, in light and dark
+- **0** cookies, so no cookie banner
+- **0** lines of JavaScript
+- **By ear** every kind of page heard with a screen reader before it goes live
+
 ## The rule
 
 Unremarkable has one rule, and it overrides every other: **it never is.**
@@ -38,7 +43,10 @@ Every site we make has to impress everyone who meets it, whether they see it, he
 
 Looking after your site is just as straightforward. Send us what you want changed: an email, a document, a flyer or some photographs. We prepare the change on a private copy of your site. Open it on your own device, see how it works, and tell us to publish it or change it again. No editor to learn.
 
-Cloud Dancer, our publishing agent, does the preparation. We run the service and stand behind the work.
+- ![A smiling cloud with arms and legs, kicking up one foot as it dances.](https://unremarkable.me/pictures/cloud-dancer.svg) **Cloud Dancer**, our publishing agent, prepares the changes you ask for.
+- ![A round, smiling character holding a spanner, with a sparkle beside it.](https://unremarkable.me/pictures/phix.svg) **Phix** (said "fix"), our fixing agent, looks into the problems your visitors report.
+
+Both are built on Claude. We run the service and stand behind the work.
 
 [See a real publishing job](https://unremarkable.me/worked-example/)
 
@@ -48,15 +56,15 @@ Cloud Dancer, our publishing agent, does the preparation. We run the service and
 
 These are our own sites: working publications where we develop and use the approach we offer here. We depend on them ourselves, and what we build gets used on them first.
 
-1. [**blind-ant.com**](https://blind-ant.com/): A making practice that publishes often: design fiction, stories, games and apps. Its pieces are published from an in-tray, twice a day, by its own agent, the one Cloud Dancer is modelled on, and the worked example is one of its jobs.
-2. [**carrados.com**](https://carrados.com/): Writing about AI and blindness that has to be accountable for its evidence: the frameworks, the Papers and The Blind AI, with a desk and an address of its own for each of its writers.
-3. [**charli-jo.com**](https://charli-jo.com/): A practice in accessible service design for people and the agents they send. Its principle and method began as Word documents and are now kept as the pages themselves.
-4. [**charli.info**](https://charli.info/): The front door of the CharliVerse, a shared fictional world, and CharliPedia, its memory: an encyclopaedia people and agents can read, with a connector that lets compatible AI tools look things up directly.
-5. [**Zero Information Casualty**](https://zeroinformationcasualty.org/): The web standard every one of these sites is built to, published on a site built to it.
+1. [**blind-ant.com**](https://blind-ant.com/): ![A grey page with a white card describing its ant logo in words.](https://unremarkable.me/pictures/work-blind-ant.webp) A making practice that publishes often: design fiction, stories, games and apps. Its pieces are published from an in-tray, twice a day, by its own agent, the one Cloud Dancer is modelled on, and the worked example is one of its jobs.
+2. [**carrados.com**](https://carrados.com/): ![The Carrados logo, a letter C with an eye inside it, on cream.](https://unremarkable.me/pictures/work-carrados.webp) Writing about AI and blindness that has to be accountable for its evidence: the frameworks, the Papers and The Blind AI, with a desk and an address of its own for each of its writers.
+3. [**charli-jo.com**](https://charli-jo.com/): ![Dark green headings on cream, starting with Charli-Jo Tyrer.](https://unremarkable.me/pictures/work-charli-jo.webp) A practice in accessible service design for people and the agents they send. Its principle and method began as Word documents and are now kept as the pages themselves.
+4. [**charli.info**](https://charli.info/): ![Deep purple headings on white, starting with The CharliVerse.](https://unremarkable.me/pictures/work-charli.webp) The front door of the CharliVerse, a shared fictional world, and CharliPedia, its memory: an encyclopaedia people and agents can read, with a connector that lets compatible AI tools look things up directly.
+5. [**Zero Information Casualty**](https://zeroinformationcasualty.org/): ![The title, Zero Information Casualty v1.7, in dark green.](https://unremarkable.me/pictures/work-zeroinformationcasualty.webp) The web standard every one of these sites is built to, published on a site built to it.
 
 ## This site is Unremarkable
 
-When you find those four words at the foot of a page, the site is ours. Hold it to the rule. Below them is a link, "Fix something on this page". Use it, and a person will fix it.
+When you find those four words at the foot of a page, the site is ours. Hold it to the rule. Below them is a link, "Fix something on this page". Use it, and Phix will look into it, and we will put it right.
 
 ## Start here
 

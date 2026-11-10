@@ -172,3 +172,77 @@ fieldset.field { border: 0; padding: 0; min-width: 0; }
   .portrait { float: right; width: 40%; margin: 0 0 1.5rem 2rem; }
   .after-portrait { clear: both; }
 }
+
+/* ---------- Flash, for the eye: November 2026 ---------- */
+/* Each piece is decoration or has a text equivalent. Nothing here is needed to read a word. */
+
+/* The name joke: "Un" struck through by hand on the home page, so the eye reads "remarkable".
+   A screen reader still reads one word, "Unremarkable": the stroke is a pseudo-element with no text. */
+.home-title .wm-un { position: relative; display: inline-block; }
+.home-title .wm-un::after {
+  content: "" / ""; position: absolute; left: -6%; right: -4%; top: 40%; height: 0.24em;
+  background: var(--ink); transform: rotate(-9deg); pointer-events: none;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' preserveAspectRatio='none'%3E%3Cpath d='M3 13 C20 5 34 15 50 10 S80 5 97 8' fill='none' stroke='black' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' preserveAspectRatio='none'%3E%3Cpath d='M3 13 C20 5 34 15 50 10 S80 5 97 8' fill='none' stroke='black' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+
+/* Full-width bands. The colour reaches both edges of the window without widening the page. */
+.band { --band-bg: var(--panel); background: var(--band-bg); box-shadow: 0 0 0 100vmax var(--band-bg); clip-path: inset(0 -100vmax); margin-top: 4.5rem; padding: clamp(2.5rem, 7vw, 5rem) 0; }
+.band h2 { margin-top: 0; }
+.rule.band { --band-bg: var(--ink); }
+.band-berry { --band-bg: var(--accent); color: var(--paper); }
+.band-berry h2::before { background: var(--paper); }
+.rule :focus-visible, .band-berry :focus-visible { outline-color: var(--paper); }
+.band + .band { margin-top: 0; }
+
+/* The numbers. */
+.numbers { list-style: none; padding: 0; margin: 3.5rem 0 0; display: grid; gap: 2rem 2.5rem; grid-template-columns: repeat(auto-fit, minmax(min(12rem, 100%), 1fr)); }
+.numbers li { max-width: none; border-top: 4px solid var(--accent); padding-top: 1rem; color: var(--muted); line-height: 1.4; }
+.numbers strong { display: block; font-family: "Fraunces", var(--display); font-weight: 900; font-size: clamp(2.75rem, 5.5vw, 4.25rem); line-height: 1; letter-spacing: -0.02em; white-space: nowrap; color: var(--ink); margin-bottom: 0.5rem; }
+
+/* Cloud Dancer and Phix. */
+.agents { list-style: none; padding: 0; margin: 2.5rem 0 1rem; display: grid; gap: 2rem 3rem; grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr)); }
+.agents li { max-width: none; }
+.agents p { margin: 0; }
+.agents strong { font-family: var(--display); font-size: 1.4rem; }
+.agent-picture { display: block; width: min(100%, 14rem); height: auto; margin: 0 0 1rem; }
+/* Cloud Dancer dances for under five seconds when the page opens, and only if your system allows motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .dancing { transform-origin: 50% 90%; animation: dance 1.2s ease-in-out 4; }
+  @keyframes dance { 0%, 100% { transform: rotate(0) translateY(0); } 25% { transform: rotate(-4deg) translateY(-6px); } 75% { transform: rotate(4deg) translateY(-6px); } }
+}
+
+/* Our work as cards, each with a picture of the site in a browser frame. */
+.work.cards { border-top: 0; display: grid; gap: 2rem; grid-template-columns: repeat(auto-fill, minmax(min(19rem, 100%), 1fr)); margin-top: 2rem; }
+.work.cards li { display: flex; flex-direction: column; gap: 0; padding: 0 0 1.5rem; border: 1px solid var(--rule); background: var(--panel); }
+.work.cards li::before {
+  content: "" / ""; order: -2; height: 1.6rem; padding: 0; background-color: var(--ink);
+  background-image: radial-gradient(circle, var(--paper) 0.22rem, transparent 0.26rem), radial-gradient(circle, var(--paper) 0.22rem, transparent 0.26rem), radial-gradient(circle, var(--paper) 0.22rem, transparent 0.26rem);
+  background-size: 1.6rem 1.6rem; background-repeat: no-repeat; background-position: 0.2rem 0, 1rem 0, 1.8rem 0;
+}
+.work.cards .shot { order: -1; display: block; width: 100%; height: auto; }
+.work.cards .work-name, .work.cards .work-line { margin: 0 1.25rem; }
+.work.cards .work-name { font-size: clamp(1.5rem, 3vw, 1.9rem); margin-top: 1.25rem; }
+.work.cards .work-line { margin-top: 0.5rem; }
+
+/* The footer's pink trainer. */
+.trainer { display: block; width: 4.5rem; height: auto; margin: 0 0 0.75rem; }
+
+/* A fix, start to finish: a numbered loop. The numbers are drawn, and hidden from screen readers. */
+.loop { list-style: none; padding: 0; margin: 2rem 0; display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(min(11rem, 100%), 1fr)); counter-reset: loop; }
+.loop li { max-width: none; counter-increment: loop; background: var(--panel); border-top: 4px solid var(--accent); padding: 1rem 1.25rem 1.25rem; line-height: 1.45; }
+.loop li::before { content: counter(loop) / ""; display: flex; align-items: center; justify-content: center; width: 2.6rem; height: 2.6rem; border-radius: 50%; background: var(--accent); color: var(--paper); font-family: "Fraunces", var(--display); font-weight: 900; font-size: 1.3rem; margin-bottom: 0.75rem; }
+.loop strong { display: block; font-family: var(--display); font-size: 1.25rem; margin-bottom: 0.25rem; }
+
+/* A signature in lettering, and the transcript of a listening test. */
+.signoff { font-family: "Fraunces", var(--display); font-style: italic; font-weight: 400; font-size: clamp(2.5rem, 6vw, 3.5rem); line-height: 1; color: var(--accent); margin: 1.5rem 0 0; }
+.transcript { margin: 1.5rem 0; border-left: 6px solid var(--accent); background: var(--panel); padding: 1rem 1.25rem; max-width: 46rem; }
+.transcript summary { font-weight: 600; cursor: pointer; }
+.transcript ol { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: 0.95rem; line-height: 1.5; padding-left: 2.5rem; margin: 1rem 0 0; }
+.transcript li { margin-bottom: 0.35rem; }
+
+@media (forced-colors: active) {
+  .home-title .wm-un::after, .work.cards li::before { background: CanvasText; }
+  .band, .numbers li, .loop li, .work.cards li, .transcript { border: 2px solid CanvasText; }
+  .loop li::before { border: 2px solid CanvasText; }
+}
