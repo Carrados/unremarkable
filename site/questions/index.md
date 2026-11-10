@@ -52,9 +52,9 @@ Only code counts: your forms, and anything else that runs a Worker. The free pla
 
 ### What if my forms get very busy?
 
-Then Cloudflare's paid plan, from US$5 a month for your whole account, with 10 million requests to your code included each month. Beyond that, you pay a little for what you use: a month with 15 million requests would cost about US$8 in all. Cloudflare's pricing page, listed under "Where these figures come from", has the exact rates.
+Then Cloudflare's paid plan, from US$5 a month for your whole account, with 10 million requests to your code included each month. Beyond that, you pay a little for what you use: a month with 15 million requests, each taking about 7 milliseconds of processing, would cost about US$8 in all. Cloudflare's pricing page, listed under "Where these figures come from", has the exact rates.
 
-We tell you well before you near the free allowance, so moving to the paid plan is your decision, never a surprise.
+We watch your usage, and tell you when we recommend moving to the paid plan, so the move is your decision.
 
 If a free allowance does run out, nothing is bought for you. Your forms pause until the next day, and your pages carry on, because they are plain files.
 
