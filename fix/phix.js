@@ -9,7 +9,6 @@
 //   POST /phix/api/...  Phix's API, behind the PHIX_SECRET bearer token.
 //   /fix/owner/<key>/   the owner's page for one fix: Publish, or Reject with reasons.
 
-import { EmailMessage } from 'cloudflare:email';
 import { esc, html, PRIVATE, newKey, dateText, now, paras, template, pageUrl, LIMITS, DAY, READING_TEXT } from './common.js';
 
 export const OWNER_KEY = /^\/fix\/owner\/([A-Za-z0-9_-]{22})\/?$/;
@@ -64,19 +63,14 @@ async function mailOwner(env, subject, text) {
     console.log(`[email to owner] ${subject}\n\n${text}`);
     return;
   }
-  const raw = [
-    `From: Phix <${from}>`,
-    `To: <${env.OWNER_EMAIL}>`,
-    `Subject: ${subject}`,
-    `Date: ${new Date().toUTCString()}`,
-    `Message-ID: <${crypto.randomUUID()}@unremarkable.me>`,
-    'MIME-Version: 1.0',
-    'Content-Type: text/plain; charset=utf-8',
-    'Content-Transfer-Encoding: 8bit',
-    '',
-    text,
-  ].join('\r\n');
-  await env.OWNER_MAIL.send(new EmailMessage(from, env.OWNER_EMAIL, raw));
+  // Cloudflare Email Sending (Compute > Email Service > Email Sending; unremarkable.me onboarded 10 November 2026).
+  // A failed send is logged, not thrown, so it never undoes the step that asked for it.
+  try {
+    const sent = await env.OWNER_MAIL.send({ to: env.OWNER_EMAIL, from, subject, text });
+    console.log('Phix: emailed the owner', sent?.messageId || '');
+  } catch (e) {
+    console.error('Phix: the email to the owner failed:', subject, e?.message || e);
+  }
 }
 
 // A step, in words for the person who reported the problem.
