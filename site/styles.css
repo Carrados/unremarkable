@@ -28,6 +28,7 @@
 @font-face { font-family: "Fraunces"; font-style: italic; font-weight: 400; font-display: swap; src: url("/fonts/fraunces-latin-400-italic.woff2") format("woff2"); }
 @font-face { font-family: "Fraunces"; font-style: normal; font-weight: 900; font-display: swap; src: url("/fonts/fraunces-latin-900-normal.woff2") format("woff2"); }
 .wm { font-family: "Fraunces", var(--display); font-weight: 900; font-style: normal; letter-spacing: -0.01em; white-space: nowrap; }
+.wm-said { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 .wm-un { font-style: italic; font-weight: 400; color: var(--accent); margin-right: 0.02em; }
 /* The wordmark is 7.2em wide; sized to the page width less its gutters, so it always fits on one line. */
 .home-title { font-size: min(8.5rem, calc((100vw - 2.5rem) / 7.5)); letter-spacing: 0; }

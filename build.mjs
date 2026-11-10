@@ -128,8 +128,9 @@ ${AS_IF_TEXT.replace("'", '&#39;')}<br>
 ` : '';
 const asIfMarkdown = AS_IF ? `> **Design fiction.** ${AS_IF_TEXT} What that means: ${ORIGIN}/as-if/\n\n` : '';
 
-// The wordmark as live text: a screen reader reads one word, "Unremarkable".
-const WORDMARK = '<span class="wm"><span class="wm-un">Un</span>remarkable</span>';
+// The wordmark: a screen reader reads one word, "Unremarkable". The styled "Un" is its own box, and
+// VoiceOver on iPhone stops at every box, so the drawn word is hidden and a plain copy is read instead.
+const WORDMARK = '<span class="wm-said">Unremarkable</span><span class="wm" aria-hidden="true"><span class="wm-un">Un</span>remarkable</span>';
 
 // Security headers. The site runs no JavaScript, so the policy allows none. fix/worker.js sends the same policy.
 const CSP = "default-src 'self'; script-src 'none'; style-src 'self'; img-src 'self' data:; font-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'";
