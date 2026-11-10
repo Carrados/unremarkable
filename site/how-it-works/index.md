@@ -45,6 +45,14 @@ Things that change often, such as events, news and opening times, can live in a 
 
 Fixing works the same way. Visitors get their own link, "Fix something on this page", for anything that stops them, whether they read by eye, by screen reader, by braille or by agent. The fix is made on a private copy and tested the way the problem was described, and when it's right, you publish it. Nobody gives an email address: whoever reported it gets a link to their report's own page, which tells them when the fix is live and asks whether it works for them now. If it doesn't, it goes round again. Every report is read first by Phix (said "fix"), our fixing agent, built on Claude. It finds the problem, makes the fix on a private copy and sends it to you. You publish it or send it back with your reasons. Nothing Phix makes goes live without you, and every fix leaves a test behind, so the same problem can't quietly come back.
 
+### A fix, start to finish
+
+1. **Reported** A visitor uses "Fix something on this page" and says what went wrong.
+2. **Fixed** Phix finds the cause and fixes it on a private copy of your site.
+3. **Checked** You try the fix, then publish it, or send it back with your reasons.
+4. **Asked** The visitor's own page tells them it's live, and asks whether it works for them now.
+5. **Works for me** If it doesn't, it goes round again.
+
 [How the loop was designed: Works For Me, on blind-ant.com](https://blind-ant.com/pieces/works-for-me/)
 
 ## You own everything
