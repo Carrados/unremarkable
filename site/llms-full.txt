@@ -242,15 +242,15 @@ No. GitHub's free plan for organisations includes private repositories and as ma
 
 ### Is the hosting really free?
 
-For most sites, yes. Cloudflare serves plain files, your pages, pictures and stylesheet, free and without limit. We build your pages as plain files, so a visit costs nothing, however many people come.
+For most sites, yes. Cloudflare serves plain files, meaning your pages, pictures and stylesheet, free and without limit. We build your pages as plain files, so a visit costs nothing, however many people come.
 
 Only code counts: your forms, and anything else that runs a Worker. The free plan allows 100,000 of those a day, more than the forms on most organisations' sites will ever use.
 
 ### What if my forms get very busy?
 
-Then Cloudflare's paid plan, from US$5 a month for your whole account. That includes 10 million requests to your code each month, and 30 million milliseconds of processing time. Beyond those, it is US$0.30 for each extra million requests, and US$0.02 for each extra million milliseconds.
+Then Cloudflare's paid plan, from US$5 a month for your whole account, with 10 million requests to your code included each month. Beyond that, you pay a little for what you use: a month with 15 million requests would cost about US$8 in all. Cloudflare's pricing page, listed under "Where these figures come from", has the exact rates.
 
-So a site whose forms took 15 million requests in a month, at 7 milliseconds each, would pay US$8 for that month. We tell you well before you near the free allowance, so moving to the paid plan is your decision, never a surprise.
+We tell you well before you near the free allowance, so moving to the paid plan is your decision, never a surprise.
 
 If a free allowance does run out, nothing is bought for you. Your forms pause until the next day, and your pages carry on, because they are plain files.
 
