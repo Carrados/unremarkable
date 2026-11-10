@@ -33,7 +33,7 @@ Every site listed under [Our work](https://unremarkable.me/#our-work) is mine, a
 
 ## Hear what I hear
 
-This is what NVDA, my screen reader, said as I read this page from top to bottom on 10 November 2026, when its heading was still "Who's behind Unremarkable". It's how I check every page before it goes live. A recording is on its way, so you'll be able to hear it too.
+This is what NVDA, my screen reader, said as I read this page from top to bottom on 10 November 2026, at 14:03. It's how I check every page before it goes live. A recording is on its way, so you'll be able to hear it too.
 
 1. same page link Skip to main content
 2. banner landmark visited link Unremarkable
@@ -43,34 +43,39 @@ This is what NVDA, my screen reader, said as I read this page from top to bottom
 6. visited link Prices
 7. current page About
 8. visited link Start
-9. out of list main landmark heading level 1 Who's behind Unremarkable
+9. out of list main landmark heading level 1 Who's Unremarkable
 10. Design fiction
 11. Unremarkable is written as if it were a business. It isn't taking work yet.
 12. link What that means
-13. figure graphic Charli, smiling, standing in a sunny coffee shop in a pale pink shirt, cream trousers and pink
-14. graphic trainers.
-15. caption Charli. Photo tidied up with AI.
-16. out of caption out of figure I'm Charli. I build Unremarkable's websites, and I use a screen reader every day.
-17. That's why every page I build is heard before it goes live. I listen to it the way many of the
-18. people who use it will: reading from top to bottom, moving by headings, tabbing through the links.
-19. Most websites are made by eye and checked for accessibility at the end, if at all. Mine start with
-20. the ear.
-21. heading level 2 How I work
-22. I decide, and agents build. Claude writes the code. Cloud Dancer, our publishing agent, makes the
-23. changes you ask for, and Phix (said "fix"), our fixing agent, looks into the problems your visitors
-24. report. Both work on a private copy of your site, and nothing goes live until you say so.
-25. I stand behind every change they make. If something goes wrong, it's mine to put right.
+13. figure graphic Charli, smiling, in a sunny coffee shop, in a pink shirt and pink trainers.
+14. caption Charli. Photo tidied up with AI.
+15. out of caption out of figure I'm Charli. I build Unremarkable's websites, and I use a screen reader every day.
+16. That's why every page I build is heard before it goes live. I listen to it the way many of the
+17. people who use it will: reading from top to bottom, moving by headings, tabbing through the links.
+18. Most websites are made by eye and checked for accessibility at the end, if at all. Mine start with
+19. the ear.
+20. heading level 2 How I work
+21. I decide, and agents build. Claude writes the code. Cloud Dancer, our publishing agent, makes the
+22. changes you ask for, and Phix (said "fix"), our fixing agent, looks into the problems your visitors
+23. report. Both work on a private copy of your site, and nothing goes live until you say so.
+24. I stand behind every change they make. If something goes wrong, it's mine to put right.
+25. Charli
 26. heading level 2 What I've built
 27. Every site listed under link Our work is mine, and this one too. Each ends with "Fix something on this
 28. page", and I read what comes back.
-29. heading level 2 Talk to me
-30. Tell me what people come to you to do. That is where we start.
-31. visited link Start a website
-32. content info landmark This site is Unremarkable
-33. link Fix something on this page
-34. Licensed under link Creative Commons Attribution-ShareAlike 4.0
-35. Built to link Zero Information Casualty v1.7
-36. For agents: link llms.txt
+29. heading level 2 Hear what I hear
+30. This is what NVDA, my screen reader, said as I read this page from top to bottom on 10 November
+31. 2026, when its heading was still "Who's behind Unremarkable". It's how I check every page before it
+32. goes live. A recording is on its way, so you'll be able to hear it too.
+33. button collapsed What NVDA said, line by line
+34. heading level 2 Talk to me
+35. Tell me what people come to you to do. That is where we start.
+36. visited link Start a website
+37. content info landmark This site is Unremarkable
+38. link Fix something on this page
+39. Licensed under link Creative Commons Attribution-ShareAlike 4.0
+40. Built to link Zero Information Casualty v1.7
+41. For agents: link llms.txt
 
 ## Talk to me
 

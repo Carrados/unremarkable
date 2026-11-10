@@ -29,7 +29,7 @@ Every site we make has to impress everyone who meets it, whether they see it, he
 
 - **Built for people who hear the web.** Not run through a checker and declared done. Every kind of page in your design is listened to before it goes live, every change is made within that design, and the design is heard again every month.
 - **Built for the agents people send.** Every page has a Markdown version, and every site has an llms.txt, so an AI agent sent by a person gets what that person would, from the menu to the footer.
-- **Built to a standard.** Our sites are built to [Zero Information Casualty v1.7](https://zeroinformationcasualty.org/): nothing published is lost on its way to any reader.
+- **Built to a standard.** [Zero Information Casualty v1.7](https://zeroinformationcasualty.org/) means nothing published is lost on its way to any reader.
 - **No plugins to patch.** Plain pages served fast from the edge on Cloudflare: no plugins to update, no database to break into, and not a line of JavaScript needed to read a word.
 - **Yours, all of it.** Your site, code, domain and hosting account belong to you. You pay the running costs directly, and we work inside your accounts.
 - **Leave with everything.** If you stop, your site stays live, and you keep everything another developer, or an agent you trust, needs to carry on.
@@ -38,8 +38,8 @@ Every site we make has to impress everyone who meets it, whether they see it, he
 
 Looking after your site is just as straightforward. Send us what you want changed: an email, a document, a flyer or some photographs. We prepare the change on a private copy of your site. Open it on your own device, see how it works, and tell us to publish it or change it again. No editor to learn.
 
-- ![A smiling cloud with arms and legs, kicking up one foot as it dances.](https://unremarkable.me/pictures/cloud-dancer.svg) **Cloud Dancer**, our publishing agent, prepares the changes you ask for.
-- ![A round, smiling character holding a spanner, with a sparkle beside it.](https://unremarkable.me/pictures/phix.svg) **Phix** (said "fix"), our fixing agent, looks into the problems your visitors report.
+- ![A smiling cloud with arms and legs, kicking up one foot as it dances.](https://unremarkable.me/pictures/cloud-dancer.svg) **Cloud Dancer** is our publishing agent. It prepares the changes you ask for.
+- ![A round, smiling character holding a spanner, with a sparkle beside it.](https://unremarkable.me/pictures/phix.svg) **Phix** (said "fix") is our fixing agent. It looks into the problems your visitors report.
 
 Both are built on Claude. We run the service and stand behind the work.
 
@@ -234,7 +234,7 @@ Every site listed under [Our work](https://unremarkable.me/#our-work) is mine, a
 
 ## Hear what I hear
 
-This is what NVDA, my screen reader, said as I read this page from top to bottom on 10 November 2026, when its heading was still "Who's behind Unremarkable". It's how I check every page before it goes live. A recording is on its way, so you'll be able to hear it too.
+This is what NVDA, my screen reader, said as I read this page from top to bottom on 10 November 2026, at 14:03. It's how I check every page before it goes live. A recording is on its way, so you'll be able to hear it too.
 
 1. same page link Skip to main content
 2. banner landmark visited link Unremarkable
@@ -244,34 +244,39 @@ This is what NVDA, my screen reader, said as I read this page from top to bottom
 6. visited link Prices
 7. current page About
 8. visited link Start
-9. out of list main landmark heading level 1 Who's behind Unremarkable
+9. out of list main landmark heading level 1 Who's Unremarkable
 10. Design fiction
 11. Unremarkable is written as if it were a business. It isn't taking work yet.
 12. link What that means
-13. figure graphic Charli, smiling, standing in a sunny coffee shop in a pale pink shirt, cream trousers and pink
-14. graphic trainers.
-15. caption Charli. Photo tidied up with AI.
-16. out of caption out of figure I'm Charli. I build Unremarkable's websites, and I use a screen reader every day.
-17. That's why every page I build is heard before it goes live. I listen to it the way many of the
-18. people who use it will: reading from top to bottom, moving by headings, tabbing through the links.
-19. Most websites are made by eye and checked for accessibility at the end, if at all. Mine start with
-20. the ear.
-21. heading level 2 How I work
-22. I decide, and agents build. Claude writes the code. Cloud Dancer, our publishing agent, makes the
-23. changes you ask for, and Phix (said "fix"), our fixing agent, looks into the problems your visitors
-24. report. Both work on a private copy of your site, and nothing goes live until you say so.
-25. I stand behind every change they make. If something goes wrong, it's mine to put right.
+13. figure graphic Charli, smiling, in a sunny coffee shop, in a pink shirt and pink trainers.
+14. caption Charli. Photo tidied up with AI.
+15. out of caption out of figure I'm Charli. I build Unremarkable's websites, and I use a screen reader every day.
+16. That's why every page I build is heard before it goes live. I listen to it the way many of the
+17. people who use it will: reading from top to bottom, moving by headings, tabbing through the links.
+18. Most websites are made by eye and checked for accessibility at the end, if at all. Mine start with
+19. the ear.
+20. heading level 2 How I work
+21. I decide, and agents build. Claude writes the code. Cloud Dancer, our publishing agent, makes the
+22. changes you ask for, and Phix (said "fix"), our fixing agent, looks into the problems your visitors
+23. report. Both work on a private copy of your site, and nothing goes live until you say so.
+24. I stand behind every change they make. If something goes wrong, it's mine to put right.
+25. Charli
 26. heading level 2 What I've built
 27. Every site listed under link Our work is mine, and this one too. Each ends with "Fix something on this
 28. page", and I read what comes back.
-29. heading level 2 Talk to me
-30. Tell me what people come to you to do. That is where we start.
-31. visited link Start a website
-32. content info landmark This site is Unremarkable
-33. link Fix something on this page
-34. Licensed under link Creative Commons Attribution-ShareAlike 4.0
-35. Built to link Zero Information Casualty v1.7
-36. For agents: link llms.txt
+29. heading level 2 Hear what I hear
+30. This is what NVDA, my screen reader, said as I read this page from top to bottom on 10 November
+31. 2026, when its heading was still "Who's behind Unremarkable". It's how I check every page before it
+32. goes live. A recording is on its way, so you'll be able to hear it too.
+33. button collapsed What NVDA said, line by line
+34. heading level 2 Talk to me
+35. Tell me what people come to you to do. That is where we start.
+36. visited link Start a website
+37. content info landmark This site is Unremarkable
+38. link Fix something on this page
+39. Licensed under link Creative Commons Attribution-ShareAlike 4.0
+40. Built to link Zero Information Casualty v1.7
+41. For agents: link llms.txt
 
 ## Talk to me
 
@@ -482,6 +487,8 @@ This statement was last reviewed on 10 November 2026.
 - **9 November 2026: a link to the page you were on, in the menu.** The current page was a link to itself, so NVDA said "same page link, current page". It is still named as the current page, but is no longer a link. Found by listening to a sister site.
 - **9 November 2026: "Design fiction" said twice.** The note under each heading was a landmark named Design fiction that began with those words. It is now a plain note. Found the same way.
 - **9 November 2026: columns that could overflow.** With text enlarged on a narrow screen, the "How we build" columns could be wider than the page. They now shrink to fit. Found in the same review.
+- **10 November 2026: a comma on its own.** On the home page, NVDA read "Cloud Dancer" and then the comma after it separately, because the comma came straight after the bold name. Phix had the same problem. Both sentences now start with the name and carry straight on. Found by listening to the redesigned home page with NVDA.
+- **10 November 2026: a colon after a link.** On the home page, the colon after the link to Zero Information Casualty was read on its own. The sentence now starts with the link. Found the same way.
 - **10 November 2026: a picture described in two halves.** On the About page, NVDA split the photo's description across two lines and said "graphic" before each half. The description is now short enough to be read in one go. Found by listening to the page with NVDA, reading through and tabbing.
 - **10 November 2026: an address box you didn't need.** The fix form showed the address of the page you came from in a text field, already filled in. On iPhone, VoiceOver stopped on it and spelled out the address, and nobody needed to change it. It is now a sentence saying which page the report is about. You're only asked for an address if we don't know it.
 
