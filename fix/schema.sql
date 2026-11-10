@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS reports (
                                  -- whether it works, and after 30 days with no answer the report counts as closed
   understood TEXT,               -- what we understood the problem to be
   did TEXT,                      -- what we did about it
-  fix_ref TEXT,                  -- commit or pull request that fixed it
+  fix_ref TEXT,                  -- the commit that fixed it: the one Phix handed in, which Publish merges
   test_ref TEXT,                 -- the test added so it can't come back
   confirmed_by TEXT,             -- reporter | owner
   confirmed_at TEXT,

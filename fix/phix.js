@@ -19,6 +19,31 @@ const WAKE_HOURS = [6, 12];   // UK time; the cron runs at both UTC hours either
 const MAX_TRIES = 3;          // after this many tries, a report goes to the owner instead
 const STALE_HOURS = 3;        // a run that hasn't reported back by then is taken to have failed
 const LINK_DAYS = 7;          // how long an owner's link works
+// Preview copies live on the account's own workers.dev address. No other address is taken as a preview.
+const PREVIEW_DOMAIN = 'charlijotyrer.workers.dev';
+
+// What Phix hands in is checked here, not taken on trust: a report could talk Phix into handing in something else.
+// The pull request must be open, from the report's own branch in the site's own repo (never a fork), into the main branch.
+// Returns what's wrong, in words for Phix, or '' when it's fine. `pr` is GitHub's answer for the pull request.
+export function checkPull(pr, repo, id) {
+  const want = `phix/report-${id}`;
+  if (!pr || !pr.head || !pr.base) return 'GitHub has no pull request at pr_url.';
+  if (pr.state !== 'open') return `That pull request is ${pr.merged ? 'already merged' : 'closed'}. Open a new one from ${want}.`;
+  if (pr.base.repo?.full_name !== repo) return `That pull request isn't on ${repo}.`;
+  if (pr.head.repo?.full_name !== repo) return `That pull request comes from another repo (${pr.head.repo?.full_name || 'unknown'}). The branch must be in ${repo} itself.`;
+  if (pr.head.ref !== want) return `That pull request is from the branch ${pr.head.ref}. The fix for report ${id} must be on ${want}.`;
+  if (pr.base.ref !== pr.base.repo.default_branch) return `That pull request goes into ${pr.base.ref}. It must go into ${pr.base.repo.default_branch}.`;
+  if (!/^[0-9a-f]{40}$/.test(pr.head.sha || '')) return 'GitHub gave no commit for that pull request.';
+  return '';
+}
+
+// A preview copy is an https address on the account's own workers.dev address, and nothing else.
+export function previewUrl(raw) {
+  try {
+    const u = new URL(String(raw || '').trim().slice(0, 500));
+    return u.protocol === 'https:' && !u.username && !u.password && !u.port && u.hostname.endsWith(`.${PREVIEW_DOMAIN}`) ? u : null;
+  } catch { return null; }
+}
 
 const dry = env => env.PHIX_DRY_RUN === '1';
 const ukHour = d => Number(new Intl.DateTimeFormat('en-GB', { hour: 'numeric', hourCycle: 'h23', timeZone: 'Europe/London' }).format(d));
@@ -153,14 +178,28 @@ export async function phixApi(request, env) {
   if (action === 'ready') {
     const understood = text(b.understood, 2000), did = text(b.did, 2000);
     const pr = /^https:\/\/github\.com\/([A-Za-z0-9-]+\/[A-Za-z0-9._-]+)\/pull\/(\d+)$/.exec(text(b.pr_url, 300));
-    let preview = null;
-    try { preview = new URL(text(b.preview_url, 500)); } catch { /* checked below */ }
+    const preview = previewUrl(b.preview_url);
     if (!understood || !did) return json({ error: 'Give both understood and did.' }, 400);
     if (!pr || !REPOS.includes(pr[1])) return json({ error: `pr_url must be a pull request on one of: ${REPOS.join(', ')}.` }, 400);
-    if (!preview || preview.protocol !== 'https:') return json({ error: 'preview_url must be the https address of the preview copy of the page.' }, 400);
+    if (!preview) return json({ error: `preview_url must be the https address of the preview copy of the page, on ${PREVIEW_DOMAIN}: the address wrangler printed.` }, 400);
+    // Ask GitHub what the pull request really is, and keep the commit the owner is about to be shown,
+    // so Publish merges that commit and nothing added after it.
+    let branch = text(b.branch, 200) || null, commit = null;
+    if (!dry(env)) {
+      const res = await github(env, 'GET', `/repos/${pr[1]}/pulls/${pr[2]}`);
+      if (!res.ok) {
+        console.error('Phix: GitHub would not show the pull request', res.status, await res.text());
+        return json({ error: `GitHub wouldn't show that pull request (error ${res.status}). Check pr_url, then try again.` }, res.status === 404 ? 400 : 502);
+      }
+      const pull = await res.json();
+      const wrong = checkPull(pull, pr[1], r.id);
+      if (wrong) return json({ error: wrong }, 400);
+      branch = pull.head.ref;
+      commit = pull.head.sha;
+    }
     await env.DB.prepare(
-      `UPDATE reports SET phix = 'owner', phix_at = ?, understood = ?, did = ?, branch = ?, pr_url = ?, preview_url = ?, test_ref = ? WHERE id = ?`
-    ).bind(now(), understood, did, text(b.branch, 200) || null, pr[0], preview.href, text(b.test_ref, 300) || null, r.id).run();
+      `UPDATE reports SET phix = 'owner', phix_at = ?, understood = ?, did = ?, branch = ?, pr_url = ?, preview_url = ?, test_ref = ?, fix_ref = ? WHERE id = ?`
+    ).bind(now(), understood, did, branch, pr[0], preview.href, text(b.test_ref, 300) || null, commit, r.id).run();
     await step(env, r.id, 'phix', 'Phix made a fix and checked it on a private copy of the page. It is waiting for the owner to look at it.');
     await tellOwner(env, origin, { ...r, understood, did, pr_url: pr[0], preview_url: preview.href, phix: 'owner' });
     return json({ ok: true });
@@ -344,7 +383,14 @@ export async function ownerPage(request, env, key) {
 
   if (decision === 'publish' && fixed) {
     const [, repo, n] = /^https:\/\/github\.com\/([^/]+\/[^/]+)\/pull\/(\d+)$/.exec(r.pr_url);
-    const res = await github(env, 'PUT', `/repos/${repo}/pulls/${n}/merge`, { merge_method: 'merge', commit_title: `Phix: fix report ${r.id} (${short(r.page)})` });
+    // Publish merges the commit Phix handed in (fix_ref), the one the preview copy was made from.
+    // If anything has been added to the branch since, GitHub refuses with 409 and nothing goes live.
+    const pinned = /^[0-9a-f]{40}$/.test(r.fix_ref || '') ? { sha: r.fix_ref } : {};
+    const res = await github(env, 'PUT', `/repos/${repo}/pulls/${n}/merge`, { merge_method: 'merge', commit_title: `Phix: fix report ${r.id} (${short(r.page)})`, ...pinned });
+    if (res.status === 409 && pinned.sha) {
+      console.error('Phix: the branch changed after the fix was handed in', await res.text());
+      return page(`<div class="error" role="alert"><h2 class="error-title">It didn't publish</h2><p>The change was altered after Phix handed it in, so it isn't the fix you were shown. Nothing went live. Reject it and ask Phix to try again: that sends you a fresh fix to check.</p></div>\n${ownerView(key, l, r)}`, 409, 'Error: ');
+    }
     if (!res.ok) {
       console.error('Phix: merge failed', res.status, await res.text());
       return page(`<div class="error" role="alert"><h2 class="error-title">It didn't publish</h2><p>GitHub wouldn't merge the change (error ${res.status}). Nothing went live. Try again in a minute, or open <a href="${esc(r.pr_url)}">the change on GitHub</a>.</p></div>\n${ownerView(key, l, r)}`, 502, 'Error: ');
