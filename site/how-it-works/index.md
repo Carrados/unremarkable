@@ -32,17 +32,17 @@ There is no editor and no content management system to learn. Your website is ch
 2. **See it on your own site.** We make the change on a private copy of your site and send you a link to it. Open it on your own phone or computer, with your own screen reader or magnifier if you use one: the way your visitors will meet it, not a preview in somebody else's tool.
 3. **Publish, or change it again.** If it's right, publish it, and it's live. If it isn't, say what's still wrong, and it goes round again. Nothing reaches your visitors until you say so.
 
-Fixing works the same way. Visitors get their own link, "Fix something on this page", for anything that stops them, whether they read by eye, by screen reader, by braille or by agent. The fix is made on a private copy and tested the way the problem was described, and when it's right, you publish it. Nobody gives an email address: whoever reported it gets a link to their report's own page, which tells them when the fix is live and asks whether it works for them now. If it doesn't, it goes round again. Every report is read first by Phix (said "fix"), our fixing agent, built on Claude. It finds the problem, makes the fix on a private copy and sends it to you. You publish it or send it back with your reasons. Nothing Phix makes goes live without you, and every fix leaves a test behind, so the same problem can't quietly come back.
+Cloud Dancer, our publishing agent, built on Claude, turns what you send into a proposed change. We build and run that process, handle anything that goes wrong, and stand behind every change it makes.
 
-Our publishing agent, built on Claude, turns what you send into a proposed change. We build and run that process, handle anything that goes wrong, and stand behind every change it makes.
-
-Every change is made within the design you agreed, and that design has already been heard. Automated checks run on every change, and the receipt sets out anything the agent wrote itself, such as a picture's description, so you can check it. A new kind of page is heard before it goes live, and the whole design is heard again every month.
+Every change is made within the design you agreed, and that design has already been heard. Automated checks run on every change, and the receipt sets out anything Cloud Dancer wrote itself, such as a picture's description, so you can check it. A new kind of page is heard before it goes live, and the whole design is heard again every month.
 
 No editor also means nothing for a screen reader to stumble over. If you can write an email, you can run your website.
 
 Things that change often, such as events, news and opening times, can live in a Google Sheet that your site reads when it is published. You edit something you already know how to use.
 
 [A real job, start to finish](https://unremarkable.me/worked-example/)
+
+Fixing works the same way. Visitors get their own link, "Fix something on this page", for anything that stops them, whether they read by eye, by screen reader, by braille or by agent. The fix is made on a private copy and tested the way the problem was described, and when it's right, you publish it. Nobody gives an email address: whoever reported it gets a link to their report's own page, which tells them when the fix is live and asks whether it works for them now. If it doesn't, it goes round again. Every report is read first by Phix (said "fix"), our fixing agent, built on Claude. It finds the problem, makes the fix on a private copy and sends it to you. You publish it or send it back with your reasons. Nothing Phix makes goes live without you, and every fix leaves a test behind, so the same problem can't quietly come back.
 
 [How the loop was designed: Works For Me, on blind-ant.com](https://blind-ant.com/pieces/works-for-me/)
 
