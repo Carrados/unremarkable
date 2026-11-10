@@ -35,7 +35,7 @@ const pages = [
     body: () => read('src/prices.html'), type: 'WebPage',
   },
   {
-    path: '/about/', nav: 'About', h1: "Who's behind Unremarkable", title: `Who's behind Unremarkable: ${SITE}`,
+    path: '/about/', nav: 'About', h1: "Who's Unremarkable", title: `Who's Unremarkable: ${SITE}`,
     description: "Charli builds Unremarkable's websites, hears every page with a screen reader, and stands behind every change its agents make.",
     llms: 'Who runs Unremarkable, why every page is heard before it goes live, and how the agents are overseen.',
     body: () => read('src/about.html'), type: 'AboutPage',

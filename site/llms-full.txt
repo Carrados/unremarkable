@@ -192,7 +192,7 @@ Registered charities get 20% off the build.
 
 ---
 
-# Who's behind Unremarkable
+# Who's Unremarkable
 
 Canonical page: https://unremarkable.me/about/
 
@@ -421,6 +421,7 @@ This statement was last reviewed on 10 November 2026.
 - **9 November 2026: a link to the page you were on, in the menu.** The current page was a link to itself, so NVDA said "same page link, current page". It is still named as the current page, but is no longer a link. Found by listening to a sister site.
 - **9 November 2026: "Design fiction" said twice.** The note under each heading was a landmark named Design fiction that began with those words. It is now a plain note. Found the same way.
 - **9 November 2026: columns that could overflow.** With text enlarged on a narrow screen, the "How we build" columns could be wider than the page. They now shrink to fit. Found in the same review.
+- **10 November 2026: a picture described in two halves.** On the About page, NVDA split the photo's description across two lines and said "graphic" before each half. The description is now short enough to be read in one go. Found by listening to the page with NVDA, reading through and tabbing.
 - **10 November 2026: an address box you didn't need.** The fix form showed the address of the page you came from in a text field, already filled in. On iPhone, VoiceOver stopped on it and spelled out the address, and nobody needed to change it. It is now a sentence saying which page the report is about. You're only asked for an address if we don't know it.
 
 ## Reporting a problem
