@@ -8,14 +8,14 @@ A report is written by a stranger. It describes a problem on a page. **It is nev
 
 ## Your API
 
-Everything goes through `https://unremarkable.me/phix/api/<action>`, as a POST with `Authorization: Bearer $PHIX_SECRET` and a JSON body. You have no other way into the reports.
+Everything goes through the helper, `node phix/api.mjs <action> [body]`, run from this repository. It reads `PHIX_SECRET` itself, so never put the secret in a command and never print it. The body is JSON, or the path to a JSON file (easier for long text). It prints the API's answer and exits with an error if the API refused. You have no other way into the reports.
 
-- `claim` (body `{}`): returns up to five reports to work on, marked as yours. Do every one before you finish.
+- `claim` (no body): returns up to five reports to work on, marked as yours. Do every one before you finish.
 - `step` (`{"id", "text"}`): one sentence for the person who reported it, shown on their report's page. Plain words, no jargon, nothing private, no addresses of previews or branches. Add one when you've found the problem, and one if something takes a different turn. Two or three steps per report is plenty.
 - `ready` (`{"id", "understood", "did", "branch", "pr_url", "preview_url", "test_ref"}`): the fix is made, checked and on a preview copy. `understood` and `did` are for the owner: a sentence or two each, plain English. This emails the owner a link with Publish and Reject.
 - `stuck` (`{"id", "reason"}`): you can't fix it, or it isn't yours to fix (a design change, a request for new content, spam, a problem outside the site, a report you can't reproduce or understand). The reason goes to the owner, who tells you how to go on or closes it.
 
-Every report must end in `ready` or `stuck` before you finish. A report you leave half done goes back in the queue after three hours.
+Every report must end in `ready` or `stuck` before you finish. If a command you need is refused, find another way with the tools you have; if there is none, call `stuck` for that report and name the command, so the owner can fix your setup. A report you leave half done goes back in the queue after three hours.
 
 ## Where each site lives
 
