@@ -44,10 +44,12 @@ You own the website. The monthly price pays for the service that changes and loo
 ## Running costs, paid by you
 
 - **Domain:** usually £10 to £40 a year, depending on the ending
-- **Hosting:** nothing for most sites on Cloudflare's free plan, because visits to plain pages aren't charged; about $5 a month on its paid plan if your forms get very busy, and we tell you before you need it
+- **Hosting:** nothing for most sites on Cloudflare's free plan, because visits to plain pages aren't charged; if your forms get very busy, Cloudflare's paid plan is from US$5 a month, plus usage above what it includes, and we tell you before you need it
 - **Email and files:** Google Workspace is charged per person per month, and is free for eligible charities through Google for Nonprofits
 
 You pay these to the providers directly. We never mark them up, because we never hold them.
+
+[Questions about your accounts and what they cost](https://unremarkable.me/questions/)
 
 ## Charities
 

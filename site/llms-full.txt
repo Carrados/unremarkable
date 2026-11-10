@@ -110,6 +110,8 @@ Things that change often, such as events, news and opening times, can live in a 
 
 The site, its source code, the hosting account and the domain are all yours, and you pay the running costs directly. We work inside your accounts as a member. Your pages are plain HTML and a short build script in your own repository, so any developer, or any agent you send, can pick them up. The forms run on Cloudflare, and would need adapting to move them anywhere else.
 
+[Questions about your accounts and what they cost](https://unremarkable.me/questions/)
+
 ## No plugins to patch
 
 Most of the cost of a website built on a platform comes after launch: plugin updates, security patches and cleaning up after break-ins. Our sites are plain pages served from the edge, with no plugins and no database behind them, so there are no plugins to patch and very little that can break. What little code there is, the build script and the forms, we keep up to date as part of looking after your site.
@@ -159,10 +161,12 @@ You own the website. The monthly price pays for the service that changes and loo
 ## Running costs, paid by you
 
 - **Domain:** usually £10 to £40 a year, depending on the ending
-- **Hosting:** nothing for most sites on Cloudflare's free plan, because visits to plain pages aren't charged; about $5 a month on its paid plan if your forms get very busy, and we tell you before you need it
+- **Hosting:** nothing for most sites on Cloudflare's free plan, because visits to plain pages aren't charged; if your forms get very busy, Cloudflare's paid plan is from US$5 a month, plus usage above what it includes, and we tell you before you need it
 - **Email and files:** Google Workspace is charged per person per month, and is free for eligible charities through Google for Nonprofits
 
 You pay these to the providers directly. We never mark them up, because we never hold them.
+
+[Questions about your accounts and what they cost](https://unremarkable.me/questions/)
 
 ## Charities
 
@@ -194,6 +198,92 @@ For example, "book a place on a course", "find out if we can help", "choose a ho
 Your current website, if you have one, or a date you need to be live by.
 
 Send
+
+
+---
+
+# Questions
+
+Canonical page: https://unremarkable.me/questions/
+
+> **Design fiction.** Unremarkable is written as if it were a business. It isn't taking work yet. What that means: https://unremarkable.me/as-if/
+
+Where your website lives, what keeps it running, and what that costs you.
+
+## Where your website lives
+
+### Where is my website?
+
+In three places, all in your name. Its files are in your own GitHub organisation. It is live on Cloudflare, in your own account. And its address, the domain, is registered to you.
+
+We work inside those accounts as a member, and you can remove us whenever you like. That is the whole of our hold on your website.
+
+### What does GitHub do?
+
+GitHub keeps your website's files: every page, every picture, and the short build script that turns them into a website. They sit in a repository, a folder that remembers every change ever made, who made it and why, so any earlier version can be brought back.
+
+You never need to open it. You ask for changes in your in-tray, and we make them. GitHub is what lets you take the whole website with you, and lets any developer or agent you choose carry on where we left off.
+
+### What does Cloudflare do?
+
+Cloudflare puts your website in front of visitors, from a network that spans the world, so a page opens quickly wherever someone is. There is no server of yours to update, patch or keep running. That is Cloudflare's job.
+
+Your forms run on Cloudflare as small programs called Workers. Your domain's settings live there too, in the same account.
+
+### How does a change go live?
+
+Every change waits on a private copy of your site first, where you try it. When you say publish, the change is added to your repository, Cloudflare builds the website from it, and the new version is live within a couple of minutes. Nothing reaches your visitors until you say so.
+
+## What it costs you
+
+### Does GitHub cost anything?
+
+No. GitHub's free plan for organisations includes private repositories and as many members as you need, which is everything your website uses. Your files stay private to the people you allow. The website itself is public, as a website should be.
+
+### Is the hosting really free?
+
+For most sites, yes. Cloudflare serves plain files, your pages, pictures and stylesheet, free and without limit. We build your pages as plain files, so a visit costs nothing, however many people come.
+
+Only code counts: your forms, and anything else that runs a Worker. The free plan allows 100,000 of those a day, more than the forms on most organisations' sites will ever use.
+
+### What if my forms get very busy?
+
+Then Cloudflare's paid plan, from US$5 a month for your whole account. That includes 10 million requests to your code each month, and 30 million milliseconds of processing time. Beyond those, it is US$0.30 for each extra million requests, and US$0.02 for each extra million milliseconds.
+
+So a site whose forms took 15 million requests in a month, at 7 milliseconds each, would pay US$8 for that month. We tell you well before you near the free allowance, so moving to the paid plan is your decision, never a surprise.
+
+If a free allowance does run out, nothing is bought for you. Your forms pause until the next day, and your pages carry on, because they are plain files.
+
+### What does my domain cost?
+
+Your domain is registered with Cloudflare at the registry's own price, with no markup. Most cost £10 to £40 a year, depending on the ending. We check the price, and the price to renew it, with you before you buy.
+
+Free hosting doesn't make the address free. It renews every year, and it is yours for as long as you renew it.
+
+### Are these costs in your monthly price?
+
+No, and that is deliberate. Our monthly price pays for changing and looking after your website. Anything GitHub, Cloudflare or your email provider charges is charged to you directly, at their price. We never mark it up, because we never hold it.
+
+## If you leave
+
+### Can I move my website somewhere else?
+
+Yes. You already have everything: the files, the accounts and the domain, with a handover note that another developer or agent can follow. Your pages are plain HTML and can go to any host. Your forms are written for Cloudflare, and would need adapting.
+
+A domain registered with Cloudflare uses Cloudflare to direct its visitors. You can point it at a new host whenever you like and keep it with Cloudflare. To manage it somewhere else entirely, you move the domain to another registrar.
+
+## Where these figures come from
+
+Checked against GitHub's and Cloudflare's own pages on 10 November 2026. Prices change, so we check them again before you buy anything.
+
+- [GitHub's plans](https://docs.github.com/en/get-started/learning-about-github/githubs-plans)
+- [Cloudflare Workers pricing](https://developers.cloudflare.com/workers/platform/pricing/)
+- [Cloudflare: billing for plain files](https://developers.cloudflare.com/workers/static-assets/billing-and-limitations/)
+- [Cloudflare Registrar questions](https://developers.cloudflare.com/registrar/faq/)
+
+## Next
+
+[Start a website](https://unremarkable.me/start/)
 
 
 ---
