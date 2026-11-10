@@ -34,7 +34,7 @@ Every site we make has to impress everyone who meets it, whether they see it, he
 
 - **Built for people who hear the web.** Not run through a checker and declared done. Every kind of page in your design is listened to before it goes live, every change is made within that design, and the design is heard again every month.
 - **Built for the agents people send.** Every page has a Markdown version, and every site has an llms.txt, so an AI agent sent by a person gets what that person would, from the menu to the footer.
-- **Built to a standard.** Our sites are built to [Zero Information Casualty v1.7](https://zeroinformationcasualty.org/): nothing published is lost on its way to any reader.
+- **Built to a standard.** [Zero Information Casualty v1.7](https://zeroinformationcasualty.org/) means nothing published is lost on its way to any reader.
 - **No plugins to patch.** Plain pages served fast from the edge on Cloudflare: no plugins to update, no database to break into, and not a line of JavaScript needed to read a word.
 - **Yours, all of it.** Your site, code, domain and hosting account belong to you. You pay the running costs directly, and we work inside your accounts.
 - **Leave with everything.** If you stop, your site stays live, and you keep everything another developer, or an agent you trust, needs to carry on.
@@ -43,8 +43,8 @@ Every site we make has to impress everyone who meets it, whether they see it, he
 
 Looking after your site is just as straightforward. Send us what you want changed: an email, a document, a flyer or some photographs. We prepare the change on a private copy of your site. Open it on your own device, see how it works, and tell us to publish it or change it again. No editor to learn.
 
-- ![A smiling cloud with arms and legs, kicking up one foot as it dances.](https://unremarkable.me/pictures/cloud-dancer.svg) **Cloud Dancer**, our publishing agent, prepares the changes you ask for.
-- ![A round, smiling character holding a spanner, with a sparkle beside it.](https://unremarkable.me/pictures/phix.svg) **Phix** (said "fix"), our fixing agent, looks into the problems your visitors report.
+- ![A smiling cloud with arms and legs, kicking up one foot as it dances.](https://unremarkable.me/pictures/cloud-dancer.svg) **Cloud Dancer** is our publishing agent. It prepares the changes you ask for.
+- ![A round, smiling character holding a spanner, with a sparkle beside it.](https://unremarkable.me/pictures/phix.svg) **Phix** (said "fix") is our fixing agent. It looks into the problems your visitors report.
 
 Both are built on Claude. We run the service and stand behind the work.
 
