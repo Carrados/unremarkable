@@ -14,7 +14,7 @@ Menu:
 
 A real job, start to finish: one folder in, one finished piece out.
 
-This is a worked example. The job is real: our publishing agent did it for blind-ant.com on 5 November 2026, and you can open the result. Nothing on this page publishes anything.
+This is a worked example. The job is real: Blind Ant's own publishing agent, the one Cloud Dancer is modelled on, did it for blind-ant.com on 5 November 2026, and you can open the result. Nothing on this page publishes anything.
 
 ## The request
 
@@ -46,7 +46,7 @@ Every job ends with a receipt, written for the owner. This one said:
 
 The receipt ended: "Say 'pull it' to take the Piece down." The owner decides. The agent never has the last word.
 
-Blind Ant runs its agent in live mode, because a design fiction studio can afford to publish first and pull later. Your site starts the other way round. The same job stops at a private copy of your site, and nothing reaches your visitors until you say so. If you come to trust it, you can choose live mode for the small things.
+Blind Ant runs its agent in live mode, because a design fiction studio can afford to publish first and pull later. Your site starts the other way round: with Cloud Dancer, the same job stops at a private copy of your site, and nothing reaches your visitors until you say so. If you come to trust it, you can choose live mode for the small things.
 
 ## What it shows
 

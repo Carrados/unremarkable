@@ -37,7 +37,7 @@ Every site we make has to impress everyone who meets it, whether they see it, he
 
 Looking after your site is just as straightforward. Send us what you want changed: an email, a document, a flyer or some photographs. We prepare the change on a private copy of your site. Open it on your own device, see how it works, and tell us to publish it or change it again. No editor to learn.
 
-Our publishing agent does the preparation. We run the service and stand behind the work.
+Cloud Dancer, our publishing agent, does the preparation. We run the service and stand behind the work.
 
 [See a real publishing job](https://unremarkable.me/worked-example/)
 
@@ -47,7 +47,7 @@ Our publishing agent does the preparation. We run the service and stand behind t
 
 These are our own sites: working publications where we develop and use the approach we offer here. We depend on them ourselves, and what we build gets used on them first.
 
-1. [**blind-ant.com**](https://blind-ant.com/): A making practice that publishes often: design fiction, stories, games and apps. Its pieces are published by our agent from an in-tray, twice a day, and the worked example is one of its jobs.
+1. [**blind-ant.com**](https://blind-ant.com/): A making practice that publishes often: design fiction, stories, games and apps. Its pieces are published from an in-tray, twice a day, by its own agent, the one Cloud Dancer is modelled on, and the worked example is one of its jobs.
 2. [**carrados.com**](https://carrados.com/): Writing about AI and blindness that has to be accountable for its evidence: the frameworks, the Papers and The Blind AI, with a desk and an address of its own for each of its writers.
 3. [**charli-jo.com**](https://charli-jo.com/): A practice in accessible service design for people and the agents they send. Its principle and method began as Word documents and are now kept as the pages themselves.
 4. [**charli.info**](https://charli.info/): The front door of the CharliVerse, a shared fictional world, and CharliPedia, its memory: an encyclopaedia people and agents can read, with a connector that lets compatible AI tools look things up directly.

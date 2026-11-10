@@ -28,7 +28,7 @@ Unremarkable is real: it is the name at the foot of every site listed under "Our
 - The sites listed under "Our work" on the home page, each built to Zero Information Casualty and tested with a screen reader.
 - The "Fix something on this page" link on every page. A person reads every report, and fixes go live.
 - The accessibility statement, which describes this site as it actually is.
-- The worked example: a real job our publishing agent did for blind-ant.com, with its receipt.
+- The worked example: a real job done for blind-ant.com by Blind Ant's publishing agent, the one Cloud Dancer is modelled on, with its receipt.
 
 ## What is not real yet
 

@@ -51,7 +51,7 @@ const pages = [
   },
   {
     path: '/worked-example/', h1: 'A worked example', title: `A worked example: ${SITE}`,
-    description: 'A real job by our publishing agent: one folder of Word documents and a picture in, a finished piece on blind-ant.com out, with the receipt.',
+    description: 'A real job by Blind Ant\'s publishing agent, the one Cloud Dancer is modelled on: one folder of Word documents and a picture in, a finished piece on blind-ant.com out, with the receipt.',
     llms: 'A real intention-based publishing job, start to finish, with the receipt the agent wrote. Nothing on the page publishes anything.',
     body: () => read('src/worked-example.html'), type: 'WebPage',
   },
