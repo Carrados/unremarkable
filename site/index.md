@@ -10,6 +10,7 @@ Menu:
 - [Home](https://unremarkable.me/) (this page)
 - [How it works](https://unremarkable.me/how-it-works/)
 - [Prices](https://unremarkable.me/prices/)
+- [About](https://unremarkable.me/about/)
 - [Start](https://unremarkable.me/start/)
 
 Websites for the people who use them, and the agents they send.

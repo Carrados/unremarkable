@@ -10,6 +10,7 @@ Menu:
 - [Home](https://unremarkable.me/)
 - [How it works](https://unremarkable.me/how-it-works/)
 - [Prices](https://unremarkable.me/prices/)
+- [About](https://unremarkable.me/about/)
 - [Start](https://unremarkable.me/start/)
 
 Where your website lives, what keeps it running, and what that costs you.

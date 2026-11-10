@@ -10,6 +10,7 @@ Menu:
 - [Home](https://unremarkable.me/)
 - [How it works](https://unremarkable.me/how-it-works/)
 - [Prices](https://unremarkable.me/prices/)
+- [About](https://unremarkable.me/about/)
 - [Start](https://unremarkable.me/start/)
 
 An accessibility statement is where most sites admit what they couldn't manage. Ours is built to [Zero Information Casualty version 1.7](https://zeroinformationcasualty.org/), so that nobody, whether reading directly, using assistive technology or sending an agent, loses access to anything published here.

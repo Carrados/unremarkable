@@ -10,6 +10,7 @@ Menu:
 - [Home](https://unremarkable.me/)
 - [How it works](https://unremarkable.me/how-it-works/)
 - [Prices](https://unremarkable.me/prices/)
+- [About](https://unremarkable.me/about/)
 - [Start](https://unremarkable.me/start/)
 
 A real job, start to finish: one folder in, one finished piece out.
