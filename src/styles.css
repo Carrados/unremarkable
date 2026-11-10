@@ -246,3 +246,23 @@ fieldset.field { border: 0; padding: 0; min-width: 0; }
   .band, .numbers li, .loop li, .work.cards li, .transcript { border: 2px solid CanvasText; }
   .loop li::before { border: 2px solid CanvasText; }
 }
+
+/* The main next step, near the top of the home page. */
+.cta { margin: 2rem 0 0; }
+.button {
+  display: inline-block; background: var(--accent); color: var(--paper); text-decoration: none;
+  font-weight: 600; font-size: 1.2rem; padding: 0.85rem 1.75rem; border: 2px solid var(--accent);
+}
+.button:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+@media (forced-colors: active) { .button { border-color: LinkText; } }
+
+/* Phones: a tighter rhythm, and the numbers two by two. */
+@media (max-width: 40rem) {
+  h2 { margin-top: 3rem; }
+  .band { margin-top: 3rem; padding: 2.5rem 0; }
+  .numbers { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem 1.25rem; margin-top: 2.5rem; }
+  .numbers li { font-size: 1rem; }
+  .numbers strong { font-size: 2.5rem; white-space: normal; }
+  .pillars { gap: 1rem; }
+  .work.cards { gap: 1.5rem; }
+}
