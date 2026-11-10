@@ -10,6 +10,7 @@ Menu:
 - [Home](https://unremarkable.me/)
 - [How it works](https://unremarkable.me/how-it-works/)
 - [Prices](https://unremarkable.me/prices/) (this page)
+- [About](https://unremarkable.me/about/)
 - [Start](https://unremarkable.me/start/)
 
 One price to build your site, and one monthly price to look after it.

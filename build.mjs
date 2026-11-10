@@ -34,6 +34,12 @@ const pages = [
     llms: 'The build price, the monthly price, what each includes, and running costs.',
     body: () => read('src/prices.html'), type: 'WebPage',
   },
+  {
+    path: '/about/', nav: 'About', h1: "Who's behind Unremarkable", title: `Who's behind Unremarkable: ${SITE}`,
+    description: "Charli builds Unremarkable's websites, hears every page with a screen reader, and stands behind every change its agents make.",
+    llms: 'Who runs Unremarkable, why every page is heard before it goes live, and how the agents are overseen.',
+    body: () => read('src/about.html'), type: 'AboutPage',
+  },
   // The way in. The Worker in fix/worker.js fills in the {{...}} placeholders,
   // checks what was written, and keeps nothing (see the As If standard).
   {
@@ -247,6 +253,9 @@ function write(rel, content) {
 if (existsSync(OUT)) rmSync(OUT, { recursive: true });
 mkdirSync(OUT, { recursive: true });
 copyFileSync('src/styles.css', join(OUT, 'styles.css'));
+// Photographs and pictures, published at /pictures/.
+mkdirSync(join(OUT, 'pictures'), { recursive: true });
+for (const f of readdirSync('src/pictures')) copyFileSync(join('src/pictures', f), join(OUT, 'pictures', f));
 for (const f of readdirSync('src/fonts')) write(`fonts/${f}`, readFileSync(join('src/fonts', f)));
 // The wordmark files are published at /brand/ so other sites can use them in their credit line.
 for (const f of readdirSync('brand').filter(f => f.endsWith('.svg'))) write(`brand/${f}`, readFileSync(join('brand', f)));

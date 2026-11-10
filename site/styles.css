@@ -163,3 +163,12 @@ fieldset.field { border: 0; padding: 0; min-width: 0; }
   .rule { border: 2px solid CanvasText; }
   .as-if, .before-you-send, .from-page, .notice { border: 2px solid CanvasText; }
 }
+
+/* A portrait beside the opening words on wide screens, above them on phones. */
+.portrait { margin: 0 0 2rem; max-width: 16rem; }
+.portrait img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); }
+.portrait figcaption { color: var(--muted); font-size: 0.95rem; margin-top: 0.5rem; }
+@media (min-width: 40rem) {
+  .portrait { float: right; width: 40%; margin: 0 0 1.5rem 2rem; }
+  .after-portrait { clear: both; }
+}
