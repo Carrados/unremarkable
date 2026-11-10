@@ -3,7 +3,9 @@
 # (fix/phix.js, wake()). It can also be started by hand from the Actions tab.
 #
 # Secrets this needs (Settings > Secrets and variables > Actions):
-#   ANTHROPIC_API_KEY       for Claude
+#   CLAUDE_CODE_OAUTH_TOKEN for Claude, from the owner's Claude subscription: run `claude setup-token`
+#                           once and paste what it prints. Phix's runs share the subscription's allowance.
+#                           For a client, switch to anthropic_api_key with ANTHROPIC_API_KEY (billed per use).
 #   PHIX_SECRET             the same value as the Worker's PHIX_SECRET: Phix's key to /phix/api/
 #   PHIX_GITHUB_TOKEN       a fine-grained token for Carrados, on the four site repos only:
 #                           Contents and Pull requests, read and write. Phix pushes branches and opens
@@ -49,7 +51,7 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           github_token: ${{ secrets.PHIX_GITHUB_TOKEN }}
           bot_name: Carrados
           bot_id: "200772005"
