@@ -1,0 +1,114 @@
+# Cloud Dancer: makes the change a site's owner asked for, on a preview copy, for the owner to publish.
+# Started by the cloud-dancer Worker the moment a request arrives (dancer/github.js, wake()).
+# It can also be started by hand from the Actions tab. One request per run; the Worker starts the next.
+#
+# Two jobs, and the split is the point:
+#   change   The model works here, on a checkout, with no keys at all: it can't push, publish or reach the in-tray.
+#            It leaves a patch and an account of what it did.
+#   hand-in  No model. A fixed script (dancer/run.mjs, from the main branch) checks the patch stays inside the
+#            site's own folders, builds the site, pushes a branch, opens the pull request, puts up the preview
+#            copy and tells the Worker, which checks it all again with GitHub.
+#
+# Secrets this needs (Settings > Secrets and variables > Actions):
+#   CLAUDE_CODE_OAUTH_TOKEN  for Claude, from the owner's Claude subscription (the same one Phix uses)
+#   DANCER_SECRET            the same value as the Worker's DANCER_SECRET: the run's key to /agent/
+#   DANCER_GITHUB_TOKEN      a fine-grained token on this repo: Contents and Pull requests, read and write
+#   CLOUDFLARE_API_TOKEN     to upload preview copies (Workers Scripts: Edit)
+#   CLOUDFLARE_ACCOUNT_ID
+
+name: Cloud Dancer
+
+on:
+  repository_dispatch:
+    types: [dancer-wake]
+  workflow_dispatch:
+
+# One run at a time.
+concurrency:
+  group: dancer
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  change:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      id: ${{ steps.claim.outputs.id }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Take one request from the in-tray
+        id: claim
+        run: node dancer/run.mjs claim
+        env:
+          DANCER_SECRET: ${{ secrets.DANCER_SECRET }}
+
+      # The only step with a model in it. It is given Claude's token and a read-only GitHub token, nothing else.
+      - name: Make the change
+        if: steps.claim.outputs.id
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ github.token }}
+          prompt: |
+            Read dancer/DANCER.md in this repository and follow it. The request is in .dancer/request.json.
+            Your last act is to write .dancer/result.json.
+          claude_args: >-
+            --model claude-sonnet-5-5
+            --max-turns 80
+            --allowedTools "Read,Edit,Write,Glob,Grep,Bash(node build.mjs),Bash(git status:*),Bash(git diff:*),Bash(ls:*)"
+
+      - name: Keep what it changed, as a patch
+        if: always() && steps.claim.outputs.id
+        run: |
+          mkdir -p "$RUNNER_TEMP/out"
+          cp .dancer/result.json "$RUNNER_TEMP/out/result.json" 2>/dev/null || true
+          git add -A
+          git diff --cached --binary > "$RUNNER_TEMP/out/change.patch"
+
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.claim.outputs.id
+        with:
+          name: dancer-${{ steps.claim.outputs.id }}
+          path: ${{ runner.temp }}/out
+          retention-days: 1
+
+  hand-in:
+    needs: change
+    if: always() && needs.change.outputs.id
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      # The main branch, untouched by the model: the script and the build that run here are its own.
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: dancer-${{ needs.change.outputs.id }}
+          path: ${{ runner.temp }}/in
+
+      - name: Check it, push it, preview it, hand it in
+        run: node dancer/run.mjs handin "$RUNNER_TEMP/in"
+        env:
+          DANCER_ID: ${{ needs.change.outputs.id }}
+          DANCER_SECRET: ${{ secrets.DANCER_SECRET }}
+          DANCER_GITHUB_TOKEN: ${{ secrets.DANCER_GITHUB_TOKEN }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

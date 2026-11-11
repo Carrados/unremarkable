@@ -4,6 +4,7 @@
 // An owner can only see and decide on their own requests, on their own sites.
 
 import { SITES, pageOn } from './sites.js';
+import { github, wake, open, dry } from './github.js';
 
 const PROTOCOLS = ['2025-06-18', '2025-03-26', '2024-11-05'];
 const MAX_TRIES = 3;
@@ -27,7 +28,7 @@ const TOOLS = [
   },
   {
     name: 'request_change', title: 'Ask for a change',
-    description: 'Hand Cloud Dancer an instruction to change one of the owner\'s sites: new words, a correction, a new page, a picture to add. Nothing goes live: Cloud Dancer makes the change on a private preview copy for the owner to check. Returns the request\'s number.',
+    description: 'Hand Cloud Dancer an instruction to change one of the owner\'s sites: new words or a correction on a page that exists. (New pages and pictures cannot be done this way yet: Cloud Dancer will say so.) Nothing goes live: Cloud Dancer makes the change on a private preview copy for the owner to check. Returns the request\'s number.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -70,7 +71,6 @@ const TOOLS = [
 const now = () => new Date().toISOString().replace(/\.\d+Z$/, 'Z');
 const clip = (v, n) => String(v ?? '').trim().slice(0, n);
 const dateText = iso => new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/London' });
-const open = env => env.DANCER_OPEN === '1';
 
 export async function sitesOf(env, owner) {
   const { results } = await env.DB.prepare('SELECT site FROM owners WHERE email = ? ORDER BY site').bind(owner).all();
@@ -118,20 +118,6 @@ function inFull(r, steps) {
   return out.join('\n');
 }
 
-async function github(env, method, path, body) {
-  return fetch(`https://api.github.com${path}`, {
-    method,
-    headers: {
-      Authorization: `Bearer ${env.GITHUB_TOKEN}`,
-      Accept: 'application/vnd.github+json',
-      'X-GitHub-Api-Version': '2022-11-28',
-      'User-Agent': 'cloud-dancer',
-      'Content-Type': 'application/json',
-    },
-    body: body ? JSON.stringify(body) : undefined,
-  });
-}
-
 export async function callTool(name, args, env, owner) {
   const sites = await sitesOf(env, owner);
   if (!sites.length) throw new Error('You are signed in, but no site is in your name any more. Ask Unremarkable.');
@@ -157,14 +143,17 @@ export async function callTool(name, args, env, owner) {
       `INSERT INTO requests (owner, site, page, instruction, status_at) VALUES (?, ?, ?, ?, ?) RETURNING id`
     ).bind(owner, site, page ? page.href : null, instruction, now()).first();
     await addStep(env, r.id, 'owner', 'You asked for this change.');
-    return open(env)
-      ? `Cloud Dancer has it: request ${r.id}, about ${site}. It will make the change on a private preview copy. Nothing goes live until you say so. Ask where request ${r.id} stands to follow it.`
-      : `It is in Cloud Dancer's in-tray: request ${r.id}, about ${site}. Cloud Dancer isn't taking work from the in-tray yet, so nothing will happen to it for now. It is kept, and nothing has changed on the site.`;
+    if (!open(env)) return `It is in Cloud Dancer's in-tray: request ${r.id}, about ${site}. Cloud Dancer isn't taking work from the in-tray yet, so nothing will happen to it for now. It is kept, and nothing has changed on the site.`;
+    return await wake(env, SITES[site].repo)
+      ? `Cloud Dancer has it: request ${r.id}, about ${site}. It is starting now and usually takes a few minutes. It makes the change on a private preview copy: nothing goes live until you say so. Ask where request ${r.id} stands to follow it; you'll also get an email when it is ready.`
+      : `It is in Cloud Dancer's in-tray: request ${r.id}, about ${site}. Cloud Dancer couldn't be started just now, so it hasn't begun. The request is kept. Ask where request ${r.id} stands in a few minutes and it will be started again.`;
   }
 
   if (name === 'where_it_stands') {
     if (args.request !== undefined && args.request !== null && args.request !== '') {
       const r = await mine(env, owner, args.request);
+      // A request that has waited more than three minutes without being taken: start Cloud Dancer again.
+      if ((r.status === 'queued' || r.status === 'retry') && Date.now() - Date.parse(r.status_at || r.created_at) > 180000) await wake(env, SITES[r.site].repo);
       const { results } = await env.DB.prepare('SELECT at, text FROM steps WHERE request_id = ? ORDER BY id').bind(r.id).all();
       return inFull(r, results);
     }
@@ -183,7 +172,7 @@ export async function callTool(name, args, env, owner) {
     if (!pr || pr[1] !== SITES[r.site].repo || !/^[0-9a-f]{40}$/.test(r.commit_sha || '')) throw new Error(`Request ${r.id} has no change that can be published. Send it back to try again.`);
     // Publish merges the commit that was handed in, the one the preview copy was made from.
     // If anything was added to the branch afterwards, GitHub refuses with 409 and nothing goes live.
-    const res = await github(env, 'PUT', `/repos/${pr[1]}/pulls/${pr[2]}/merge`, { merge_method: 'merge', commit_title: `Cloud Dancer: request ${r.id} (${r.site})`, sha: r.commit_sha });
+    const res = dry(env) ? new Response('{}') : await github(env, 'PUT', `/repos/${pr[1]}/pulls/${pr[2]}/merge`, { merge_method: 'merge', commit_title: `Cloud Dancer: request ${r.id} (${r.site})`, sha: r.commit_sha });
     if (res.status === 409) throw new Error(`Request ${r.id} wasn't published. The change was altered after Cloud Dancer handed it in, so it isn't the one on the preview copy. Nothing went live. Send it back to try again.`);
     if (!res.ok) {
       console.error('Cloud Dancer: merge failed', res.status, await res.text());
@@ -201,7 +190,7 @@ export async function callTool(name, args, env, owner) {
     if (!reasons) throw new Error('Give the owner\'s reasons, in their words.');
     if (args.next === 'leave-it') {
       const pr = /^https:\/\/github\.com\/([^/]+\/[^/]+)\/pull\/(\d+)$/.exec(r.pr_url || '');
-      if (pr && pr[1] === SITES[r.site].repo) await github(env, 'PATCH', `/repos/${pr[1]}/pulls/${pr[2]}`, { state: 'closed' });
+      if (pr && pr[1] === SITES[r.site].repo && !dry(env)) await github(env, 'PATCH', `/repos/${pr[1]}/pulls/${pr[2]}`, { state: 'closed' });
       await env.DB.prepare(`UPDATE requests SET status = 'left', status_at = ?, did = ? WHERE id = ?`).bind(now(), reasons, r.id).run();
       await addStep(env, r.id, 'owner', 'You decided to leave the site as it is.');
       return `Request ${r.id} is closed, and ${r.site} stays as it is.`;
@@ -211,6 +200,7 @@ export async function callTool(name, args, env, owner) {
     if (r.status === 'ready' && r.tries >= MAX_TRIES) throw new Error(`Cloud Dancer has tried request ${r.id} ${r.tries} times. Send it back with "leave-it" and ask again in other words, or ask Unremarkable.`);
     await env.DB.prepare(`UPDATE requests SET status = 'retry', status_at = ?, owner_reason = ?, tries = CASE WHEN status = 'stuck' THEN 0 ELSE tries END WHERE id = ?`).bind(now(), reasons, r.id).run();
     await addStep(env, r.id, 'owner', r.status === 'stuck' ? 'You told Cloud Dancer how to go on.' : 'You sent it back to be done again.');
+    await wake(env, SITES[r.site].repo);
     return `Sent back. Cloud Dancer will try request ${r.id} again with those reasons.`;
   }
 

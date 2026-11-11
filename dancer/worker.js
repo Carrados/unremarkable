@@ -8,6 +8,7 @@
 //   /mcp            the connector (Model Context Protocol), for signed-in owners only: mcp.js
 //   /authorize      the one page an owner meets, once, to sign in with a code sent to their email: signin.js
 //   /oauth/...      tokens and registration, answered by Cloudflare's OAuth library
+//   /agent/...      Cloud Dancer's own run, taking work and handing it in, with DANCER_SECRET: agent.js
 //   /               a plain page saying what this is
 //
 // Nothing here changes a site. A request goes into Cloud Dancer's in-tray (the database); a change is made on
@@ -16,6 +17,7 @@
 import { OAuthProvider } from '@cloudflare/workers-oauth-provider';
 import { mcp } from './mcp.js';
 import { authorize, SCOPE } from './signin.js';
+import { agentApi } from './agent.js';
 
 const HOME = `Cloud Dancer, the publishing agent at Unremarkable.
 
@@ -37,6 +39,7 @@ const site = {
   fetch(request, env) {
     const { pathname } = new URL(request.url);
     if (pathname === '/authorize') return authorize(request, env);
+    if (pathname.startsWith('/agent/')) return agentApi(request, env);
     if (pathname === '/' && (request.method === 'GET' || request.method === 'HEAD')) {
       return new Response(HOME, { headers: { 'Content-Type': 'text/plain; charset=utf-8', 'X-Robots-Tag': 'noindex', 'X-Content-Type-Options': 'nosniff' } });
     }
