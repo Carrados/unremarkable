@@ -23,7 +23,9 @@ const SECURITY = {
   'Cache-Control': 'no-store',
   'X-Robots-Tag': 'noindex',
   'Strict-Transport-Security': 'max-age=31536000',
-  'Content-Security-Policy': "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'",
+  // No form-action rule: signing in ends by sending the browser back to the owner's agent, on another address,
+  // and browsers apply form-action to that redirect too. With form-action 'self' the last step was blocked.
+  'Content-Security-Policy': "default-src 'none'; style-src 'unsafe-inline'; frame-ancestors 'none'; base-uri 'none'",
   'X-Content-Type-Options': 'nosniff',
   'X-Frame-Options': 'DENY',
   'Referrer-Policy': 'no-referrer',
