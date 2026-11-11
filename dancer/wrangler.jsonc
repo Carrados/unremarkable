@@ -1,0 +1,26 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Cloud Dancer's connector: how a site's owner, through their own agent, asks for a change.
+  // A Worker of its own, apart from the unremarkable Worker that serves the site and Phix's form.
+  "name": "cloud-dancer",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-01",
+  // Needed by the OAuth library when it reads an agent's published description of itself.
+  "compatibility_flags": ["global_fetch_strictly_public"],
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [{ "pattern": "dancer.unremarkable.me", "custom_domain": true }],
+  "vars": {
+    "DANCER_ORIGIN": "https://dancer.unremarkable.me",
+    // "1" once Cloud Dancer is taking work from the in-tray. Until then a request is kept and the owner is told so.
+    "DANCER_OPEN": "0"
+  },
+  // Sign-ins and tokens, kept by the OAuth library: only hashes of tokens and codes are stored.
+  "kv_namespaces": [{ "binding": "OAUTH_KV", "id": "9d30e50ddca44cce9cba7d88ad0b2a9d" }],
+  // Owners and their requests: dancer/schema.sql.
+  "d1_databases": [{ "binding": "DB", "database_name": "cloud-dancer", "database_id": "e598c993-268c-4167-b143-6c8853d6c6b6" }],
+  // The sign-in code goes by Cloudflare Email Sending (unremarkable.me is onboarded there).
+  "send_email": [{ "name": "OWNER_MAIL", "remote": true }],
+  // Slows down guessing at the sign-in page without storing anything.
+  "ratelimits": [{ "name": "LIMITER", "namespace_id": "1002", "simple": { "limit": 10, "period": 60 } }]
+}
