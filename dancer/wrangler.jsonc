@@ -7,6 +7,8 @@
   "compatibility_date": "2026-10-01",
   // Needed by the OAuth library when it reads an agent's published description of itself.
   "compatibility_flags": ["global_fetch_strictly_public"],
+  // Keeps the Worker's logs, so a failed sign-in can be looked into. Codes and tokens are never logged.
+  "observability": { "enabled": true },
   "workers_dev": false,
   "preview_urls": false,
   "routes": [{ "pattern": "dancer.unremarkable.me", "custom_domain": true }],

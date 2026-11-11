@@ -36,6 +36,7 @@ ok(s.res.status === 200 && /Sign in to Cloud Dancer/.test(s.html), 'the sign-in 
 ok(!s.html.includes('<script>') && s.html.includes('claude.ai'), 'the agent\'s name is escaped and the destination is shown');
 ok(!!s.cookie && !!s.handle, 'the form is tied to the browser');
 ok(/script-src|default-src 'none'/.test(s.res.headers.get('content-security-policy') || ''), 'the page allows no scripts');
+ok(!/form-action/.test(s.res.headers.get('content-security-policy') || ''), 'the page does not block the return to the agent (no form-action rule)');
 
 // 2. Someone who is not an owner: same page, no code sent
 let r = await post(s.cookie, { handle: s.handle, step: 'email', email: 'stranger@example.org' });
