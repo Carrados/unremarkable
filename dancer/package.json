@@ -4,7 +4,7 @@
   "type": "module",
   "description": "Cloud Dancer's connector: how a site's owner, through their own agent, asks for a change.",
   "scripts": {
-    "test": "node --test dancer.test.mjs"
+    "test": "node --test dancer.test.mjs agent.test.mjs"
   },
   "dependencies": {
     "@cloudflare/workers-oauth-provider": "1.2.4"
