@@ -22,9 +22,12 @@ export const siteOf = host => SITES[String(host || '').toLowerCase().replace(/^w
 
 // What a fix may never touch: it would change what the agents are, what their keys reach, or code that runs
 // with a site's secrets. The owner approves what they see on the preview, and none of this shows there.
+// Anything that changes how Claude behaves in later runs (settings and hooks, MCP servers, rule files) is
+// refused wherever it sits in the repo, not only at the top.
 const MACHINERY = [
-  /^\.github\//, /^\.claude\//, /^dancer\//, /^flo\//, /^phix\//, /^fix\//,
-  /^wrangler[^/]*\.(jsonc|json|toml)$/, /^package(-lock)?\.json$/, /^(CLAUDE|AGENTS)\.md$/,
+  /^\.github\//, /^dancer\//, /^flo\//, /^phix\//, /^fix\//,
+  /^wrangler[^/]*\.(jsonc|json|toml)$/, /^package(-lock)?\.json$/,
+  /(^|\/)\.claude\//, /(^|\/)\.mcp\.json$/i, /(^|\/)(CLAUDE|CLAUDE\.local|AGENTS)\.md$/i,
   /(^|\/)worker\.(js|mjs|ts)$/, /(^|\/)mcp\//,
 ];
 

@@ -30,6 +30,8 @@ Everything goes through `node flo/api.mjs <action> [body]`, run from this reposi
 
 Your work has already been claimed for you: it is in `flo-work.json`, a list under `work`. Do every request in it before you finish.
 
+**For now, flow is off on every site.** You hold no token that can push, and the Worker refuses `posted`. Requests for a site with flow off go back to Cloud Dancer before they reach you. If one does reach you, call `fabric` and say flow is off for that site.
+
 - `step` (`{"id", "text"}`): one sentence for the owner on what is happening. One or two per request is plenty.
 - `posted` (`{"id", "understood", "did", "wrote", "pr_url", "live_url"}`): you have built and checked it, pushed `flo/request-<id>` and opened a pull request. Cloud Dancer checks the pull request with GitHub and merges it, which puts it live. `understood` and `did` are a sentence or two each for the owner. `wrote` is everything you wrote yourself, word for word (an alt text, a label, a short description), or leave it out. `live_url` is the full https address where the piece will be. Push nothing after you call `posted`.
 - `fabric` (`{"id", "reason"}`): it is design work after all. Nothing is changed; it goes back to Cloud Dancer.
@@ -39,7 +41,7 @@ Every request ends in `posted`, `fabric` or `stuck`. A request you leave half do
 
 ## How you do one request
 
-1. Clone the site's repo (`repo` in the request) with `gh repo clone`. Read its `CLAUDE.md`, `README.md` and `FLOW.md`. They win over this file on site rules and mechanics. No `FLOW.md`, or no shape in it that fits: `fabric`.
+1. Clone the site's repo (`repo` in the request) with `git clone https://github.com/<repo>`. Read its `CLAUDE.md`, `README.md` and `FLOW.md`. They win over this file on site rules and mechanics. No `FLOW.md`, or no shape in it that fits: `fabric`.
 2. Decide flow or fabric. If fabric, call `fabric` and move on.
 3. On a retry, read `owner_reason` first and work on `previous_branch` if there is one.
 4. Branch `flo/request-<id>` from `main`. Never work on `main`.

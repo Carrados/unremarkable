@@ -31,7 +31,7 @@ The second is the hand-in file, `phix-out/ready-<id>.json`:
 
 The owner publishes the commit that is in the bundle, so finish every commit before you make it. If you commit again, make the bundle again.
 
-The workflow refuses a branch that changes a site's machinery: anything in `.github/`, `.claude/`, `dancer/`, `flo/`, `phix/`, `fix/` or an `mcp/` folder, any `worker.js`, any `wrangler` file, `package.json`, `package-lock.json`, `CLAUDE.md` or `AGENTS.md`. The preview copy runs the Worker as it is on main, with only the built pages from your branch. A fix that needs one of those files is for Unremarkable: call `stuck` and say which file and why.
+The workflow refuses a branch that changes a site's machinery: anything in `.github/`, `dancer/`, `flo/`, `phix/`, `fix/` or an `mcp/` folder, any `worker.js`, any `wrangler` file, `package.json` and `package-lock.json`, and, anywhere in the repo, a `.claude/` folder, a `.mcp.json` file, `CLAUDE.md`, `CLAUDE.local.md` or `AGENTS.md`. The preview copy runs the Worker as it is on main, with only the built pages from your branch. A fix that needs one of those files is for Unremarkable: call `stuck` and say which file and why.
 
 Every report must end in a hand-in or `stuck` before you finish. If a command you need is refused, find another way with the tools you have; if there is none, call `stuck` for that report and name the command, so the owner can fix your setup. A report you leave half done goes back in the queue after three hours.
 

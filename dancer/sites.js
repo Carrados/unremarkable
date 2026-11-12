@@ -1,7 +1,14 @@
 // The sites Cloud Dancer may change, and where each one lives. Who owns a site is in the database (owners), not here.
+//
+// `flow` is the list of folders Flo may change on that site. Empty means flow is off: Cloud Dancer can't hand
+// a request to Flo, and Flo's `posted` is refused, so nothing goes live without the owner's "publish". Turn it on
+// for a site only once its FLOW.md has a shape, and list only the folders that shape uses.
 export const SITES = {
-  'unremarkable.me': { name: 'Unremarkable', repo: 'Carrados/unremarkable' },
+  'unremarkable.me': { name: 'Unremarkable', repo: 'Carrados/unremarkable', flow: [] },
 };
+
+// Whether flow is on for a site. Checked by the Worker, not left to the agents' judgement.
+export const flowOn = site => (SITES[site]?.flow || []).length > 0;
 
 // Preview copies live on the account's own workers.dev address. No other address is taken as a preview.
 export const PREVIEW_DOMAIN = 'charlijotyrer.workers.dev';

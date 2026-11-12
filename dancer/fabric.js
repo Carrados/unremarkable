@@ -21,7 +21,7 @@
 //            (called by the preview job, not by the agent)
 //   stuck    she can't do it by herself: the owner is told why
 
-import { SITES, previewUrl, PREVIEW_DOMAIN } from './sites.js';
+import { SITES, previewUrl, PREVIEW_DOMAIN, flowOn } from './sites.js';
 import { DANCER_WORKFLOW, whoIs, github, checkPull, wakeFlo, addStep, tell, now, text, json } from './flo.js';
 
 const PER_RUN = 3;
@@ -73,6 +73,8 @@ export async function dancerAct(action, b, env) {
 
   if (action === 'flow') {
     if (r.kind === 'fabric') return json({ error: `Request ${r.id} came back from Flo as design work. Do it on a preview copy, or call stuck.` }, 409);
+    // Flow goes live without the owner seeing it first, so whether a site has it is decided here, not by her.
+    if (!flowOn(r.site)) return json({ error: `Flow is off for ${r.site}, so nothing goes to Flo. Do request ${r.id} as fabric, on a preview copy, or call stuck.` }, 409);
     const reason = text(b.reason, 2000);
     if (!reason) return json({ error: 'Say in a sentence what kind of flow it is.' }, 400);
     await env.DB.prepare(`UPDATE requests SET status = 'flow', status_at = ?, kind = 'flow', understood = ?, tries = 0 WHERE id = ?`).bind(now(), reason, r.id).run();

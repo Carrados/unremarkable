@@ -22,7 +22,7 @@
 //   fabric   it is design work after all, not flow: it goes back to Cloud Dancer to do on a preview copy
 //   stuck    she can't do it by herself: the owner is told why
 
-import { SITES } from './sites.js';
+import { SITES, flowOn } from './sites.js';
 
 export const AUDIENCE = 'https://dancer.unremarkable.me';
 export const FLO_WORKFLOW = 'Carrados/unremarkable/.github/workflows/flo.yml@refs/heads/main';
@@ -169,11 +169,21 @@ export async function act(action, b, env) {
       .bind(now(), new Date(Date.now() - STALE_HOURS * 3600000).toISOString().replace(/\.\d+Z$/, 'Z')).run();
     const { results } = await env.DB.prepare(`SELECT * FROM requests WHERE kind = 'flow' AND status IN ('flow', 'retry') ORDER BY id LIMIT ${PER_RUN}`).all();
     const work = [];
+    let back = 0;
     for (const r of results) {
       if (!SITES[r.site]) continue;
+      // Flow that is off for its site goes back to Cloud Dancer, to be done on a preview copy for the owner.
+      if (!flowOn(r.site)) {
+        await env.DB.prepare(`UPDATE requests SET status = 'queued', status_at = ?, kind = 'fabric', understood = ?, tries = 0 WHERE id = ? AND kind = 'flow' AND status IN ('flow', 'retry')`)
+          .bind(now(), `Flow is off for ${r.site}, so this is done as design work, on a preview copy.`, r.id).run();
+        await addStep(env, r.id, 'Flow is off for this site, so this went back to Cloud Dancer to do on a preview copy.');
+        back++;
+        continue;
+      }
       await env.DB.prepare(`UPDATE requests SET status = 'working', status_at = ?, tries = tries + 1 WHERE id = ? AND kind = 'flow' AND status IN ('flow', 'retry')`).bind(now(), r.id).run();
       work.push({ id: r.id, site: r.site, repo: SITES[r.site].repo, page: r.page, instruction: r.instruction, owner_reason: r.owner_reason || null, previous_branch: r.branch || null, try: r.tries + 1 });
     }
+    if (back) await wakeDancer(env);
     return json({ work });
   }
 
@@ -190,6 +200,8 @@ export async function act(action, b, env) {
 
   if (action === 'posted') {
     const understood = text(b.understood, 2000), did = text(b.did, 3000), wrote = text(b.wrote, 3000) || null;
+    // Merging here puts it live with no preview, so it happens only on a site where flow is on.
+    if (!flowOn(r.site)) return json({ error: `Flow is off for ${r.site}. Nothing went live. Call fabric, so it is done on a preview copy.` }, 409);
     const repo = SITES[r.site].repo;
     const pr = /^https:\/\/github\.com\/([A-Za-z0-9-]+\/[A-Za-z0-9._-]+)\/pull\/(\d+)$/.exec(text(b.pr_url, 300));
     const live = liveOn(r.site, b.live_url);
