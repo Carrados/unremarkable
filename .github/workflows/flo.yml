@@ -42,7 +42,8 @@ jobs:
         id: claim
         run: |
           node flo/api.mjs claim > flo-work.json
-          cat flo-work.json
+          # This repo's logs are public: print the request numbers, never the owners' words.
+          echo "Claimed requests: $(jq -c '[.work[].id]' flo-work.json)"
           echo "n=$(jq '.work | length' flo-work.json)" >> "$GITHUB_OUTPUT"
 
       - name: Commit as Carrados
@@ -60,7 +61,8 @@ jobs:
           github_token: ${{ secrets.PHIX_GITHUB_TOKEN }}
           bot_name: Carrados
           bot_id: "200772005"
-          display_report: "true"
+          # Her report would repeat the owner's words in the public run summary.
+          display_report: "false"
           prompt: |
             Read flo/FLO.md in this repository and follow it. Your work is in flo-work.json.
           claude_args: >-
