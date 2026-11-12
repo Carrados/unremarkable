@@ -14,8 +14,8 @@
   "routes": [{ "pattern": "dancer.unremarkable.me", "custom_domain": true }],
   "vars": {
     "DANCER_ORIGIN": "https://dancer.unremarkable.me",
-    // "1" once Cloud Dancer is taking work from the in-tray. Until then a request is kept and the owner is told so.
-    "DANCER_OPEN": "0"
+    // "1": Flo takes work from the in-tray. "0": a request is kept and the owner is told nothing will happen yet.
+    "DANCER_OPEN": "1"
   },
   // Sign-ins and tokens, kept by the OAuth library: only hashes of tokens and codes are stored.
   "kv_namespaces": [{ "binding": "OAUTH_KV", "id": "9d30e50ddca44cce9cba7d88ad0b2a9d" }],
@@ -23,6 +23,9 @@
   "d1_databases": [{ "binding": "DB", "database_name": "cloud-dancer", "database_id": "e598c993-268c-4167-b143-6c8853d6c6b6" }],
   // The sign-in code goes by Cloudflare Email Sending (unremarkable.me is onboarded there).
   "send_email": [{ "name": "OWNER_MAIL", "remote": true }],
+  // The door to GitHub, in the site Worker (fix/door.js): wake Flo, look at and merge her pull requests.
+  // Cloud Dancer itself holds no GitHub token.
+  "services": [{ "binding": "SITE", "service": "unremarkable", "entrypoint": "Dancer" }],
   // Slows down guessing at the sign-in page without storing anything.
   "ratelimits": [{ "name": "LIMITER", "namespace_id": "1002", "simple": { "limit": 10, "period": 60 } }]
 }

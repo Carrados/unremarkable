@@ -25,6 +25,7 @@ function fakeEnv({ owners = [['lottie@example.org', 'unremarkable.me']], request
           return { results: [] };
         },
         async first(col) {
+          if (/SELECT \* FROM requests WHERE id = \?$/.test(sql)) return requests.find(r => r.id === st.a[0]) || null;
           if (/SELECT \* FROM requests WHERE id = \? AND owner = \?/.test(sql)) return requests.find(r => r.id === st.a[0] && r.owner === st.a[1]) || null;
           if (/COUNT\(\*\)/.test(sql)) return col ? 0 : { n: 0 };
           if (/INSERT INTO requests/.test(sql)) { const r = { id: requests.length + 1, owner: st.a[0], site: st.a[1], page: st.a[2], instruction: st.a[3], status: 'queued', tries: 0, created_at: '2026-11-10T19:00:00Z' }; requests.push(r); return { id: r.id }; }
@@ -33,6 +34,7 @@ function fakeEnv({ owners = [['lottie@example.org', 'unremarkable.me']], request
         async run() {
           if (/INSERT INTO steps/.test(sql)) steps.push({ request_id: st.a[0], who: st.a[1], text: st.a[2], at: '2026-11-10T19:00:00Z' });
           const m = /UPDATE requests SET status = '(\w+)'/.exec(sql);
+          if (/UPDATE requests SET status = \?/.test(sql)) { const r = requests.find(x => x.id === st.a[st.a.length - 1]); r.status = st.a[0]; r.understood = st.a[3]; }
           if (m) { const r = requests.find(x => x.id === st.a[st.a.length - 1]); r.status = m[1]; if (/owner_reason = \?/.test(sql)) r.owner_reason = st.a[1]; }
           return {};
         },
@@ -137,4 +139,63 @@ test('send back: try again keeps the reasons, leave it closes the pull request',
   assert.equal(env.DB.requests[0].status, 'left');
   assert.deepEqual(calls[0].body, { state: 'closed' });
   await assert.rejects(callTool('send_back', { request: 1, reasons: '', next: 'try-again' }, fakeEnv({ requests: [ready()] }), ME), /reasons/);
+});
+
+// ---- Flo ---------------------------------------------------------------------------------------
+
+import { checkClaims, checkPull, liveOn, act, FLO_WORKFLOW, AUDIENCE } from './flo.js';
+
+test('only a token from Flo\'s own workflow on main, meant for Cloud Dancer, gets in', () => {
+  const good = { iss: 'https://token.actions.githubusercontent.com', aud: AUDIENCE, exp: 2e9, repository: 'Carrados/unremarkable', job_workflow_ref: FLO_WORKFLOW };
+  assert.equal(checkClaims(good, 1.8e9), '');
+  assert.match(checkClaims({ ...good, aud: 'sts.amazonaws.com' }, 1.8e9), /someone else/);
+  assert.match(checkClaims({ ...good, exp: 1 }, 1.8e9), /out of date/);
+  assert.match(checkClaims({ ...good, repository: 'stranger/unremarkable' }, 1.8e9), /another repository/);
+  assert.match(checkClaims({ ...good, job_workflow_ref: 'Carrados/unremarkable/.github/workflows/phix.yml@refs/heads/main' }, 1.8e9), /another workflow/);
+  assert.match(checkClaims({ ...good, job_workflow_ref: FLO_WORKFLOW.replace('main', 'claude/x') }, 1.8e9), /not from main/);
+  assert.match(checkClaims({ ...good, iss: 'https://evil.example' }, 1.8e9), /not a GitHub/);
+});
+
+const pull = (over = {}) => ({ state: 'open', head: { ref: 'flo/request-1', sha: SHA, repo: { full_name: 'Carrados/unremarkable' } }, base: { ref: 'main', repo: { full_name: 'Carrados/unremarkable', default_branch: 'main' } }, ...over });
+
+test('Flo can only hand in her own branch for that request, in the site\'s own repo', () => {
+  assert.equal(checkPull(pull(), 'Carrados/unremarkable', 1), '');
+  assert.match(checkPull(pull({ head: { ref: 'flo/request-2', sha: SHA, repo: { full_name: 'Carrados/unremarkable' } } }), 'Carrados/unremarkable', 1), /flo\/request-1/);
+  assert.match(checkPull(pull({ head: { ref: 'flo/request-1', sha: SHA, repo: { full_name: 'fork/unremarkable' } } }), 'Carrados/unremarkable', 1), /another repo/);
+  assert.match(checkPull(pull({ state: 'closed' }), 'Carrados/unremarkable', 1), /closed/);
+  assert.equal(liveOn('unremarkable.me', 'https://unremarkable.me/news/hello/')?.pathname, '/news/hello/');
+  assert.equal(liveOn('unremarkable.me', 'https://evil.example/news/'), null);
+});
+
+test('posted merges exactly the commit GitHub showed, and the request is done', async t => {
+  const env = fakeEnv({ requests: [ready({ status: 'working', pr_url: null, commit_sha: null })] });
+  const calls = fakeGitHub(t, {
+    'GET /repos/Carrados/unremarkable/pulls/7': [200, pull()],
+    'PUT /repos/Carrados/unremarkable/pulls/7/merge': [200, { merged: true }],
+  });
+  const res = await act('posted', { id: 1, understood: 'A news item.', did: 'Added it.', pr_url: 'https://github.com/Carrados/unremarkable/pull/7', live_url: 'https://unremarkable.me/news/hello/' }, env);
+  assert.equal(res.status, 200);
+  assert.equal(calls[1].body.sha, SHA);
+  assert.equal(env.DB.requests[0].status, 'published');
+});
+
+test('posted puts nothing live from another request\'s branch, or for a request that isn\'t hers', async t => {
+  let env = fakeEnv({ requests: [ready({ status: 'working' })] });
+  const calls = fakeGitHub(t, { 'GET /repos/Carrados/unremarkable/pulls/7': [200, pull({ head: { ref: 'flo/request-9', sha: SHA, repo: { full_name: 'Carrados/unremarkable' } } })] });
+  const res = await act('posted', { id: 1, understood: 'u', did: 'd', pr_url: 'https://github.com/Carrados/unremarkable/pull/7', live_url: 'https://unremarkable.me/x/' }, env);
+  assert.equal(res.status, 400);
+  assert.ok(!calls.some(c => c.key.startsWith('PUT')));
+  env = fakeEnv({ requests: [ready({ status: 'queued' })] });
+  assert.equal((await act('posted', { id: 1 }, env)).status, 409);
+});
+
+test('fabric leaves the site alone and tells the owner it waits for them', async t => {
+  const calls = fakeGitHub(t, {});
+  const env = fakeEnv({ requests: [ready({ status: 'working' })] });
+  const res = await act('fabric', { id: 1, reason: 'A new News section is design work.' }, env);
+  assert.equal(res.status, 200);
+  assert.equal(env.DB.requests[0].status, 'fabric');
+  assert.equal(calls.length, 0);
+  const said = await callTool('where_it_stands', { request: 1 }, env, ME);
+  assert.match(said, /design work/);
 });

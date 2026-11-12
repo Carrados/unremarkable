@@ -25,7 +25,8 @@ CREATE TABLE IF NOT EXISTS requests (
   --   ready      a change is made and on a preview copy; waiting for the owner to publish or send back
   --   retry      the owner sent it back with reasons: Cloud Dancer tries again
   --   stuck      Cloud Dancer couldn't do it by itself; why is in `understood`
-  --   published  the owner published it
+--   fabric     design work, not flow: Flo left it for the owner; why is in `understood`
+  --   published  live: Flo posted it (flow), or the owner published it
   --   left       the owner decided to leave the site as it is
   status TEXT NOT NULL DEFAULT 'queued',
   status_at TEXT,
@@ -37,7 +38,9 @@ CREATE TABLE IF NOT EXISTS requests (
   pr_url TEXT,
   preview_url TEXT,
   commit_sha TEXT,               -- the commit that was handed in: Publish merges this and nothing pushed after it
-  owner_reason TEXT              -- why the owner last sent it back
+  owner_reason TEXT,             -- why the owner last sent it back
+  kind TEXT,                     -- flow | fabric, once Flo has sorted it
+  live_url TEXT                  -- where a flow change is live
 );
 CREATE INDEX IF NOT EXISTS requests_owner ON requests (owner, id);
 CREATE INDEX IF NOT EXISTS requests_status ON requests (status, id);
@@ -47,7 +50,7 @@ CREATE TABLE IF NOT EXISTS steps (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   request_id INTEGER NOT NULL REFERENCES requests (id),
   at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%SZ', 'now')),
-  who TEXT NOT NULL,             -- dancer | owner
+  who TEXT NOT NULL,             -- dancer | flo | owner
   text TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS steps_request ON steps (request_id, id);

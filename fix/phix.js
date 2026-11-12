@@ -14,7 +14,7 @@ import { esc, html, PRIVATE, newKey, dateText, now, paras, template, pageUrl, LI
 export const OWNER_KEY = /^\/fix\/owner\/([A-Za-z0-9_-]{22})\/?$/;
 
 // The repos Phix may hand in fixes for, and so the ones Publish may merge. Phix's own workflow lives in the first.
-const REPOS = ['Carrados/unremarkable', 'Carrados/Charli.info', 'Carrados/charli-jo', 'Carrados/tka'];
+export const REPOS = ['Carrados/unremarkable', 'Carrados/Charli.info', 'Carrados/charli-jo', 'Carrados/tka'];
 const WAKE_HOURS = [6, 12];   // UK time; the cron runs at both UTC hours either side, and this picks the right one
 const MAX_TRIES = 3;          // after this many tries, a report goes to the owner instead
 const STALE_HOURS = 3;        // a run that hasn't reported back by then is taken to have failed

@@ -178,3 +178,17 @@ test('a fix handed in before this check existed still publishes', async t => {
   assert.equal(res.status, 200);
   assert.equal('sha' in calls[0].body, false);
 });
+
+import { allowed } from './door-rules.js';
+
+test('the door lets Cloud Dancer wake Flo, and look at, merge and close pull requests on the site repos, and nothing else', () => {
+  assert.equal(allowed('POST', '/repos/Carrados/unremarkable/dispatches', { event_type: 'flo-wake' }), true);
+  assert.equal(allowed('POST', '/repos/Carrados/unremarkable/dispatches', { event_type: 'phix-wake' }), false);
+  assert.equal(allowed('GET', '/repos/Carrados/unremarkable/pulls/5'), true);
+  assert.equal(allowed('PUT', '/repos/Carrados/tka/pulls/5/merge', { sha: 'x' }), true);
+  assert.equal(allowed('PATCH', '/repos/Carrados/unremarkable/pulls/5', { state: 'closed' }), true);
+  assert.equal(allowed('PATCH', '/repos/Carrados/unremarkable/pulls/5', { state: 'closed', base: 'x' }), false);
+  assert.equal(allowed('PUT', '/repos/stranger/unremarkable/pulls/5/merge', {}), false);
+  assert.equal(allowed('DELETE', '/repos/Carrados/unremarkable/git/refs/heads/main'), false);
+  assert.equal(allowed('PUT', '/repos/Carrados/unremarkable/contents/site/index.html', {}), false);
+});

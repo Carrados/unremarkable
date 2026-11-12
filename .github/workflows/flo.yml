@@ -1,0 +1,69 @@
+# Flo (Florence): Cloud Dancer's flow agent. Puts news items, posts and catalogue entries live on the
+# owner's sites, in the shape each site's FLOW.md sets out; says so when a request is design work instead.
+# Read flo/FLO.md and dancer/flo.js.
+#
+# Started by Cloud Dancer the moment an owner asks for something (a "flo-wake" dispatch, through the door in
+# the site Worker), or by hand from the Actions tab. If there is no work, it stops before Claude starts, so no
+# tokens are used.
+#
+# Flo proves who she is to Cloud Dancer with this run's GitHub identity token ("id-token: write"): no secret.
+# Secrets it shares with Phix (Settings > Secrets and variables > Actions):
+#   CLAUDE_CODE_OAUTH_TOKEN  for Claude, from the owner's Claude subscription
+#   PHIX_GITHUB_TOKEN        pushes branches and opens pull requests on the site repos. Flo never merges:
+#                            Cloud Dancer checks what she hands in and merges it.
+
+name: Flo
+
+on:
+  repository_dispatch:
+    types: [flo-wake]
+  workflow_dispatch:
+
+concurrency:
+  group: flo
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  flo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Claim the work
+        id: claim
+        run: |
+          node flo/api.mjs claim > flo-work.json
+          cat flo-work.json
+          echo "n=$(jq '.work | length' flo-work.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Commit as Carrados
+        if: steps.claim.outputs.n != '0'
+        run: |
+          git config --global user.name "Carrados"
+          git config --global user.email "200772005+Carrados@users.noreply.github.com"
+
+      - uses: anthropics/claude-code-action@v1
+        if: steps.claim.outputs.n != '0'
+        env:
+          GH_TOKEN: ${{ secrets.PHIX_GITHUB_TOKEN }}
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ secrets.PHIX_GITHUB_TOKEN }}
+          bot_name: Carrados
+          bot_id: "200772005"
+          display_report: "true"
+          prompt: |
+            Read flo/FLO.md in this repository and follow it. Your work is in flo-work.json.
+          claude_args: >-
+            --model claude-opus-5-5
+            --max-turns 150
+            --allowedTools "Read,Edit,Write,Glob,Grep,Bash(node flo/api.mjs:*),Bash(curl:*),Bash(git:*),Bash(gh:*),Bash(node:*),Bash(npm:*),Bash(npx:*),Bash(cd:*),Bash(ls:*),Bash(cat:*),Bash(head:*),Bash(tail:*),Bash(wc:*),Bash(find:*),Bash(diff:*),Bash(mkdir:*),Bash(cp:*),Bash(mv:*),Bash(pwd),Bash(jq:*),Bash(echo:*),Bash(sleep:*),Bash(date:*)"
