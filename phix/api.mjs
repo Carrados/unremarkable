@@ -1,4 +1,4 @@
-// Phix's way into its API, so the secret never appears in a command.
+// Phix's way into her API, so the secret never appears in a command.
 //
 //   node phix/api.mjs claim
 //   node phix/api.mjs step  '{"id": 12, "text": "..."}'

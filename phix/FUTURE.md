@@ -4,15 +4,15 @@ Notes for Charli-Jo on where Phix could go. Nothing here is decided, and nothing
 
 ## How wide Phix's scope should be (10 November 2026)
 
-The question: Phix is ambitious. It can't fix every accessibility problem, but it could fix a great many, and models well short of the newest can work out what needs doing from the HTML and the person's own words. So how wide should its scope be, should its limitations be stated, or should it simply grow as models do?
+The question: Phix is ambitious. She can't fix every accessibility problem, but she could fix a great many, and models well short of the newest can work out what needs doing from the HTML and the person's own words. So how wide should its scope be, should its limitations be stated, or should it simply grow as models do?
 
 The answer reached: keep the scope wide, and put the limits somewhere other than on the kinds of problem.
 
 ### Don't limit Phix by what the problem is
 
-Any list of "what Phix can fix" is a snapshot of one month's model and will be wrong within months. The price of Phix trying and failing is small: it calls `stuck` and the owner gets an email. So let it attempt everything.
+Any list of "what Phix can fix" is a snapshot of one month's model and will be wrong within months. The price of Phix trying and failing is small: she calls `stuck` and the owner gets an email. So let it attempt everything.
 
-### Limit Phix by what it may change
+### Limit Phix by what she may change
 
 This boundary has nothing to do with how clever the model is, so it doesn't date:
 
@@ -27,7 +27,7 @@ A better model fixes more inside that fence. It doesn't earn the right to move t
 
 "Phix can fix X but not Y" is a claim that would need revising for ever. "A person checks every fix before it goes live, and you tell us whether it worked" stays true whatever the model.
 
-One limitation is worth stating, because it explains the design: Phix reads the code, it doesn't use a screen reader. That is exactly why the person who reported the problem has the last word.
+One limitation is worth stating, because it explains the design: Phix reads the code, she doesn't use a screen reader. That is exactly why the person who reported the problem has the last word.
 
 ### Let the record draw the boundary
 
