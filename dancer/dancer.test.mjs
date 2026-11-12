@@ -301,3 +301,52 @@ test('sending back goes to whoever has it: flow to Flo, fabric to Cloud Dancer',
   assert.match(await callTool('send_back', { request: 1, reasons: 'Use today.', next: 'try-again' }, env, ME), /Flo will try/);
   assert.deepEqual(calls.map(c => c.body.event_type), ['dancer-wake', 'flo-wake']);
 });
+
+// ---- The preview job: what Cloud Dancer hands in is data, and nothing from her branch is run --------
+
+import { readHandin, checkPull as checkPreviewPull, previewFrom, unsafe } from './preview.mjs';
+import { mkdtempSync, mkdirSync, writeFileSync, symlinkSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+
+test('a hand-in must name a pull request on the request\'s own repo, and a path on the site', () => {
+  const good = { id: 7, understood: 'u', did: 'd', pr_url: 'https://github.com/Carrados/unremarkable/pull/9', path: '/prices/' };
+  const h = readHandin(JSON.stringify(good), 7, 'Carrados/unremarkable');
+  assert.equal(h.number, 9);
+  assert.equal(h.path, '/prices/');
+  assert.equal(readHandin(JSON.stringify({ ...good, path: undefined }), 7, 'Carrados/unremarkable').path, '/');
+  assert.throws(() => readHandin('not json', 7, 'Carrados/unremarkable'));
+  assert.throws(() => readHandin(JSON.stringify({ ...good, did: '' }), 7, 'Carrados/unremarkable'));
+  assert.throws(() => readHandin(JSON.stringify({ ...good, pr_url: 'https://github.com/someone/else/pull/9' }), 7, 'Carrados/unremarkable'));
+  assert.throws(() => readHandin(JSON.stringify({ ...good, path: '//evil.example/' }), 7, 'Carrados/unremarkable'));
+  assert.throws(() => readHandin(JSON.stringify({ ...good, path: 'https://evil.example/' }), 7, 'Carrados/unremarkable'));
+});
+
+test('the preview job only takes an open pull request from that request\'s own branch, in the site\'s repo', () => {
+  const repo = { full_name: 'Carrados/unremarkable', default_branch: 'main' };
+  const pull = { state: 'open', base: { ref: 'main', repo }, head: { ref: 'dancer/request-7', sha: 'a'.repeat(40), repo } };
+  assert.equal(checkPreviewPull(pull, 'Carrados/unremarkable', 7), '');
+  assert.ok(checkPreviewPull(pull, 'Carrados/unremarkable', 8));
+  assert.ok(checkPreviewPull({ ...pull, state: 'closed' }, 'Carrados/unremarkable', 7));
+  assert.ok(checkPreviewPull({ ...pull, head: { ...pull.head, repo: { full_name: 'someone/fork' } } }, 'Carrados/unremarkable', 7));
+  assert.ok(checkPreviewPull({ ...pull, head: { ...pull.head, sha: 'main' } }, 'Carrados/unremarkable', 7));
+});
+
+test('only the address wrangler printed for this request\'s alias counts as its preview', () => {
+  const out = 'Uploaded unremarkable\nVersion Preview URL: https://1a2b3c4d-unremarkable.charlijotyrer.workers.dev\nVersion Preview Alias URL: https://dancer-7-unremarkable.charlijotyrer.workers.dev\n';
+  assert.equal(previewFrom(out, 7), 'https://dancer-7-unremarkable.charlijotyrer.workers.dev');
+  assert.equal(previewFrom(out, 70), null);
+  assert.equal(previewFrom('no address here', 7), null);
+});
+
+test('a branch with a link to another file, or a settings file, is not uploaded', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'unsafe-'));
+  mkdirSync(join(dir, 'site'));
+  writeFileSync(join(dir, 'site', 'index.html'), '<h1>Hello</h1>');
+  assert.equal(unsafe(dir), '');
+  symlinkSync('/etc/passwd', join(dir, 'site', 'leak.txt'));
+  assert.match(unsafe(dir), /link to another file/);
+  const dir2 = mkdtempSync(join(tmpdir(), 'unsafe-'));
+  writeFileSync(join(dir2, '.env'), 'CLOUDFLARE_API_BASE_URL=https://evil.example');
+  assert.match(unsafe(dir2), /settings file/);
+});

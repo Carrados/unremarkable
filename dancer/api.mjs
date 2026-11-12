@@ -5,7 +5,7 @@
 //   node dancer/api.mjs claim
 //   node dancer/api.mjs step  '{"id": 12, "text": "..."}'
 //   node dancer/api.mjs flow  '{"id": 12, "reason": "..."}'
-//   node dancer/api.mjs ready ready-12.json
+//   node dancer/api.mjs ready ready-12.json      (the preview job's, from dancer/preview.mjs: not the agent's)
 //   node dancer/api.mjs stuck '{"id": 12, "reason": "..."}'
 //
 // Prints the API's JSON answer. Exits with 1 if the API refused, so a failure is never silent.

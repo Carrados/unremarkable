@@ -10,12 +10,15 @@
 //
 // She runs as a GitHub Actions run in Carrados/unremarkable (.github/workflows/dancer.yml), woken through the
 // door in the site Worker (fix/door.js) the moment a request comes in, and proves who she is with the run's
-// own GitHub identity token (OIDC), as Flo does. Her rules are dancer/DANCER.md. Her API, at /dancer/api/:
+// own GitHub identity token (OIDC), as Flo does. Her rules are dancer/DANCER.md. The agent holds no Cloudflare
+// key: a second job in the same run, with no model in it (dancer/preview.mjs), uploads the preview copy and
+// calls `ready`. Her API, at /dancer/api/:
 //
 //   claim    up to three requests to sort (new ones, and fabric the owner sent back), marked as hers
 //   step     one sentence on what is happening, for the owner
 //   flow     it is flow: handed to Flo
 //   ready    the fabric change is on a branch, a pull request and a preview copy: the owner is emailed the link
+//            (called by the preview job, not by the agent)
 //   stuck    she can't do it by herself: the owner is told why
 
 import { SITES, previewUrl, PREVIEW_DOMAIN } from './sites.js';

@@ -1,19 +1,27 @@
 # Cloud Dancer: gets every request an owner makes, sorts it, and does the fabric herself.
 # Flow (a news item, a post, a catalogue entry) she hands to Flo. Fabric (layout, menus, pages, design,
-# standing wording) she makes on a new branch and a private preview copy, and the owner is emailed the
-# preview address to publish or send back. She never publishes. Read dancer/DANCER.md and dancer/fabric.js.
+# standing wording) she makes on a new branch, and the owner is emailed the address of a private preview
+# copy to publish or send back. She never publishes. Read dancer/DANCER.md and dancer/fabric.js.
 #
 # Started by the Cloud Dancer Worker the moment an owner asks for something (a "dancer-wake" dispatch, through
 # the door in the site Worker), or by hand from the Actions tab. If there is no work, it stops before Claude
 # starts, so no tokens are used.
 #
-# Cloud Dancer proves who she is to her API with this run's GitHub identity token ("id-token: write"): no secret.
-# Secrets it shares with Phix (Settings > Secrets and variables > Actions):
-#   CLAUDE_CODE_OAUTH_TOKEN  for Claude, from the owner's Claude subscription
-#   PHIX_GITHUB_TOKEN        pushes branches and opens pull requests on the site repos. Cloud Dancer never
-#                            merges: the owner's "publish" does.
-#   CLOUDFLARE_API_TOKEN     to upload preview copies (Workers Scripts: Edit)
-#   CLOUDFLARE_ACCOUNT_ID
+# Two jobs, on two machines, so that the agent never holds a key that can put anything live:
+#   dancer   the agent. She has the GitHub token (branches and pull requests) and no Cloudflare key.
+#            What she finishes she leaves as a hand-in file, dancer-out/ready-<id>.json.
+#   preview  no model. It holds the Cloudflare key, fetches the commit GitHub names for her pull request,
+#            uploads it as a preview copy and calls `ready` (dancer/preview.mjs). Nothing from her branch is run.
+#
+# This repo is public, and so are its Actions logs. What an owner asked for is never printed here.
+#
+# Both jobs prove who they are to the API with the run's GitHub identity token ("id-token: write"): no secret.
+# Secrets (Settings > Secrets and variables > Actions):
+#   CLAUDE_CODE_OAUTH_TOKEN  for Claude, from the owner's Claude subscription (dancer job only)
+#   PHIX_GITHUB_TOKEN        pushes branches and opens pull requests on the site repos (dancer job only).
+#                            Cloud Dancer never merges: the owner's "publish" does. See dancer/REVIEW.md, finding 2.
+#   CLOUDFLARE_API_TOKEN     to upload preview copies (Workers Scripts: Edit) (preview job only)
+#   CLOUDFLARE_ACCOUNT_ID    (preview job only)
 
 name: Cloud Dancer
 
@@ -34,6 +42,10 @@ jobs:
   dancer:
     runs-on: ubuntu-latest
     timeout-minutes: 120
+    outputs:
+      n: ${{ steps.claim.outputs.n }}
+      # Set before the agent starts, so she can't change which requests the preview job looks at.
+      work: ${{ steps.claim.outputs.work }}
     steps:
       - uses: actions/checkout@v4
 
@@ -41,12 +53,14 @@ jobs:
         with:
           node-version: 22
 
+      # Only the request numbers are printed: the owners' words stay out of the public log.
       - name: Claim the work
         id: claim
         run: |
           node dancer/api.mjs claim > dancer-work.json
-          cat dancer-work.json
+          echo "Claimed requests: $(jq -c '[.work[].id]' dancer-work.json)"
           echo "n=$(jq '.work | length' dancer-work.json)" >> "$GITHUB_OUTPUT"
+          echo "work=$(jq -c '[.work[] | {id, repo}]' dancer-work.json)" >> "$GITHUB_OUTPUT"
 
       - name: Commit as Carrados
         if: steps.claim.outputs.n != '0'
@@ -54,21 +68,67 @@ jobs:
           git config --global user.name "Carrados"
           git config --global user.email "200772005+Carrados@users.noreply.github.com"
 
+      # No Cloudflare key here. She may call step, flow and stuck; `ready` is the preview job's to call.
       - uses: anthropics/claude-code-action@v1
         if: steps.claim.outputs.n != '0'
         env:
           GH_TOKEN: ${{ secrets.PHIX_GITHUB_TOKEN }}
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           github_token: ${{ secrets.PHIX_GITHUB_TOKEN }}
           bot_name: Carrados
           bot_id: "200772005"
-          display_report: "true"
+          # Her report would repeat the owner's words in the public run summary.
+          display_report: "false"
           prompt: |
             Read dancer/DANCER.md in this repository and follow it. Your work is in dancer-work.json.
           claude_args: >-
             --model claude-opus-5-5
             --max-turns 200
-            --allowedTools "Read,Edit,Write,Glob,Grep,Bash(node dancer/api.mjs:*),Bash(curl:*),Bash(git:*),Bash(gh:*),Bash(node:*),Bash(npm:*),Bash(npx:*),Bash(cd:*),Bash(ls:*),Bash(cat:*),Bash(head:*),Bash(tail:*),Bash(wc:*),Bash(find:*),Bash(diff:*),Bash(mkdir:*),Bash(cp:*),Bash(mv:*),Bash(pwd),Bash(jq:*),Bash(echo:*),Bash(sleep:*),Bash(date:*)"
+            --allowedTools "Read,Edit,Write,Glob,Grep,Bash(node dancer/api.mjs step:*),Bash(node dancer/api.mjs flow:*),Bash(node dancer/api.mjs stuck:*),Bash(node build.mjs:*),Bash(curl:*),Bash(git:*),Bash(gh repo clone:*),Bash(gh pr create:*),Bash(gh pr view:*),Bash(gh pr list:*),Bash(gh pr edit:*),Bash(cd:*),Bash(ls:*),Bash(cat:*),Bash(head:*),Bash(tail:*),Bash(wc:*),Bash(find:*),Bash(diff:*),Bash(mkdir:*),Bash(cp:*),Bash(mv:*),Bash(pwd),Bash(jq:*),Bash(echo:*),Bash(sleep:*),Bash(date:*)"
+
+      # What she understood and changed, for the preview job. It says no more than her pull request does.
+      - name: Keep what she handed in
+        if: always() && steps.claim.outputs.n != '0'
+        uses: actions/upload-artifact@v4
+        with:
+          name: dancer-out
+          path: dancer-out/ready-*.json
+          if-no-files-found: ignore
+          retention-days: 1
+
+  # A fresh machine with no model on it: the only place the Cloudflare key is used.
+  preview:
+    needs: dancer
+    if: always() && needs.dancer.outputs.n != '' && needs.dancer.outputs.n != '0'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      # main, as this run started on: dancer/preview.mjs and dancer/api.mjs come from here, never from her branch.
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Fetch what she handed in
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: dancer-out
+          path: ${{ runner.temp }}/handin
+
+      - name: Get wrangler, in a folder of its own
+        run: npm install --prefix "$RUNNER_TEMP/tools" --no-save --no-audit --no-fund wrangler@4
+
+      - name: Upload the preview copies and hand them in
+        env:
+          WORK: ${{ needs.dancer.outputs.work }}
+          HANDIN_DIR: ${{ runner.temp }}/handin
+          WRANGLER: ${{ runner.temp }}/tools/node_modules/.bin/wrangler
+          GH_TOKEN: ${{ github.token }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          mkdir -p "$HANDIN_DIR"
+          node dancer/preview.mjs
