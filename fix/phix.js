@@ -1,9 +1,9 @@
 // Phix (said "fix"): the agent that works on reports from "Fix something on this page".
 //
-// This file is the website's side of Phix. Phix itself runs elsewhere (a GitHub Actions run with
-// Claude Code, started by wake() below) and can only do what the API here lets it do:
-// claim work, add a step for the reporter, hand a finished fix to the owner, or say it is stuck.
-// It can't publish anything, read the database, or email anyone but the owner.
+// This file is the website's side of Phix. Phix herself runs elsewhere (a GitHub Actions run with
+// Claude Code, started by wake() below) and can only do what the API here lets her do:
+// claim work, add a step for the reporter, hand a finished fix to the owner, or say she is stuck.
+// She can't publish anything, read the database, or email anyone but the owner.
 //
 //   wake()              06:00 and midday, UK time: is there work? If not, back to sleep, no tokens used.
 //   POST /phix/api/...  Phix's API, behind the PHIX_SECRET bearer token.
@@ -209,7 +209,7 @@ export async function phixApi(request, env) {
     const why = text(b.reason, 2000);
     if (!why) return json({ error: 'Say why, for the owner.' }, 400);
     await env.DB.prepare(`UPDATE reports SET phix = 'stuck', phix_at = ?, understood = ? WHERE id = ?`).bind(now(), why, r.id).run();
-    await step(env, r.id, 'phix', 'Phix couldn\'t fix this by itself, so it has gone to the owner.');
+    await step(env, r.id, 'phix', 'Phix couldn\'t fix this by herself, so it has gone to the owner.');
     await tellOwner(env, origin, { ...r, understood: why, phix: 'stuck' });
     return json({ ok: true });
   }
@@ -227,7 +227,7 @@ async function claim(env, origin) {
     if (r.tries >= MAX_TRIES) {
       const why = `Phix has tried ${r.tries} times without a fix that was accepted.`;
       await env.DB.prepare(`UPDATE reports SET phix = 'stuck', phix_at = ?, understood = ? WHERE id = ?`).bind(now(), why, r.id).run();
-      await step(env, r.id, 'phix', 'Phix couldn\'t fix this by itself, so it has gone to the owner.');
+      await step(env, r.id, 'phix', 'Phix couldn\'t fix this by herself, so it has gone to the owner.');
       await tellOwner(env, origin, { ...r, understood: why, phix: 'stuck' });
       continue;
     }
@@ -265,7 +265,7 @@ async function tellOwner(env, origin, r, reminder = false) {
   const fixed = r.phix === 'owner';
   const subject = `${reminder ? 'Reminder: ' : ''}${fixed ? 'A fix to check' : 'Phix needs you'}: ${where}`;
   const body = [
-    fixed ? `Phix has fixed a report about ${where}.` : `Phix couldn't fix a report about ${where} by itself.`,
+    fixed ? `Phix has fixed a report about ${where}.` : `Phix couldn't fix a report about ${where} by herself.`,
     '',
     'What the visitor said:',
     r.what_happened,
@@ -335,7 +335,7 @@ function ownerView(key, l, r) {
   const out = [];
   out.push(fixed
     ? `<p class="lede">Phix has fixed a report about ${esc(where)}.</p>`
-    : `<p class="lede">Phix couldn't fix a report about ${esc(where)} by itself.</p>`);
+    : `<p class="lede">Phix couldn't fix a report about ${esc(where)} by herself.</p>`);
   out.push(visitorSaid(r));
   out.push(`<h2 id="what-phix-did">${fixed ? 'What Phix did' : 'Why Phix stopped'}</h2>`);
   if (fixed) out.push('<h3>What Phix understood</h3>', paras(r.understood), '<h3>What Phix changed</h3>', paras(r.did));
@@ -371,7 +371,7 @@ export async function ownerPage(request, env, key) {
   const { l, r } = await findLink(env, key);
   if (!l || !r) return page('<p class="lede">There\'s no link like this.</p>\n<p>Check the link is complete. If it came in an email, use the newest one: each new email replaces the links before it.</p>', 404, 'Not found: ');
   if (l.used_at) return page(`<p class="lede">${DECIDED[l.decision] || 'This link has been used'}, on ${dateText(l.used_at)}.</p>\n<p>Each link decides once.${l.decision === 'published' && pageUrl(r.page) ? ` <a href="${esc(r.page)}">See the page</a>` : ''}</p>`);
-  if (l.expires_at < now()) return page('<p class="lede">This link has expired.</p>\n<p>Phix sends a new link at its next wake-up, at 6 in the morning or midday.</p>', 410, 'Expired: ');
+  if (l.expires_at < now()) return page('<p class="lede">This link has expired.</p>\n<p>Phix sends a new link at her next wake-up, at 6 in the morning or midday.</p>', 410, 'Expired: ');
 
   if (request.method !== 'POST') return page(ownerView(key, l, r));
 
@@ -411,8 +411,8 @@ export async function ownerPage(request, env, key) {
         env.DB.prepare(`UPDATE reports SET phix = 'retry', phix_at = ?, owner_reason = ?, tries = CASE WHEN phix = 'stuck' THEN 0 ELSE tries END WHERE id = ?`).bind(now(), v.reason, r.id),
         env.DB.prepare(`UPDATE owner_links SET used_at = ?, decision = 'retry' WHERE hash = ?`).bind(now(), l.hash),
       ]);
-      await step(env, r.id, 'owner', fixed ? 'The owner looked at Phix\'s fix and asked it to try again.' : 'The owner told Phix how to go on.');
-      return page(`<p class="lede">Sent back to Phix.</p>\n<p>Phix tries again at its next wake-up, ${nextWake()}, with your reasons. You'll get an email when there's a new fix to check.</p>`, 200, 'Sent back: ');
+      await step(env, r.id, 'owner', fixed ? 'The owner looked at Phix\'s fix and asked her to try again.' : 'The owner told Phix how to go on.');
+      return page(`<p class="lede">Sent back to Phix.</p>\n<p>Phix tries again at her next wake-up, ${nextWake()}, with your reasons. You'll get an email when there's a new fix to check.</p>`, 200, 'Sent back: ');
     }
     if (fixed) {
       const [, repo, n] = /^https:\/\/github\.com\/([^/]+\/[^/]+)\/pull\/(\d+)$/.exec(r.pr_url);
@@ -437,7 +437,7 @@ export function phixLine(r) {
     case 'working': return '<p>Phix (said "fix"), the agent that works on reports, has it now.</p>';
     case 'owner': return '<p>Phix (said "fix"), the agent that works on reports, has made a fix. It is waiting for the site\'s owner to check it and publish it.</p>';
     case 'retry': return `<p>Phix (said "fix"), the agent that works on reports, will try again ${nextWake()}.</p>`;
-    case 'stuck': return '<p>Phix (said "fix"), the agent that works on reports, couldn\'t fix it by itself, so it is with the site\'s owner.</p>';
+    case 'stuck': return '<p>Phix (said "fix"), the agent that works on reports, couldn\'t fix it by herself, so it is with the site\'s owner.</p>';
     default: return `<p>Phix (said "fix"), the agent that works on reports, looks at new reports at 6 in the morning and at midday. It will start on yours ${nextWake()}.</p>`;
   }
 }
