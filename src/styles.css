@@ -91,6 +91,7 @@ h2::before { content: ""; display: block; width: 3rem; height: 4px; background: 
 .intro { max-width: 60ch; margin: 1.5rem 0 0; }
 
 /* The As If note: under every main heading while Unremarkable is design fiction. */
+blockquote { margin: 0 0 1.5rem; padding: 0 0 0 1.25rem; border-left: 3px solid var(--accent); max-width: 40rem; }
 .as-if { border-left: 6px solid var(--accent); background: var(--panel); padding: 1rem 1.25rem; margin: 0 0 2.5rem; max-width: 40rem; }
 .as-if p { margin: 0; }
 .before-you-send { border-left: 6px solid var(--accent); background: var(--panel); padding: 1rem 1.25rem; margin: 2.5rem 0 0; max-width: 40rem; }

@@ -68,6 +68,13 @@ const pages = [
     llms: 'How this site meets ZIC v1.7 and its agent surface.',
     body: () => read('src/accessibility.html'), type: 'WebPage',
   },
+  // Not in the menu: linked from the accessibility statement.
+  {
+    path: '/what-is-accessibility/', h1: 'What is web accessibility?', title: `What is web accessibility?: ${SITE}`,
+    description: 'What web accessibility is, introduced in the words of W3C WAI, and what it means at Unremarkable.',
+    llms: 'What web accessibility is, a short introduction quoted from W3C WAI, how Unremarkable builds for it, and further reading.',
+    body: () => read('src/what-is-accessibility.html'), type: 'WebPage',
+  },
   // Outside the fiction: what is real here and what isn't. Linked from the note on every page, not the menu.
   {
     path: '/as-if/', h1: 'As if', title: `As if: ${SITE}`,
@@ -222,7 +229,7 @@ For agents: [llms.txt](${ORIGIN}/llms.txt)
 `;
 
 // A small HTML-to-Markdown converter for the hand-written pages in src/.
-// It covers exactly the elements those pages use: h2, h3, p, ul/li, ol/li, figure, img, a, strong, em, section.
+// It covers exactly the elements those pages use: h2, h3, p, ul/li, ol/li, blockquote, figure, img, a, strong, em, section.
 function toMarkdown(html) {
   const inline = s => s
     // Pictures keep their description; decorative ones (empty alt) are left out.
@@ -237,11 +244,12 @@ function toMarkdown(html) {
     .trim();
   const blocks = [];
   html = html.replace(/<\/?section[^>]*>/g, '');
-  for (const [, tag, body] of html.matchAll(/<(h2|h3|p|ul|ol|figure)\b[^>]*>([\s\S]*?)<\/\1>/g)) {
+  for (const [, tag, body] of html.matchAll(/<(h2|h3|p|ul|ol|blockquote|figure)\b[^>]*>([\s\S]*?)<\/\1>/g)) {
     if (tag === 'figure') blocks.push(inline(body.replace(/<figcaption>([\s\S]*?)<\/figcaption>/, ' $1')));
     else if (tag === 'h2') blocks.push(`## ${inline(body)}`);
     else if (tag === 'h3') blocks.push(`### ${inline(body)}`);
     else if (tag === 'p') blocks.push(inline(body));
+    else if (tag === 'blockquote') blocks.push([...body.matchAll(/<p>([\s\S]*?)<\/p>/g)].map(([, q]) => `> ${inline(q)}`).join('\n>\n'));
     else blocks.push([...body.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(([, li], i) => `${tag === 'ol' ? `${i + 1}.` : '-'} ${inline(li)}`).join('\n'));
   }
   return blocks.join('\n\n');

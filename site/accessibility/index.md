@@ -15,6 +15,8 @@ Menu:
 
 An accessibility statement is where most sites admit what they couldn't manage. Ours is built to [Zero Information Casualty version 1.7](https://zeroinformationcasualty.org/), so that nobody, whether reading directly, using assistive technology or sending an agent, loses access to anything published here.
 
+New to the subject? [What is web accessibility?](https://unremarkable.me/what-is-accessibility/) explains it, in the words of the W3C Web Accessibility Initiative and our own.
+
 ## How it is built
 
 - Every page is plain, static HTML. No content depends on JavaScript, and the site uses none.
