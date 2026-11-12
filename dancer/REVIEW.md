@@ -1,6 +1,6 @@
 # Cloud Dancer: review of 12 November 2026
 
-A review of Cloud Dancer's connector and the agent runs behind it, for design, operational sanity and security. It was made from the source in this repo and from the live connector, using read-only calls only. Flo is not written yet, so findings about her are about the design.
+A review of Cloud Dancer's connector and the agent runs behind it, for design, operational sanity and security. It was made from the source in this repo and from the live connector, using read-only calls only. It said Flo was not written yet. That was wrong: her API (`dancer/flo.js`) and her run (`flo.yml`) were on main and reachable, which is why finding 5 was done first, on 12 November 2026.
 
 Each finding says where it stands: **done**, **partly done**, or **to do**.
 
@@ -47,7 +47,7 @@ The preview job also refuses a branch that touches the site's own machinery: `.g
 Still to do:
 
 - **Phix: done too**, in the same way, across all four site repos. Which repo a fix is pushed to comes from the reported page (`phix/sites.mjs`), never from her.
-- **`flo.yml` still holds the token.** Give Flo the same shape when she is written.
+- **`flo.yml`: done.** Flo's run no longer holds `PHIX_GITHUB_TOKEN`, only its own read-only token, and may no longer use `gh`, `npm`, `npx` or bare `node`. She can't push, so she can't put flow live until her run has the same two-job shape as Cloud Dancer's. Do that before flow is turned on for any site.
 - `build.mjs` and `README.md` are not on the refused list, because fabric can need them. `build.mjs` runs on Cloudflare when a change is published, and the agents read `README.md` as rules. A change to either deserves a line in the email to the owner saying so.
 
 ### 3. Owners' instructions were printed in public. Done for the logs. A decision is still open.
@@ -73,12 +73,20 @@ Still to do:
 - The agent's job can still mint the run's identity token, so a determined misuse could call `ready` by hand. Have the Worker work out the expected host itself (`dancer-<id>-<worker>.<account>.workers.dev`) and refuse any other.
 - Serve the commit id on the preview (a small `version.txt`), and have `ready` and `publish` both fetch and compare it. The alias `dancer-<id>` can be uploaded again later, so check at publish, not only at ready.
 
-### 5. Flow has no server-side limit. To do, before Flo is switched on.
+### 5. Flow has no server-side limit. Partly done.
 
-The Worker merges whatever is in Flo's pull request (`posted` in `flo.js`). It does not check that the site has any flow shapes, or that only flow files changed. `FLOW.md` says "none yet", but only the agents read it. The sort between flow and fabric is a model's judgement, and the approval gate hangs on it.
+The Worker merged whatever was in Flo's pull request (`posted` in `flo.js`). It did not check that the site had any flow shapes, or that only flow files changed. `FLOW.md` says "none yet", but only the agents read it. The sort between flow and fabric is a model's judgement, and the approval gate hung on it. Flo was live, with a token that could push and merge, so a misled Cloud Dancer calling `flow` was a way to put a change live, Worker code included, with no preview and no owner.
 
-- Add a per-site flow setting in `sites.js`: off, or the list of folders flow may touch. Refuse `flow` and `posted` when it is off.
-- Before merging, ask GitHub for the pull request's changed files and refuse anything outside those folders. The door needs one more allowed call for that.
+What changed:
+
+- `sites.js` has a `flow` setting for each site: the folders flow may touch, empty for off. Every site is off.
+- While it is off, the Worker refuses Cloud Dancer's `flow` and Flo's `posted`, and Flo's `claim` sends any flow request for that site back to Cloud Dancer as fabric.
+- Flo's run holds no token that can push (finding 2).
+
+Still to do, before flow is turned on for any site:
+
+- Before merging, ask GitHub for the pull request's changed files and refuse anything outside that site's `flow` folders. The door needs one more allowed call for that.
+- Give Flo's run Cloud Dancer's shape: an agent job with no keys, and a job with no model that pushes her branch.
 
 ### 6. The sign-in code can be guessed slowly, and sign-in can be blocked. To do.
 
@@ -97,6 +105,12 @@ Six codes an hour with five tries each is 30 guesses an hour against one address
 - An agent's "stuck" reason is emailed to the owner word for word, so a misled agent could send a persuasive link. Consider stripping addresses that aren't on the owner's site.
 - The sign-in email names the app by the name it gave itself. Add the address access will go to, as the page does.
 - The agents' API has no rate limit, and an unknown key id makes the Worker fetch GitHub's keys again each time. Small.
+
+### 8. Files that change how Claude behaves could be published unseen. Done.
+
+Cloud Dancer's preview job refused `CLAUDE.md` at the top of the repo, and nothing else of the kind. A `.claude/settings.json` with a hook, a `.mcp.json`, or a `CLAUDE.md` or `AGENTS.md` in a folder shows nothing on a preview. Once published, a hook runs commands in every later agent run on the repo, past its list of allowed tools. Phix's list had `.claude/` at the top only, and no `.mcp.json`.
+
+What changed: both lists (`dancer/preview.mjs`, `phix/sites.mjs`) now refuse, anywhere in the repo, a `.claude/` folder, a `.mcp.json` file, and `CLAUDE.md`, `CLAUDE.local.md` and `AGENTS.md`, in any letter case.
 
 ## Operational findings. To do.
 

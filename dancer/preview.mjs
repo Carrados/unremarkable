@@ -34,8 +34,14 @@ const SHA = /^[0-9a-f]{40}$/;
 const CONFIG = 'wrangler.jsonc';
 const MAX_BUNDLE = 100 * 1024 * 1024;
 // What a fabric change may never touch: it would change what the agents are, or what their keys reach.
-// The owner approves what they see on the preview, and none of this shows there.
-const MACHINERY = ['.github/', 'dancer/', 'flo/', 'phix/', 'fix/', CONFIG, 'CLAUDE.md'];
+// The owner approves what they see on the preview, and none of this shows there. That includes anything that
+// changes how Claude behaves in later runs on this repo, wherever it sits: settings and hooks (.claude/), MCP
+// servers (.mcp.json) and rule files (CLAUDE.md, CLAUDE.local.md, AGENTS.md). A hook would run commands in
+// every later agent run, past its list of allowed tools.
+const MACHINERY = [
+  /^\.github\//, /^dancer\//, /^flo\//, /^phix\//, /^fix\//, /^wrangler\.jsonc$/,
+  /(^|\/)\.claude\//, /(^|\/)\.mcp\.json$/i, /(^|\/)(CLAUDE|CLAUDE\.local|AGENTS)\.md$/i,
+];
 
 const text = (v, n) => String(v ?? '').trim().slice(0, n);
 
@@ -53,7 +59,7 @@ export function readHandin(raw, id) {
 
 // The first changed file that is part of the site's machinery, or ''. `files` are paths from the repo's root.
 export function machinery(files) {
-  return files.find(f => MACHINERY.some(m => (m.endsWith('/') ? f.startsWith(m) : f === m))) || '';
+  return files.find(f => MACHINERY.some(m => m.test(f))) || '';
 }
 
 // What GitHub says about the pull request must match the request. Returns what's wrong, or ''.

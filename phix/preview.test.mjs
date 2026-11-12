@@ -26,6 +26,9 @@ test('a fix may not touch workflows, the agents\' files, Worker code or how a si
   assert.equal(machinery(['wrangler.zic.jsonc']), 'wrangler.zic.jsonc');
   assert.equal(machinery(['package-lock.json']), 'package-lock.json');
   assert.equal(machinery(['AGENTS.md']), 'AGENTS.md');
+  for (const f of ['.mcp.json', 'site/.mcp.json', 'dist/carrados/.claude/settings.json', 'carrados/CLAUDE.md', 'CLAUDE.local.md', 'src/agents.md']) {
+    assert.equal(machinery(['site/index.html', f]), f, f);
+  }
 });
 
 test('a hand-in must say what was understood and changed, and give a path on the site', () => {

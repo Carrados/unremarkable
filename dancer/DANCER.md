@@ -31,7 +31,7 @@ Everything goes through `node dancer/api.mjs <action> [body]`, run from this rep
 Your work has already been claimed for you: it is in `dancer-work.json`, a list under `work`. Do every request in it before you finish.
 
 - `step` (`{"id", "text"}`): one sentence for the owner on what is happening. One or two per request is plenty.
-- `flow` (`{"id", "reason"}`): it is flow. `reason` says in a sentence which shape in `FLOW.md` it fills. Flo is woken and does it. You change nothing.
+- `flow` (`{"id", "reason"}`): it is flow. `reason` says in a sentence which shape in `FLOW.md` it fills. Flo is woken and does it. You change nothing. The Worker refuses `flow` for a site where flow is off, which is every site for now. Then it is fabric: do it on a preview copy.
 - `stuck` (`{"id", "reason"}`): you can't do it by yourself (the request is unclear, a check fails, a command you need is refused). Say what you need from the owner.
 
 You have no Cloudflare key and no GitHub token that can push, and you do not call `ready`. When a fabric change is finished, you hand it in as two files, and the workflow does the rest after you stop: it checks your branch, pushes it, opens the pull request, uploads the preview copy, checks it answers, and calls `ready`, which emails the owner the preview address.
@@ -50,7 +50,7 @@ The second is the hand-in file, `dancer-out/ready-<id>.json`:
 
 The owner publishes the commit that is in the bundle, so finish every commit before you make it. If you commit again, make the bundle again.
 
-The workflow refuses a branch that changes the site's own machinery: anything in `.github/`, `dancer/`, `flo/`, `phix/` or `fix/`, and `wrangler.jsonc` or `CLAUDE.md`. A request that needs one of those is for Unremarkable: call `stuck` and say so.
+The workflow refuses a branch that changes the site's own machinery: anything in `.github/`, `dancer/`, `flo/`, `phix/` or `fix/`, and `wrangler.jsonc`. It also refuses, anywhere in the repo, anything that changes how Claude behaves: a `.claude/` folder, a `.mcp.json` file, and `CLAUDE.md`, `CLAUDE.local.md` or `AGENTS.md`. A request that needs one of those is for Unremarkable: call `stuck` and say so.
 
 Every request ends in `flow`, a hand-in file, or `stuck`. A request you leave half done goes back in the queue after three hours.
 

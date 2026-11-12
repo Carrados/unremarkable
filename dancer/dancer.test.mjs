@@ -4,7 +4,7 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { pageOn, previewUrl } from './sites.js';
+import { pageOn, previewUrl, SITES, flowOn } from './sites.js';
 import { callTool } from './mcp.js';
 
 const SHA = 'b'.repeat(40);
@@ -165,6 +165,12 @@ test('only a token from Flo\'s own workflow on main, meant for Cloud Dancer, get
   assert.match(checkClaims({ ...good, iss: 'https://evil.example' }, 1.8e9), /not a GitHub/);
 });
 
+// Flow is off on every site in sites.js. A test of flow itself turns it on for unremarkable.me, and back off after.
+function withFlow(t) {
+  SITES['unremarkable.me'].flow = ['news/'];
+  t.after(() => { SITES['unremarkable.me'].flow = []; });
+}
+
 const pull = (over = {}) => ({ state: 'open', head: { ref: 'flo/request-1', sha: SHA, repo: { full_name: 'Carrados/unremarkable' } }, base: { ref: 'main', repo: { full_name: 'Carrados/unremarkable', default_branch: 'main' } }, ...over });
 
 test('Flo can only hand in her own branch for that request, in the site\'s own repo', () => {
@@ -177,6 +183,7 @@ test('Flo can only hand in her own branch for that request, in the site\'s own r
 });
 
 test('posted merges exactly the commit GitHub showed, and the request is done', async t => {
+  withFlow(t);
   const env = fakeEnv({ requests: [ready({ status: 'working', kind: 'flow', pr_url: null, commit_sha: null })] });
   const calls = fakeGitHub(t, {
     'GET /repos/Carrados/unremarkable/pulls/7': [200, pull()],
@@ -189,6 +196,7 @@ test('posted merges exactly the commit GitHub showed, and the request is done', 
 });
 
 test('posted puts nothing live from another request\'s branch, or for a request that isn\'t hers', async t => {
+  withFlow(t);
   let env = fakeEnv({ requests: [ready({ status: 'working', kind: 'flow' })] });
   const calls = fakeGitHub(t, { 'GET /repos/Carrados/unremarkable/pulls/7': [200, pull({ head: { ref: 'flo/request-9', sha: SHA, repo: { full_name: 'Carrados/unremarkable' } } })] });
   const res = await act('posted', { id: 1, understood: 'u', did: 'd', pr_url: 'https://github.com/Carrados/unremarkable/pull/7', live_url: 'https://unremarkable.me/x/' }, env);
@@ -239,6 +247,7 @@ test('a new request wakes Cloud Dancer, not Flo', async t => {
 });
 
 test('flow is handed to Flo and Flo is woken; Cloud Dancer changes nothing', async t => {
+  withFlow(t);
   const calls = fakeGitHub(t, { 'POST /repos/Carrados/unremarkable/dispatches': [204, {}] });
   const env = fakeEnv({ requests: [ready({ status: 'working', kind: null, tries: 1 })] });
   const res = await dancerAct('flow', { id: 1, reason: 'A news item.' }, env);
@@ -250,6 +259,29 @@ test('flow is handed to Flo and Flo is woken; Cloud Dancer changes nothing', asy
   // Once it is Flo's, Cloud Dancer can't touch it.
   env.DB.requests[0].status = 'working';
   assert.equal((await dancerAct('ready', { id: 1 }, env)).status, 409);
+});
+
+test('flow is off on every site until sites.js turns it on', () => {
+  for (const site of Object.keys(SITES)) assert.equal(flowOn(site), false, site);
+  assert.equal(flowOn('nowhere.example'), false);
+});
+
+test('where flow is off, Cloud Dancer can\'t hand anything to Flo, and Flo can\'t put anything live', async t => {
+  const calls = fakeGitHub(t, {
+    'GET /repos/Carrados/unremarkable/pulls/7': [200, pull()],
+    'PUT /repos/Carrados/unremarkable/pulls/7/merge': [200, { merged: true }],
+  });
+  let env = fakeEnv({ requests: [ready({ status: 'working', kind: null, tries: 1 })] });
+  const res = await dancerAct('flow', { id: 1, reason: 'A news item.' }, env);
+  assert.equal(res.status, 409);
+  assert.match(await res.text(), /Flow is off/);
+  assert.equal(env.DB.requests[0].status, 'working');
+  assert.notEqual(env.DB.requests[0].kind, 'flow');
+  env = fakeEnv({ requests: [ready({ status: 'working', kind: 'flow', pr_url: null, commit_sha: null })] });
+  const posted = await act('posted', { id: 1, understood: 'A news item.', did: 'Added it.', pr_url: 'https://github.com/Carrados/unremarkable/pull/7', live_url: 'https://unremarkable.me/news/hello/' }, env);
+  assert.equal(posted.status, 409);
+  assert.equal(env.DB.requests[0].status, 'working');
+  assert.equal(calls.length, 0, 'GitHub is not asked anything: no wake, no look, no merge');
 });
 
 test('fabric Flo sent back can\'t be passed to Flo again', async t => {
@@ -328,6 +360,14 @@ test('a fabric change may not touch the workflows, the agents\' rules and code, 
   assert.equal(machinery(['fix/door-rules.js']), 'fix/door-rules.js');
   assert.equal(machinery(['wrangler.jsonc']), 'wrangler.jsonc');
   assert.equal(machinery(['site/fix/index.html', 'src/dancer/notes.html']), '');
+});
+
+test('a fabric change may not change how Claude behaves in later runs, wherever the file sits', () => {
+  for (const f of ['CLAUDE.md', 'AGENTS.md', 'CLAUDE.local.md', 'site/CLAUDE.md', 'src/agents.md', '.claude/settings.json',
+    'site/.claude/settings.json', '.claude/skills/x/SKILL.md', '.mcp.json', 'site/.mcp.json']) {
+    assert.equal(machinery(['site/index.html', f]), f, f);
+  }
+  assert.equal(machinery(['site/claude/index.html', 'src/mcp-notes.html', 'site/claude.md.html']), '');
 });
 
 test('the preview job only takes an open pull request from that request\'s own branch, in the site\'s repo', () => {
