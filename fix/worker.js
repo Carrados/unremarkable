@@ -10,6 +10,8 @@
 
 import { READINGS, LIMITS, esc, SITES, pageUrl, template, SECURITY, html, PRIVATE, newKey, KEY, reportUrl, CONFIRM_DAYS, DAY, dateText, now, paras, READING_TEXT } from './common.js';
 import { scheduled, phixApi, ownerPage, phixLine, step, OWNER_KEY } from './phix.js';
+// Cloud Dancer's way to GitHub (wake Flo, look at and merge her pull requests): fix/door.js.
+export { Dancer } from './door.js';
 
 // The reported page. When we know it from the link the visitor followed, it is a sentence, not a
 // field: a pre-filled address box was one more stop for VoiceOver on iPhone ("Page, text field, h t t p s...")
