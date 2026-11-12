@@ -1,0 +1,40 @@
+# Deploys Cloud Dancer's connector, the cloud-dancer Worker in dancer/, from main. Started by hand from the
+# Actions tab (or by an agent with the owner's go-ahead). It uploads a new version and sends all traffic to it.
+# It uses `versions upload` and `versions deploy`, which need only Workers Scripts: Edit, so it shares Phix's
+# CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID. The route, bindings and settings stay as wrangler.jsonc has them.
+
+name: Deploy Cloud Dancer
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: dancer-deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: dancer
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm test
+      - name: Upload and deploy
+        run: |
+          npx wrangler versions upload --message "main ${GITHUB_SHA::7}" | tee upload.txt
+          VERSION=$(grep -oE 'Version ID: *[0-9a-f-]{36}' upload.txt | grep -oE '[0-9a-f-]{36}')
+          test -n "$VERSION"
+          npx wrangler versions deploy "$VERSION@100%" --yes --message "main ${GITHUB_SHA::7}"
