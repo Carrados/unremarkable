@@ -304,22 +304,30 @@ test('sending back goes to whoever has it: flow to Flo, fabric to Cloud Dancer',
 
 // ---- The preview job: what Cloud Dancer hands in is data, and nothing from her branch is run --------
 
-import { readHandin, checkPull as checkPreviewPull, previewFrom, unsafe } from './preview.mjs';
+import { readHandin, machinery, checkPull as checkPreviewPull, previewFrom, unsafe } from './preview.mjs';
 import { mkdtempSync, mkdirSync, writeFileSync, symlinkSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-test('a hand-in must name a pull request on the request\'s own repo, and a path on the site', () => {
-  const good = { id: 7, understood: 'u', did: 'd', pr_url: 'https://github.com/Carrados/unremarkable/pull/9', path: '/prices/' };
-  const h = readHandin(JSON.stringify(good), 7, 'Carrados/unremarkable');
-  assert.equal(h.number, 9);
+test('a hand-in must say what was understood and changed, and give a path on the site', () => {
+  const good = { id: 7, understood: 'u', did: 'd', title: 'a new page\nabout prices', path: '/prices/' };
+  const h = readHandin(JSON.stringify(good), 7);
+  assert.equal(h.title, 'a new page about prices');
   assert.equal(h.path, '/prices/');
-  assert.equal(readHandin(JSON.stringify({ ...good, path: undefined }), 7, 'Carrados/unremarkable').path, '/');
-  assert.throws(() => readHandin('not json', 7, 'Carrados/unremarkable'));
-  assert.throws(() => readHandin(JSON.stringify({ ...good, did: '' }), 7, 'Carrados/unremarkable'));
-  assert.throws(() => readHandin(JSON.stringify({ ...good, pr_url: 'https://github.com/someone/else/pull/9' }), 7, 'Carrados/unremarkable'));
-  assert.throws(() => readHandin(JSON.stringify({ ...good, path: '//evil.example/' }), 7, 'Carrados/unremarkable'));
-  assert.throws(() => readHandin(JSON.stringify({ ...good, path: 'https://evil.example/' }), 7, 'Carrados/unremarkable'));
+  assert.equal(readHandin(JSON.stringify({ ...good, path: undefined }), 7).path, '/');
+  assert.throws(() => readHandin('not json', 7));
+  assert.throws(() => readHandin(JSON.stringify({ ...good, did: '' }), 7));
+  assert.throws(() => readHandin(JSON.stringify({ ...good, path: '//evil.example/' }), 7));
+  assert.throws(() => readHandin(JSON.stringify({ ...good, path: 'https://evil.example/' }), 7));
+});
+
+test('a fabric change may not touch the workflows, the agents\' rules and code, or how the site is deployed', () => {
+  assert.equal(machinery(['src/prices.html', 'site/prices/index.html', 'build.mjs', 'FLOW.md']), '');
+  assert.equal(machinery(['site/index.html', '.github/workflows/dancer.yml']), '.github/workflows/dancer.yml');
+  assert.equal(machinery(['dancer/DANCER.md']), 'dancer/DANCER.md');
+  assert.equal(machinery(['fix/door-rules.js']), 'fix/door-rules.js');
+  assert.equal(machinery(['wrangler.jsonc']), 'wrangler.jsonc');
+  assert.equal(machinery(['site/fix/index.html', 'src/dancer/notes.html']), '');
 });
 
 test('the preview job only takes an open pull request from that request\'s own branch, in the site\'s repo', () => {

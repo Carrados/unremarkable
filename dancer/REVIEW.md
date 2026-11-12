@@ -6,7 +6,7 @@ Each finding says where it stands: **done**, **partly done**, or **to do**.
 
 ## The short of it
 
-The connector itself is sound. The weak point was the agent runs behind it. The rule "nothing goes live until the owner says publish" was kept by the agents' instructions, not by what their keys could do. Findings 1 and 3 are now fixed in code. Finding 2 needs one change in GitHub's settings, set out below.
+The connector itself is sound. The weak point was the agent runs behind it. The rule "nothing goes live until the owner says publish" was kept by the agents' instructions, not by what their keys could do. Findings 1, 2 and 3 are now fixed in code for Cloud Dancer. Phix still needs the same treatment, and so will Flo when she is written.
 
 ## What is solid
 
@@ -25,30 +25,28 @@ The connector itself is sound. The weak point was the agent runs behind it. The 
 What changed:
 
 - The run is now two jobs on two machines. The agent's job has no Cloudflare key. A second job, `preview`, has the key and no model.
-- The agent hands in a file, `dancer-out/ready-<id>.json`. The preview job (`dancer/preview.mjs`) asks GitHub for the pull request, fetches exactly that commit, uploads it as a preview copy and calls `ready`.
+- The agent hands in two files: her branch as a git bundle, and `dancer-out/ready-<id>.json`. The preview job (`dancer/preview.mjs`) checks the branch, pushes it, opens the pull request, uploads that commit as a preview copy and calls `ready`.
 - Nothing from the agent's branch is run. Wrangler comes from a folder of its own. The branch's `wrangler.jsonc` must be the same as main's. A branch with a link to another file, or a `.env` or `.dev.vars` file, is refused.
-- The agent's commands are narrower: no `npm`, `npx` or bare `node`, only named `gh` commands, and only `step`, `flow` and `stuck` on her API.
+- The agent's commands are narrower: no `npm`, `npx`, `gh` or bare `node`, and only `step`, `flow` and `stuck` on her API.
 - If the preview can't be made, the request is marked stuck and the owner is told why.
 
 Still to do:
 
 - **Phix has the same problem.** `phix.yml` gives her agent the same Cloudflare key, and Phix reads reports from the public. Give her the same two-job shape.
-- The narrower command list is a speed bump, not a wall. `curl` and `git` are still allowed, and the agent's job still holds the GitHub token. Finding 2 is what makes that safe.
+- The narrower command list is a speed bump, not a wall: `curl` and `git` are still allowed. What makes it safe is that her job now holds no key worth taking, apart from the Claude subscription token.
 
-### 2. The agent's GitHub token can probably merge. Partly done, needs a settings change.
+### 2. The agent's GitHub token could probably merge. Done for Cloud Dancer.
 
-Checked on 12 November 2026: `main` is protected, and no other branch is. The workflow notes say the protection is "only a pull request can change it". That stops a direct push. It does not stop a merge. `PHIX_GITHUB_TOKEN` is a token for the Carrados account with Contents and Pull requests write, so the agent could merge her own pull request, which publishes. I could not read the exact rule, so treat this as likely, not proven.
+Checked on 12 November 2026: `main` is protected, and no other branch is. The workflow notes say the protection is "only a pull request can change it". That stops a direct push. It does not stop a merge. `PHIX_GITHUB_TOKEN` is a token for the Carrados account with Contents and Pull requests write, so an agent holding it could merge her own pull request, which publishes. I could not read the exact rule, so treat this as likely, not proven.
 
-What changed: the agent can no longer run `gh pr merge` or bare `gh api` from her allowed commands. That is a speed bump only.
+What changed: Cloud Dancer's agent no longer holds that token at all. She gets only the run's own read-only token. She commits on her branch and hands it in as a git bundle. The preview job, with no model in it, pushes that branch to `dancer/request-<id>` and nowhere else, never forced, and opens the pull request. So no settings change is needed for her.
 
-The real fix is in settings, because a token made by the account's owner acts as the owner:
+The preview job also refuses a branch that touches the site's own machinery: `.github/`, `dancer/`, `flo/`, `phix/`, `fix/`, `wrangler.jsonc` or `CLAUDE.md`. Without that, a misled agent could slip a change to a workflow or a rulebook into a fabric change, and the owner would publish it without seeing it, because none of it shows on a preview.
 
-1. Make the agents a GitHub identity of their own: a GitHub App installed on the site repos (Contents and Pull requests, read and write), or a second "machine" account added as a collaborator with write access.
-2. Use that identity's token as `PHIX_GITHUB_TOKEN`.
-3. On `main`, in each site repo, add a ruleset: "Restrict updates", with only the repository admin allowed to bypass. The door's token (`GITHUB_TOKEN` in the site Worker) stays a Carrados token, so `publish` still merges.
-4. Test it: from a run, try `gh pr merge` on a test pull request. It must be refused.
+Still to do:
 
-After that, only the door can merge, and the door only opens on the owner's word.
+- **Phix still holds the token**, and so does `flo.yml`. Give them the same shape. Until then, the settings route still applies to them: a GitHub identity of their own for the agents, and a rule on `main` that only the repository admin can bypass.
+- `build.mjs` and `README.md` are not on the refused list, because fabric can need them. `build.mjs` runs on Cloudflare when a change is published, and the agents read `README.md` as rules. A change to either deserves a line in the email to the owner saying so.
 
 ### 3. Owners' instructions were printed in public. Done for the logs. A decision is still open.
 
@@ -123,4 +121,4 @@ Six codes an hour with five tries each is 30 guesses an hour against one address
 - The exact branch protection rule on `main`, and the real scopes of the three tokens.
 - The deployed Workers' settings on Cloudflare, against what the repo says.
 - `dancer/e2e.mjs`, the sign-in run end to end.
-- The new preview job has unit tests but has not yet run for real. The first real fabric request is its test. Watch that run.
+- The new preview job has unit tests, and its git steps were rehearsed by hand, but it has not yet run for real. The first real fabric request is its test. Watch that run. Two things in particular: that the Claude action is content with the run's read-only token, and that the preview address can be read from wrangler's output.
