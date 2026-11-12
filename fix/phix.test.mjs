@@ -181,9 +181,12 @@ test('a fix handed in before this check existed still publishes', async t => {
 
 import { allowed } from './door-rules.js';
 
-test('the door lets Cloud Dancer wake Flo, and look at, merge and close pull requests on the site repos, and nothing else', () => {
+test('the door lets Cloud Dancer wake her own run or Flo\'s, and look at, merge and close pull requests on the site repos, and nothing else', () => {
   assert.equal(allowed('POST', '/repos/Carrados/unremarkable/dispatches', { event_type: 'flo-wake' }), true);
+  assert.equal(allowed('POST', '/repos/Carrados/unremarkable/dispatches', { event_type: 'dancer-wake' }), true);
   assert.equal(allowed('POST', '/repos/Carrados/unremarkable/dispatches', { event_type: 'phix-wake' }), false);
+  assert.equal(allowed('POST', '/repos/Carrados/tka/dispatches', { event_type: 'dancer-wake' }), false);
+  assert.equal(allowed('POST', '/repos/Carrados/unremarkable/dispatches'), false);
   assert.equal(allowed('GET', '/repos/Carrados/unremarkable/pulls/5'), true);
   assert.equal(allowed('PUT', '/repos/Carrados/tka/pulls/5/merge', { sha: 'x' }), true);
   assert.equal(allowed('PATCH', '/repos/Carrados/unremarkable/pulls/5', { state: 'closed' }), true);

@@ -10,7 +10,8 @@ const ALLOWED = [
 ];
 
 export function allowed(method, path, body) {
-  if (method === 'POST' && path === `/repos/${REPOS[0]}/dispatches`) return body && body.event_type === 'flo-wake';
+  // Wake Flo or Cloud Dancer, and nothing else.
+  if (method === 'POST' && path === `/repos/${REPOS[0]}/dispatches`) return !!body && ['flo-wake', 'dancer-wake'].includes(body.event_type);
   for (const [m, re] of ALLOWED) {
     const hit = re.exec(path);
     if (m === method && hit && REPOS.includes(hit[1])) {
