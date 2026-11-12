@@ -6,7 +6,7 @@ Each finding says where it stands: **done**, **partly done**, or **to do**.
 
 ## The short of it
 
-The connector itself is sound. The weak point was the agent runs behind it. The rule "nothing goes live until the owner says publish" was kept by the agents' instructions, not by what their keys could do. Findings 1, 2 and 3 are now fixed in code for Cloud Dancer. Phix still needs the same treatment, and so will Flo when she is written.
+The connector itself is sound. The weak point was the agent runs behind it. The rule "nothing goes live until the owner says publish" was kept by the agents' instructions, not by what their keys could do. Findings 1, 2 and 3 are now fixed in code for Cloud Dancer and for Phix. Flo will need the same treatment when she is written.
 
 ## What is solid
 
@@ -32,7 +32,8 @@ What changed:
 
 Still to do:
 
-- **Phix has the same problem.** `phix.yml` gives her agent the same Cloudflare key, and Phix reads reports from the public. Give her the same two-job shape.
+- **Phix: done too.** Her run is three jobs: the agent with no keys, a build job with no keys and no model, and a preview job with the keys and no model (`phix/build.mjs`, `phix/preview.mjs`). Her preview copy is the Worker as it is on main with only the built pages swapped in, so no code from her branch ever runs with a site's secrets. Cloud Dancer's preview still uploads her whole branch, guarded by the refused list. Moving her to the same "main's Worker, branch's pages" shape would be stronger.
+- Phix's agent still holds `PHIX_SECRET`, because she needs it to tell the reporter and the owner what is happening. With it she could call `claim` or `ready` by hand. `ready` only accepts a pull request from her own branch, which she can no longer push. Moving her API to the run's GitHub identity, as Cloud Dancer's is, would let the Worker tell the agent's job from the preview job.
 - The narrower command list is a speed bump, not a wall: `curl` and `git` are still allowed. What makes it safe is that her job now holds no key worth taking, apart from the Claude subscription token.
 
 ### 2. The agent's GitHub token could probably merge. Done for Cloud Dancer.
@@ -45,7 +46,8 @@ The preview job also refuses a branch that touches the site's own machinery: `.g
 
 Still to do:
 
-- **Phix still holds the token**, and so does `flo.yml`. Give them the same shape. Until then, the settings route still applies to them: a GitHub identity of their own for the agents, and a rule on `main` that only the repository admin can bypass.
+- **Phix: done too**, in the same way, across all four site repos. Which repo a fix is pushed to comes from the reported page (`phix/sites.mjs`), never from her.
+- **`flo.yml` still holds the token.** Give Flo the same shape when she is written.
 - `build.mjs` and `README.md` are not on the refused list, because fabric can need them. `build.mjs` runs on Cloudflare when a change is published, and the agents read `README.md` as rules. A change to either deserves a line in the email to the owner saying so.
 
 ### 3. Owners' instructions were printed in public. Done for the logs. A decision is still open.
@@ -58,7 +60,7 @@ Still to do:
 
 - **Old runs.** Logs from runs before this change still hold the text. Delete those runs in the Actions tab (each run's menu has "Delete workflow run").
 - **Is the preview private?** The branch, the pull request and the hand-in file are public before the owner approves, because the repo is public. The preview address is guessable from the request number and needs no sign-in. Either make site repos private, or stop calling the preview "private" in the connector's wording.
-- `phix.yml` still has `display_report` on. Check what her report repeats.
+- `phix.yml`: done. It prints report numbers and sites only, and `display_report` is off.
 
 ### 4. The preview is not fully tied to the commit. Partly done.
 
@@ -121,4 +123,5 @@ Six codes an hour with five tries each is 30 guesses an hour against one address
 - The exact branch protection rule on `main`, and the real scopes of the three tokens.
 - The deployed Workers' settings on Cloudflare, against what the repo says.
 - `dancer/e2e.mjs`, the sign-in run end to end.
-- The new preview job has unit tests, and its git steps were rehearsed by hand, but it has not yet run for real. The first real fabric request is its test. Watch that run. Two things in particular: that the Claude action is content with the run's read-only token, and that the preview address can be read from wrangler's output.
+- Cloud Dancer's new run was tested end to end on 12 November 2026 with request 4, a test request that was then closed. It worked.
+- Phix's new run has unit tests, and its build step was rehearsed by hand for unremarkable.me and carrados.com, but it has not yet run on a real report. The first real report is its test. Watch that run.
