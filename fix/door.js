@@ -1,7 +1,7 @@
 // The door between Cloud Dancer and GitHub.
 //
-// Cloud Dancer (dancer/, a Worker of its own) holds no keys. When it needs GitHub, to wake Flo, to look at
-// a pull request she handed in, to merge it or to close it, it asks this Worker through a service binding
+// Cloud Dancer (dancer/, a Worker of its own) holds no keys. When it needs GitHub, to wake Cloud Dancer's
+// agent run or Flo's, to look at a pull request one of them handed in, to merge it or to close it, it asks this Worker through a service binding
 // (`SITE` in dancer/wrangler.jsonc). A service binding is reachable only by other Workers on the account
 // that are bound to it, never from the web. This Worker already holds the token (GITHUB_TOKEN) for Phix.
 //

@@ -20,12 +20,13 @@ CREATE TABLE IF NOT EXISTS requests (
   page TEXT,                     -- the address of the page it is about, if they named one
   instruction TEXT NOT NULL,     -- what they asked for, in their words
   -- Where it stands:
-  --   queued     waiting for Cloud Dancer
-  --   working    Cloud Dancer has it now
-  --   ready      a change is made and on a preview copy; waiting for the owner to publish or send back
-  --   retry      the owner sent it back with reasons: Cloud Dancer tries again
+  --   queued     waiting for Cloud Dancer to sort it (or, kind = 'fabric', for her to do the fabric)
+  --   working    Cloud Dancer has it now, or Flo when kind = 'flow'
+  --   flow       Cloud Dancer sorted it as flow and handed it to Flo, who hasn't started yet
+  --   ready      a fabric change is made and on a preview copy; waiting for the owner to publish or send back
+  --   retry      the owner sent it back with reasons: Flo tries again if kind = 'flow', otherwise Cloud Dancer
   --   stuck      Cloud Dancer couldn't do it by itself; why is in `understood`
---   fabric     design work, not flow: Flo left it for the owner; why is in `understood`
+  --   fabric     (before 12 November 2026 only) Flo left it as design work; send it back to have Cloud Dancer do it
   --   published  live: Flo posted it (flow), or the owner published it
   --   left       the owner decided to leave the site as it is
   status TEXT NOT NULL DEFAULT 'queued',
@@ -39,7 +40,7 @@ CREATE TABLE IF NOT EXISTS requests (
   preview_url TEXT,
   commit_sha TEXT,               -- the commit that was handed in: Publish merges this and nothing pushed after it
   owner_reason TEXT,             -- why the owner last sent it back
-  kind TEXT,                     -- flow | fabric, once Flo has sorted it
+  kind TEXT,                     -- flow | fabric, once Cloud Dancer has sorted it (null until then)
   live_url TEXT                  -- where a flow change is live
 );
 CREATE INDEX IF NOT EXISTS requests_owner ON requests (owner, id);

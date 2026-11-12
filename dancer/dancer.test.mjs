@@ -10,7 +10,7 @@ import { callTool } from './mcp.js';
 const SHA = 'b'.repeat(40);
 
 // A small stand-in for the database: owners and requests in memory, answering the queries mcp.js makes.
-function fakeEnv({ owners = [['lottie@example.org', 'unremarkable.me']], requests = [] } = {}) {
+function fakeEnv({ owners = [['lottie@example.org', 'unremarkable.me']], requests = [], open = '0' } = {}) {
   const steps = [];
   const DB = {
     requests, steps,
@@ -33,16 +33,25 @@ function fakeEnv({ owners = [['lottie@example.org', 'unremarkable.me']], request
         },
         async run() {
           if (/INSERT INTO steps/.test(sql)) steps.push({ request_id: st.a[0], who: st.a[1], text: st.a[2], at: '2026-11-10T19:00:00Z' });
-          const m = /UPDATE requests SET status = '(\w+)'/.exec(sql);
-          if (/UPDATE requests SET status = \?/.test(sql)) { const r = requests.find(x => x.id === st.a[st.a.length - 1]); r.status = st.a[0]; r.understood = st.a[3]; }
-          if (m) { const r = requests.find(x => x.id === st.a[st.a.length - 1]); r.status = m[1]; if (/owner_reason = \?/.test(sql)) r.owner_reason = st.a[1]; }
+          // An update of one request by id: set each column the SQL names, from a literal or the next bound value.
+          const u = /^UPDATE requests SET (.+) WHERE id = \?$/s.exec(sql.trim());
+          if (u) {
+            const r = requests.find(x => x.id === st.a[st.a.length - 1]);
+            let i = 0;
+            for (const [, col, val] of u[1].matchAll(/(\w+) = (\?|'[^']*'|CASE .*? END|tries \+ 1)/g)) {
+              if (val === '?') r[col] = st.a[i++];
+              else if (val.startsWith("'")) r[col] = val.slice(1, -1);
+              else if (val.startsWith('CASE')) r[col] = ['stuck', 'fabric'].includes(r.status) ? 0 : r.tries;
+              else r[col] = r.tries + 1;
+            }
+          }
           return {};
         },
       };
       return st;
     },
   };
-  return { DB, GITHUB_TOKEN: 't', DANCER_OPEN: '0' };
+  return { DB, GITHUB_TOKEN: 't', DANCER_OPEN: open };
 }
 
 function fakeGitHub(t, answers) {
@@ -168,7 +177,7 @@ test('Flo can only hand in her own branch for that request, in the site\'s own r
 });
 
 test('posted merges exactly the commit GitHub showed, and the request is done', async t => {
-  const env = fakeEnv({ requests: [ready({ status: 'working', pr_url: null, commit_sha: null })] });
+  const env = fakeEnv({ requests: [ready({ status: 'working', kind: 'flow', pr_url: null, commit_sha: null })] });
   const calls = fakeGitHub(t, {
     'GET /repos/Carrados/unremarkable/pulls/7': [200, pull()],
     'PUT /repos/Carrados/unremarkable/pulls/7/merge': [200, { merged: true }],
@@ -180,7 +189,7 @@ test('posted merges exactly the commit GitHub showed, and the request is done', 
 });
 
 test('posted puts nothing live from another request\'s branch, or for a request that isn\'t hers', async t => {
-  let env = fakeEnv({ requests: [ready({ status: 'working' })] });
+  let env = fakeEnv({ requests: [ready({ status: 'working', kind: 'flow' })] });
   const calls = fakeGitHub(t, { 'GET /repos/Carrados/unremarkable/pulls/7': [200, pull({ head: { ref: 'flo/request-9', sha: SHA, repo: { full_name: 'Carrados/unremarkable' } } })] });
   const res = await act('posted', { id: 1, understood: 'u', did: 'd', pr_url: 'https://github.com/Carrados/unremarkable/pull/7', live_url: 'https://unremarkable.me/x/' }, env);
   assert.equal(res.status, 400);
@@ -189,13 +198,106 @@ test('posted puts nothing live from another request\'s branch, or for a request 
   assert.equal((await act('posted', { id: 1 }, env)).status, 409);
 });
 
-test('fabric leaves the site alone and tells the owner it waits for them', async t => {
-  const calls = fakeGitHub(t, {});
-  const env = fakeEnv({ requests: [ready({ status: 'working' })] });
+test('fabric that reaches Flo goes back to Cloud Dancer, and the site is left alone', async t => {
+  const calls = fakeGitHub(t, { 'POST /repos/Carrados/unremarkable/dispatches': [204, {}] });
+  const env = fakeEnv({ requests: [ready({ status: 'working', kind: 'flow' })] });
   const res = await act('fabric', { id: 1, reason: 'A new News section is design work.' }, env);
   assert.equal(res.status, 200);
-  assert.equal(env.DB.requests[0].status, 'fabric');
-  assert.equal(calls.length, 0);
+  assert.equal(env.DB.requests[0].status, 'queued');
+  assert.equal(env.DB.requests[0].kind, 'fabric');
+  assert.deepEqual(calls.map(c => [c.key, c.body.event_type]), [['POST /repos/Carrados/unremarkable/dispatches', 'dancer-wake']]);
+});
+
+test('Flo can only work on flow', async t => {
+  fakeGitHub(t, {});
+  for (const kind of [null, 'fabric']) {
+    const env = fakeEnv({ requests: [ready({ status: 'working', kind })] });
+    assert.equal((await act('fabric', { id: 1, reason: 'x' }, env)).status, 409);
+    assert.equal((await act('step', { id: 1, text: 'x' }, env)).status, 409);
+  }
+});
+
+// ---- Cloud Dancer: sorting, and fabric on a preview ---------------------------------------------
+
+import { dancerAct } from './fabric.js';
+import { DANCER_WORKFLOW } from './flo.js';
+
+test('only Cloud Dancer\'s own workflow gets into her API, and Flo\'s can\'t', () => {
+  const good = { iss: 'https://token.actions.githubusercontent.com', aud: AUDIENCE, exp: 2e9, repository: 'Carrados/unremarkable', job_workflow_ref: DANCER_WORKFLOW };
+  assert.equal(checkClaims(good, 1.8e9, DANCER_WORKFLOW), '');
+  assert.match(checkClaims({ ...good, job_workflow_ref: FLO_WORKFLOW }, 1.8e9, DANCER_WORKFLOW), /another workflow/);
+  assert.match(checkClaims(good, 1.8e9), /another workflow/);
+});
+
+test('a new request wakes Cloud Dancer, not Flo', async t => {
+  const calls = fakeGitHub(t, { 'POST /repos/Carrados/unremarkable/dispatches': [204, {}] });
+  const env = fakeEnv({ open: '1' });
+  const said = await callTool('request_change', { instruction: 'Add a page.' }, env, ME);
+  assert.match(said, /Cloud Dancer has it: request 1/);
+  assert.deepEqual(calls.map(c => c.body.event_type), ['dancer-wake']);
+  assert.match(await callTool('where_it_stands', { request: 1 }, env, ME), /Waiting for Cloud Dancer to sort it/);
+});
+
+test('flow is handed to Flo and Flo is woken; Cloud Dancer changes nothing', async t => {
+  const calls = fakeGitHub(t, { 'POST /repos/Carrados/unremarkable/dispatches': [204, {}] });
+  const env = fakeEnv({ requests: [ready({ status: 'working', kind: null, tries: 1 })] });
+  const res = await dancerAct('flow', { id: 1, reason: 'A news item.' }, env);
+  assert.equal(res.status, 200);
+  assert.equal(env.DB.requests[0].status, 'flow');
+  assert.equal(env.DB.requests[0].kind, 'flow');
+  assert.deepEqual(calls.map(c => c.body.event_type), ['flo-wake']);
+  assert.match(await callTool('where_it_stands', { request: 1 }, env, ME), /handed it to Flo/);
+  // Once it is Flo's, Cloud Dancer can't touch it.
+  env.DB.requests[0].status = 'working';
+  assert.equal((await dancerAct('ready', { id: 1 }, env)).status, 409);
+});
+
+test('fabric Flo sent back can\'t be passed to Flo again', async t => {
+  fakeGitHub(t, {});
+  const env = fakeEnv({ requests: [ready({ status: 'working', kind: 'fabric' })] });
+  assert.equal((await dancerAct('flow', { id: 1, reason: 'x' }, env)).status, 409);
+});
+
+const dpull = (over = {}) => pull({ head: { ref: 'dancer/request-1', sha: SHA, repo: { full_name: 'Carrados/unremarkable' } }, ...over });
+const handIn = (over = {}) => ({ id: 1, understood: 'A new page.', did: 'Added /what-is-accessibility/.', pr_url: 'https://github.com/Carrados/unremarkable/pull/9', preview_url: 'https://dancer-1-unremarkable.charlijotyrer.workers.dev/what-is-accessibility/', ...over });
+
+test('fabric is ready on a preview: the owner can publish exactly that commit, and nothing was merged before', async t => {
+  const calls = fakeGitHub(t, {
+    'GET /repos/Carrados/unremarkable/pulls/9': [200, dpull()],
+    'PUT /repos/Carrados/unremarkable/pulls/9/merge': [200, { merged: true }],
+  });
+  const sent = [];
+  const env = { ...fakeEnv({ requests: [ready({ status: 'working', kind: null, pr_url: null, commit_sha: null, preview_url: null })] }), OWNER_MAIL: { send: async m => sent.push(m) } };
+  const res = await dancerAct('ready', handIn(), env);
+  assert.equal(res.status, 200);
+  const r = env.DB.requests[0];
+  assert.equal(r.status, 'ready');
+  assert.equal(r.kind, 'fabric');
+  assert.equal(r.commit_sha, SHA);
+  assert.ok(!calls.some(c => c.key.startsWith('PUT')), 'Cloud Dancer merges nothing herself');
+  assert.equal(sent.length, 1);
+  assert.match(sent[0].text, /https:\/\/dancer-1-unremarkable\.charlijotyrer\.workers\.dev\/what-is-accessibility\//);
+  assert.match(sent[0].text, /publish request 1/);
   const said = await callTool('where_it_stands', { request: 1 }, env, ME);
-  assert.match(said, /design work/);
+  assert.match(said, /preview copy/);
+  assert.match(await callTool('publish', { request: 1 }, env, ME), /Published/);
+  assert.equal(calls.at(-1).body.sha, SHA);
+});
+
+test('fabric is refused from another branch, off the preview address, or on another repo', async t => {
+  quiet(t);
+  fakeGitHub(t, { 'GET /repos/Carrados/unremarkable/pulls/9': [200, pull()] });
+  const env = () => fakeEnv({ requests: [ready({ status: 'working', kind: null })] });
+  assert.match(await (await dancerAct('ready', handIn(), env())).text(), /dancer\/request-1/);
+  assert.equal((await dancerAct('ready', handIn({ preview_url: 'https://unremarkable.me/x/' }), env())).status, 400);
+  assert.equal((await dancerAct('ready', handIn({ pr_url: 'https://github.com/stranger/unremarkable/pull/9' }), env())).status, 400);
+});
+
+test('sending back goes to whoever has it: flow to Flo, fabric to Cloud Dancer', async t => {
+  const calls = fakeGitHub(t, { 'POST /repos/Carrados/unremarkable/dispatches': [204, {}] });
+  let env = fakeEnv({ open: '1', requests: [ready({ kind: 'fabric' })] });
+  assert.match(await callTool('send_back', { request: 1, reasons: 'Shorter.', next: 'try-again' }, env, ME), /Cloud Dancer will try/);
+  env = fakeEnv({ open: '1', requests: [ready({ status: 'stuck', kind: 'flow' })] });
+  assert.match(await callTool('send_back', { request: 1, reasons: 'Use today.', next: 'try-again' }, env, ME), /Flo will try/);
+  assert.deepEqual(calls.map(c => c.body.event_type), ['dancer-wake', 'flo-wake']);
 });

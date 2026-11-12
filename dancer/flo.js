@@ -1,49 +1,55 @@
 // Flo (Florence): the agent who does flow on the owner's sites.
 //
+// Every request goes to Cloud Dancer first (fabric.js), who sorts it. Flow is handed to Flo; fabric Cloud
+// Dancer does herself, on a private preview copy, and the owner decides whether to publish it.
+//
 // Flow is what an owner adds or changes often, each piece on its own: a news item, a blog post, a product in
 // a catalogue. Fabric is the rest: layout, sections, design and the standing wording. A new kind of flow (a site
 // that had news now wanting events) is fabric too: adding a shape is design work, filling one is not.
 //
 // Flow goes live as soon as Flo has done it and her checks pass. The owner asking is the approval, as it is
 // for Charlotte Joanne on blind-ant.com, and the safety comes afterwards: "take it down" or "change that line"
-// are just more flow. Fabric is never Flo's: she says so, and it is done with the owner there.
+// are just more flow. Fabric is never Flo's: if something reaches her that is really fabric, she hands it back
+// to Cloud Dancer, who does it on a preview copy for the owner to decide on.
 //
 // Flo runs as a GitHub Actions run in Carrados/unremarkable (.github/workflows/flo.yml), woken through the
-// door in the site Worker (fix/door.js) the moment a request comes in. She proves who she is with the run's
+// door in the site Worker (fix/door.js) the moment Cloud Dancer hands her a request. She proves who she is with the run's
 // own GitHub identity token (OIDC), so there is no shared secret to keep or leak. Her API, at /flo/api/:
 //
-//   claim    up to three requests to work on, marked as hers
+//   claim    up to three flow requests to work on, marked as hers
 //   step     one sentence on what is happening, for the owner
 //   posted   she has put it on a branch with a pull request; Cloud Dancer checks it with GitHub and merges it
-//   fabric   it is design work, not flow: the owner is told it will be done with them
+//   fabric   it is design work after all, not flow: it goes back to Cloud Dancer to do on a preview copy
 //   stuck    she can't do it by herself: the owner is told why
 
 import { SITES } from './sites.js';
 
 export const AUDIENCE = 'https://dancer.unremarkable.me';
 export const FLO_WORKFLOW = 'Carrados/unremarkable/.github/workflows/flo.yml@refs/heads/main';
+export const DANCER_WORKFLOW = 'Carrados/unremarkable/.github/workflows/dancer.yml@refs/heads/main';
 const ISSUER = 'https://token.actions.githubusercontent.com';
 const PER_RUN = 3;
 const STALE_HOURS = 2;
 
-const now = () => new Date().toISOString().replace(/\.\d+Z$/, 'Z');
-const text = (v, n) => String(v ?? '').trim().slice(0, n);
-const json = (o, status = 200) => new Response(JSON.stringify(o, null, 2), {
+export const now = () => new Date().toISOString().replace(/\.\d+Z$/, 'Z');
+export const text = (v, n) => String(v ?? '').trim().slice(0, n);
+export const json = (o, status = 200) => new Response(JSON.stringify(o, null, 2), {
   status, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex' },
 });
 
-// ---- Who is calling: a GitHub Actions identity token for Flo's own workflow on main ------------------
+// ---- Who is calling: a GitHub Actions identity token for Flo's (or Cloud Dancer's) own workflow on main ---
 
 const b64 = s => Uint8Array.from(atob(s.replace(/-/g, '+').replace(/_/g, '/') + '='.repeat((4 - (s.length % 4)) % 4)), c => c.charCodeAt(0));
 const decode = s => JSON.parse(new TextDecoder().decode(b64(s)));
 
-// What the token says must be true. Returns what's wrong, or '' when it's Flo. Exported for the tests.
-export function checkClaims(c, at = Date.now() / 1000) {
+// What the token says must be true. Returns what's wrong, or '' when it's the run named by `workflow`.
+// Exported for the tests.
+export function checkClaims(c, at = Date.now() / 1000, workflow = FLO_WORKFLOW) {
   if (!c || c.iss !== ISSUER) return 'not a GitHub Actions token';
   if ((Array.isArray(c.aud) ? !c.aud.includes(AUDIENCE) : c.aud !== AUDIENCE)) return 'meant for someone else';
   if (!(c.exp > at) || (c.nbf && c.nbf > at + 60)) return 'out of date';
   if (c.repository !== 'Carrados/unremarkable') return 'from another repository';
-  if (c.job_workflow_ref !== FLO_WORKFLOW) return 'from another workflow, or not from main';
+  if (c.job_workflow_ref !== workflow) return 'from another workflow, or not from main';
   return '';
 }
 
@@ -58,7 +64,7 @@ async function key(kid) {
   return k ? crypto.subtle.importKey('jwk', k, { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' }, false, ['verify']) : null;
 }
 
-export async function whoIs(request) {
+export async function whoIs(request, workflow = FLO_WORKFLOW) {
   const m = /^Bearer ([\w-]+)\.([\w-]+)\.([\w-]+)$/.exec(request.headers.get('Authorization') || '');
   if (!m) return 'no token';
   let head, claims;
@@ -68,7 +74,7 @@ export async function whoIs(request) {
   if (!k) return 'unknown key';
   const ok = await crypto.subtle.verify('RSASSA-PKCS1-v1_5', k, b64(m[3]), new TextEncoder().encode(`${m[1]}.${m[2]}`));
   if (!ok) return 'bad signature';
-  return checkClaims(claims);
+  return checkClaims(claims, Date.now() / 1000, workflow);
 }
 
 // ---- GitHub, through the site Worker's door ---------------------------------------------------------
@@ -93,22 +99,26 @@ export async function github(env, method, path, body) {
   });
 }
 
-// Wake Flo now. A failed wake is logged, not thrown: the request is kept and the next wake finds it.
-export async function wakeFlo(env) {
+// Wake an agent now: 'flo-wake' for Flo, 'dancer-wake' for Cloud Dancer. A failed wake is logged, not
+// thrown: the request is kept and the next wake finds it.
+async function wake(env, event_type, who) {
   try {
-    const res = await github(env, 'POST', `/repos/${SITES['unremarkable.me'].repo}/dispatches`, { event_type: 'flo-wake' });
-    if (!res.ok) console.error('Flo: GitHub would not start the run', res.status, await res.text());
+    const res = await github(env, 'POST', `/repos/${SITES['unremarkable.me'].repo}/dispatches`, { event_type });
+    if (!res.ok) console.error(`${who}: GitHub would not start the run`, res.status, await res.text());
     return res.ok;
   } catch (e) {
-    console.error('Flo: could not wake', e?.message || e);
+    console.error(`${who}: could not wake`, e?.message || e);
     return false;
   }
 }
+export const wakeFlo = env => wake(env, 'flo-wake', 'Flo');
+export const wakeDancer = env => wake(env, 'dancer-wake', 'Cloud Dancer');
 
-// What Flo hands in is checked here, not taken on trust: the pull request must be open, from her branch for
-// this request, in the site's own repo (never a fork), into its main branch. Returns what's wrong, or ''.
-export function checkPull(pr, repo, id) {
-  const want = `flo/request-${id}`;
+// What an agent hands in is checked here, not taken on trust: the pull request must be open, from its own
+// branch for this request (flo/request-<id>, or dancer/request-<id> for Cloud Dancer), in the site's own repo
+// (never a fork), into its main branch. Returns what's wrong, or ''.
+export function checkPull(pr, repo, id, prefix = 'flo') {
+  const want = `${prefix}/request-${id}`;
   if (!pr || !pr.head || !pr.base) return 'GitHub has no pull request at pr_url.';
   if (pr.state !== 'open') return `That pull request is ${pr.merged ? 'already merged' : 'closed'}. Open a new one from ${want}.`;
   if (pr.base.repo?.full_name !== repo) return `That pull request isn't on ${repo}.`;
@@ -127,16 +137,16 @@ export function liveOn(site, raw) {
   } catch { return null; }
 }
 
-async function addStep(env, id, text_) {
-  await env.DB.prepare('INSERT INTO steps (request_id, who, text) VALUES (?, ?, ?)').bind(id, 'flo', text(text_, 500)).run();
+export async function addStep(env, id, text_, who = 'flo') {
+  await env.DB.prepare('INSERT INTO steps (request_id, who, text) VALUES (?, ?, ?)').bind(id, who, text(text_, 500)).run();
 }
 
 // One short email to the owner who asked, so they hear without having to ask their agent.
-async function tell(env, r, subject, body) {
+export async function tell(env, r, subject, body, from = 'Flo, at Cloud Dancer') {
   if (!env.OWNER_MAIL) { console.log(`[email to ${r.owner}] ${subject}\n${body}`); return; }
   try {
-    await env.OWNER_MAIL.send({ to: r.owner, from: env.DANCER_FROM || 'dancer@unremarkable.me', subject, text: `${body}\n\nRequest ${r.id}, about ${r.site}. Ask your agent where request ${r.id} stands for the whole story.\n\nFlo, at Cloud Dancer\n` });
-  } catch (e) { console.error('Flo: the email to the owner failed', e?.message || e); }
+    await env.OWNER_MAIL.send({ to: r.owner, from: env.DANCER_FROM || 'dancer@unremarkable.me', subject, text: `${body}\n\nRequest ${r.id}, about ${r.site}. Ask your agent where request ${r.id} stands for the whole story.\n\n${from}\n` });
+  } catch (e) { console.error(`${from}: the email to the owner failed`, e?.message || e); }
 }
 
 // ---- The API ---------------------------------------------------------------------------------------
@@ -152,14 +162,16 @@ export async function floApi(request, env) {
 }
 
 export async function act(action, b, env) {
+  // Flo only ever claims flow: what Cloud Dancer has sorted and handed to her ('flow'), or a flow request the
+  // owner sent back to be done again.
   if (action === 'claim') {
-    await env.DB.prepare(`UPDATE requests SET status = 'retry', status_at = ? WHERE status = 'working' AND status_at < ?`)
+    await env.DB.prepare(`UPDATE requests SET status = 'retry', status_at = ? WHERE status = 'working' AND kind = 'flow' AND status_at < ?`)
       .bind(now(), new Date(Date.now() - STALE_HOURS * 3600000).toISOString().replace(/\.\d+Z$/, 'Z')).run();
-    const { results } = await env.DB.prepare(`SELECT * FROM requests WHERE status IN ('queued', 'retry') ORDER BY id LIMIT ${PER_RUN}`).all();
+    const { results } = await env.DB.prepare(`SELECT * FROM requests WHERE kind = 'flow' AND status IN ('flow', 'retry') ORDER BY id LIMIT ${PER_RUN}`).all();
     const work = [];
     for (const r of results) {
       if (!SITES[r.site]) continue;
-      await env.DB.prepare(`UPDATE requests SET status = 'working', status_at = ?, tries = tries + 1 WHERE id = ? AND status IN ('queued', 'retry')`).bind(now(), r.id).run();
+      await env.DB.prepare(`UPDATE requests SET status = 'working', status_at = ?, tries = tries + 1 WHERE id = ? AND kind = 'flow' AND status IN ('flow', 'retry')`).bind(now(), r.id).run();
       work.push({ id: r.id, site: r.site, repo: SITES[r.site].repo, page: r.page, instruction: r.instruction, owner_reason: r.owner_reason || null, previous_branch: r.branch || null, try: r.tries + 1 });
     }
     return json({ work });
@@ -167,7 +179,7 @@ export async function act(action, b, env) {
 
   const r = await env.DB.prepare('SELECT * FROM requests WHERE id = ?').bind(Number(b.id) || 0).first();
   if (!r) return json({ error: 'No request with that id.' }, 404);
-  if (r.status !== 'working') return json({ error: `Request ${r.id} isn't yours to work on: it is ${r.status}.` }, 409);
+  if (r.status !== 'working' || r.kind !== 'flow') return json({ error: `Request ${r.id} isn't yours to work on: it is ${r.kind === 'flow' ? r.status : 'not flow'}.` }, 409);
 
   if (action === 'step') {
     const t = text(b.text, 500);
@@ -204,13 +216,22 @@ export async function act(action, b, env) {
     return json({ ok: true, merged: pull.head.sha });
   }
 
-  if (action === 'fabric' || action === 'stuck') {
+  // Fabric after all: back to Cloud Dancer, who does it on a preview copy. The owner hears when it is ready.
+  if (action === 'fabric') {
     const reason = text(b.reason, 2000);
     if (!reason) return json({ error: 'Give the reason, in words for the owner.' }, 400);
-    const status = action === 'fabric' ? 'fabric' : 'stuck';
-    await env.DB.prepare(`UPDATE requests SET status = ?, status_at = ?, kind = ?, understood = ? WHERE id = ?`).bind(status, now(), action === 'fabric' ? 'fabric' : r.kind, reason, r.id).run();
-    await addStep(env, r.id, action === 'fabric' ? 'This is design work, so it waits for you.' : 'Flo stopped and needs you.');
-    await tell(env, r, action === 'fabric' ? 'Design work: this one waits for you' : 'Flo needs you', reason);
+    await env.DB.prepare(`UPDATE requests SET status = 'queued', status_at = ?, kind = 'fabric', understood = ?, tries = 0 WHERE id = ?`).bind(now(), reason, r.id).run();
+    await addStep(env, r.id, 'Flo found this is design work, so it went back to Cloud Dancer to do on a preview copy.');
+    await wakeDancer(env);
+    return json({ ok: true });
+  }
+
+  if (action === 'stuck') {
+    const reason = text(b.reason, 2000);
+    if (!reason) return json({ error: 'Give the reason, in words for the owner.' }, 400);
+    await env.DB.prepare(`UPDATE requests SET status = 'stuck', status_at = ?, understood = ? WHERE id = ?`).bind(now(), reason, r.id).run();
+    await addStep(env, r.id, 'Flo stopped and needs you.');
+    await tell(env, r, 'Flo needs you', reason);
     return json({ ok: true });
   }
 
