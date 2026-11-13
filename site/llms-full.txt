@@ -218,7 +218,7 @@ Canonical page: https://unremarkable.me/about/
 
 ![Charli, smiling, in a sunny coffee shop, in a pink shirt and pink trainers.](https://unremarkable.me/pictures/charli-full.webp) Charli. Photo tidied up with AI.
 
-I'm Charli. I build Unremarkable's websites, and I use a screen reader every day.
+I'm [Charli-Jo Tyrer](https://charli-jo.com/), Charli for short. I build Unremarkable's websites, and I use a screen reader every day.
 
 That's why every page I build is heard before it goes live. I listen to it the way many of the people who use it will: reading from top to bottom, moving by headings, tabbing through the links. Most websites are made by eye and checked for accessibility at the end, if at all. Mine start with the ear.
 
@@ -236,7 +236,7 @@ Every site listed under [Our work](https://unremarkable.me/#our-work) is mine, a
 
 ## Hear what I hear
 
-This is what NVDA, my screen reader, said as I read this page from top to bottom on 10 November 2026, at 14:03. It's how I check every page before it goes live. A recording is on its way, so you'll be able to hear it too.
+This is what NVDA, my screen reader, said as I read this page from top to bottom on 10 November 2026, at 14:03. The page has changed a little since, so some lines differ from what you'll hear now. It's how I check every page before it goes live. A recording is on its way, so you'll be able to hear it too.
 
 1. same page link Skip to main content
 2. banner landmark visited link Unremarkable
@@ -285,6 +285,8 @@ This is what NVDA, my screen reader, said as I read this page from top to bottom
 Tell me what people come to you to do. That is where we start.
 
 [Start a website](https://unremarkable.me/start/)
+
+Want to talk about this idea first? Email me at [hey@unremarkable.me](mailto:hey@unremarkable.me). Unremarkable isn't taking work yet, so this is for talking, not buying.
 
 
 ---
@@ -385,6 +387,12 @@ A domain registered with Cloudflare uses Cloudflare to direct its visitors. You 
 ### Can I keep changing my website after I leave?
 
 Yes, two ways. Any developer, or an AI agent you trust, can follow the handover note. Or you can take your own copy of our publishing agent, set up in your own Claude account, and carry on asking for changes in your in-tray as before. That is a one-off price, on [Prices](https://unremarkable.me/prices/#take-your-own-agent).
+
+## Asking a question
+
+### How do I ask something that isn't answered here?
+
+Email [hey@unremarkable.me](mailto:hey@unremarkable.me). A person reads every email. Unremarkable isn't taking work yet, so for now it's for talking about the idea.
 
 ## Where these figures come from
 
@@ -502,7 +510,7 @@ Every page has a link at the foot, "Fix something on this page", to a short form
 
 When you send a report, you get a link to its own page. It shows what you sent and where it stands, and once the fix is live it asks whether it works for you. You can answer there, so we never need your email address. Reports are read first by Phix (said "fix"), our fixing agent, built on Claude, and the site's owner decides every fix that goes live. The link ends in a long random key; anyone who has it can see the report, and nobody else can.
 
-The form doesn't ask who you are. We keep what you write, the page's address, how you were reading the page if you tell us, and your browser and device as your browser reports them. We don't keep your name, your email address or your IP address. Reports are used only to fix the sites, and to learn what to get right on the next one.
+The form doesn't ask who you are. We keep what you write, the page's address, how you were reading the page if you tell us, and your browser and device as your browser reports them. We don't keep your name, your email address or your IP address. Reports are used only to fix the sites, and to learn what to get right on the next one. Each report is deleted 12 months after it is sent, and the [privacy page](https://unremarkable.me/privacy/) says how to have yours deleted sooner.
 
 The Start form, for starting a website, keeps nothing while Unremarkable is design fiction: what you write is checked and thrown away.
 
@@ -576,6 +584,39 @@ The name and trademarks of copyright holders may NOT be used in advertising or p
 
 ---
 
+# Privacy
+
+Canonical page: https://unremarkable.me/privacy/
+
+> **Design fiction.** Unremarkable is written as if it were a business. It isn't taking work yet. What that means: https://unremarkable.me/as-if/
+
+Only one form on this site keeps anything: "Fix something on this page". This is what it keeps, for how long, and how to have it deleted.
+
+## What is kept
+
+What you write in your report, the address of the page it is about, how you were reading the page if you tell us, and your browser and device as your browser reports them. We don't ask for your name or your email address, and we don't keep your IP address: it is used for a moment to stop the form being flooded, then forgotten.
+
+Your report is read by Phix (said "fix"), our fixing agent, built on Claude, and by the person who looks after the site it is about. Anyone who has your report's link can see it, because the link is the only key, so keep it to yourself.
+
+## How long it is kept
+
+Twelve months from the day you send it. Then the report, and everything that happened to it, is deleted automatically, and its link stops working.
+
+## Having a report deleted sooner
+
+Email [hey@unremarkable.me](mailto:hey@unremarkable.me) with your report's link, and it will be deleted. The link is how we know the report is yours, so you needn't tell us who you are.
+
+## The Start form
+
+The Start form keeps nothing while Unremarkable is design fiction. What you write is checked and thrown away. When that changes, this page will say exactly what it keeps before you send anything.
+
+## Who is responsible
+
+[Charli-Jo Tyrer](https://charli-jo.com/) runs Unremarkable and answers for what this site keeps. Questions go to the same address, [hey@unremarkable.me](mailto:hey@unremarkable.me).
+
+
+---
+
 # As if
 
 Canonical page: https://unremarkable.me/as-if/
@@ -585,6 +626,12 @@ Canonical page: https://unremarkable.me/as-if/
 This site is written as if Unremarkable were a business. It isn't one yet.
 
 Unremarkable is real: it is the name at the foot of every site listed under "Our work" on the home page, and those sites are real. What isn't real yet is the business those pages describe, a studio that designs, builds and looks after websites for organisations. This site works that business out by building it properly before it exists. That is design fiction, and this page is its standard.
+
+## Who runs it
+
+Unremarkable is run by [Charli-Jo Tyrer](https://charli-jo.com/), who answers for everything on this site and everything its agents do.
+
+Want to talk about this idea? Email [hey@unremarkable.me](mailto:hey@unremarkable.me). A person reads every email.
 
 ## The As If standard
 
@@ -598,6 +645,8 @@ Unremarkable is real: it is the name at the foot of every site listed under "Our
 - The sites listed under "Our work" on the home page, each built to Zero Information Casualty and tested with a screen reader.
 - The "Fix something on this page" link on every page. A person reads every report, and fixes go live.
 - The accessibility statement, which describes this site as it actually is.
+- The [privacy page](https://unremarkable.me/privacy/), which says what the fix form keeps and for how long.
+- The email address, [hey@unremarkable.me](mailto:hey@unremarkable.me).
 - The worked example: a real job done for blind-ant.com by Blind Ant's publishing agent, the one Cloud Dancer is modelled on, with its receipt.
 
 ## What is not real yet

@@ -36,7 +36,7 @@ const pages = [
   },
   {
     path: '/about/', nav: 'About', h1: "Who's Unremarkable", title: `Who's Unremarkable: ${SITE}`,
-    description: "Charli builds Unremarkable's websites, hears every page with a screen reader, and stands behind every change its agents make.",
+    description: "Charli-Jo Tyrer builds Unremarkable's websites, hears every page with a screen reader, and stands behind every change its agents make.",
     llms: 'Who runs Unremarkable, why every page is heard before it goes live, and how the agents are overseen.',
     body: () => read('src/about.html'), type: 'AboutPage',
   },
@@ -74,6 +74,13 @@ const pages = [
     description: 'What web accessibility is, introduced in the words of W3C WAI, and what it means at Unremarkable.',
     llms: 'What web accessibility is, a short introduction quoted from W3C WAI, how Unremarkable builds for it, and further reading.',
     body: () => read('src/what-is-accessibility.html'), type: 'WebPage',
+  },
+  // Not in the menu: linked from the footer, the fix form, the accessibility statement and As if.
+  {
+    path: '/privacy/', h1: 'Privacy', title: `Privacy: ${SITE}`,
+    description: 'What the fix form keeps, for how long, and how to have a report deleted. The Start form keeps nothing.',
+    llms: 'What the fix form keeps, how long reports are kept (12 months), and how to have one deleted.',
+    body: () => read('src/privacy.html'), type: 'WebPage',
   },
   // Outside the fiction: what is real here and what isn't. Linked from the note on every page, not the menu.
   {
@@ -203,6 +210,7 @@ ${asIfHtml}${main}
 <p>Licensed under <a href="${LICENCE_URL}">Creative Commons Attribution-ShareAlike 4.0</a></p>
 <p>Built to <a href="${ZIC_URL}">Zero Information Casualty v1.7</a></p>
 <p>For agents: <a href="/llms.txt">llms.txt</a></p>
+<p><a href="/privacy/">Privacy</a></p>
 </footer>
 </body>
 </html>
@@ -226,6 +234,8 @@ Licensed under [${LICENCE_NAME.replace(/ \(.*\)$/, '')}](${LICENCE_URL})
 Built to [Zero Information Casualty v1.7](${ZIC_URL})
 
 For agents: [llms.txt](${ORIGIN}/llms.txt)
+
+[Privacy](${ORIGIN}/privacy/)
 `;
 
 // A small HTML-to-Markdown converter for the hand-written pages in src/.

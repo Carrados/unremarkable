@@ -195,3 +195,19 @@ test('the door lets Cloud Dancer wake her own run or Flo\'s, and look at, merge 
   assert.equal(allowed('DELETE', '/repos/Carrados/unremarkable/git/refs/heads/main'), false);
   assert.equal(allowed('PUT', '/repos/Carrados/unremarkable/contents/site/index.html', {}), false);
 });
+
+test('reports are deleted 12 months after they are sent, with their steps and owner links', async () => {
+  const { forgetOldReports, KEEP_DAYS, DAY } = await import('./common.js');
+  const calls = [];
+  const env = { DB: {
+    prepare: (sql) => ({ bind: (...args) => ({ sql, args }) }),
+    batch: async (stmts) => { calls.push(...stmts); return [{}, {}, { meta: { changes: 2 } }]; },
+  } };
+  const at = Date.parse('2026-11-13T12:00:00Z');
+  assert.equal(KEEP_DAYS, 365);
+  assert.equal(await forgetOldReports(env, at), 2);
+  assert.deepEqual(calls.map(c => c.sql.split(' ')[2]), ['steps', 'owner_links', 'reports']);
+  const before = new Date(at - KEEP_DAYS * DAY).toISOString().replace(/\.\d{3}Z$/, 'Z');
+  assert.equal(before, '2025-11-13T12:00:00Z');
+  for (const c of calls) assert.deepEqual(c.args, [before]);
+});

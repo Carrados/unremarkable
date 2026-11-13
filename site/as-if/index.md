@@ -17,6 +17,12 @@ This site is written as if Unremarkable were a business. It isn't one yet.
 
 Unremarkable is real: it is the name at the foot of every site listed under "Our work" on the home page, and those sites are real. What isn't real yet is the business those pages describe, a studio that designs, builds and looks after websites for organisations. This site works that business out by building it properly before it exists. That is design fiction, and this page is its standard.
 
+## Who runs it
+
+Unremarkable is run by [Charli-Jo Tyrer](https://charli-jo.com/), who answers for everything on this site and everything its agents do.
+
+Want to talk about this idea? Email [hey@unremarkable.me](mailto:hey@unremarkable.me). A person reads every email.
+
 ## The As If standard
 
 1. **Inside, everything is done for real.** Prices, terms and the way in are written as the real business would write them, and built to the same standard as everything else Unremarkable makes. Unremarkable never is, even when it is pretending.
@@ -29,6 +35,8 @@ Unremarkable is real: it is the name at the foot of every site listed under "Our
 - The sites listed under "Our work" on the home page, each built to Zero Information Casualty and tested with a screen reader.
 - The "Fix something on this page" link on every page. A person reads every report, and fixes go live.
 - The accessibility statement, which describes this site as it actually is.
+- The [privacy page](https://unremarkable.me/privacy/), which says what the fix form keeps and for how long.
+- The email address, [hey@unremarkable.me](mailto:hey@unremarkable.me).
 - The worked example: a real job done for blind-ant.com by Blind Ant's publishing agent, the one Cloud Dancer is modelled on, with its receipt.
 
 ## What is not real yet
@@ -52,3 +60,5 @@ Licensed under [Creative Commons Attribution-ShareAlike 4.0](https://creativecom
 Built to [Zero Information Casualty v1.7](https://zeroinformationcasualty.org/)
 
 For agents: [llms.txt](https://unremarkable.me/llms.txt)
+
+[Privacy](https://unremarkable.me/privacy/)

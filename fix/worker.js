@@ -8,7 +8,7 @@
 // for an email so we can reply, every report gets a long random key, and whoever holds the link
 // can follow it. The key is the only way in, so it is never shown anywhere else.
 
-import { READINGS, LIMITS, esc, SITES, pageUrl, template, SECURITY, html, PRIVATE, newKey, KEY, reportUrl, CONFIRM_DAYS, DAY, dateText, now, paras, READING_TEXT } from './common.js';
+import { READINGS, LIMITS, esc, SITES, pageUrl, template, SECURITY, html, PRIVATE, newKey, KEY, reportUrl, CONFIRM_DAYS, DAY, forgetOldReports, dateText, now, paras, READING_TEXT } from './common.js';
 import { scheduled, phixApi, ownerPage, phixLine, step, OWNER_KEY } from './phix.js';
 // Cloud Dancer's way to GitHub (wake Flo, look at and merge her pull requests): fix/door.js.
 export { Dancer } from './door.js';
@@ -298,6 +298,10 @@ export default {
     if (pathname.startsWith('/fix/')) return Response.redirect(new URL('/fix/', request.url), 302);
     return env.ASSETS.fetch(request);
   },
-  // Phix wakes at 06:00 and midday, UK time (see the cron in wrangler.jsonc).
-  scheduled,
+  // Phix wakes at 06:00 and midday, UK time, if there's work (the cron in wrangler.jsonc).
+  // Every time the cron fires, reports past their 12 months are deleted.
+  scheduled(event, env, ctx) {
+    ctx.waitUntil(forgetOldReports(env).then(n => { if (n) console.log('Deleted old reports:', n); }));
+    return scheduled(event, env, ctx);
+  },
 };
