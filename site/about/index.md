@@ -17,7 +17,7 @@ Menu:
 
 I'm [Charli-Jo Tyrer](https://charli-jo.com/), Charli for short. I build Unremarkable's websites, and I use a screen reader every day.
 
-That's why every page I build is heard before it goes live. I listen to it the way many of the people who use it will: reading from top to bottom, moving by headings, tabbing through the links. Most websites are made by eye and checked for accessibility at the end, if at all. Mine start with the ear.
+That's why every page I build is heard before it goes live. I read it with my screen reader from top to bottom, move by headings and tab through the links. Listening is the strictest test a page can face: nothing can hide behind how it looks. A page that makes sense by ear makes sense by eye too. Most websites are made by eye and checked for accessibility at the end, if at all. Mine start with the ear.
 
 ## How I work
 
