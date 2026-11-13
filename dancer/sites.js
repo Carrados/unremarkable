@@ -5,6 +5,7 @@
 // for a site only once its FLOW.md has a shape, and list only the folders that shape uses.
 export const SITES = {
   'unremarkable.me': { name: 'Unremarkable', repo: 'Carrados/unremarkable', flow: [] },
+  'tka.unremarkable.me': { name: 'The Talking Kettle Association', repo: 'Carrados/tka', flow: [] },
 };
 
 // Whether flow is on for a site. Checked by the Worker, not left to the agents' judgement.
