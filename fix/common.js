@@ -55,6 +55,20 @@ export const reportUrl = (request, key) => new URL(`/fix/r/${key}/`, request.url
 // How long a fix waits for "it works for me" before the report closes by itself.
 export const CONFIRM_DAYS = 30;
 export const DAY = 86400000;
+// Reports are deleted this many days after they're sent (said on /privacy/).
+export const KEEP_DAYS = 365;
+
+// Delete every report older than KEEP_DAYS, with its steps and owner links. Run by the Worker's cron.
+export async function forgetOldReports(env, at = Date.now()) {
+  const before = new Date(at - KEEP_DAYS * DAY).toISOString().replace(/\.\d{3}Z$/, 'Z');
+  const old = 'SELECT id FROM reports WHERE created_at < ?';
+  const results = await env.DB.batch([
+    env.DB.prepare(`DELETE FROM steps WHERE report_id IN (${old})`).bind(before),
+    env.DB.prepare(`DELETE FROM owner_links WHERE report_id IN (${old})`).bind(before),
+    env.DB.prepare('DELETE FROM reports WHERE created_at < ?').bind(before),
+  ]);
+  return results[2]?.meta?.changes ?? 0;
+}
 export const dateText = iso => new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/London' });
 export const now = () => new Date().toISOString().replace(/\.\d+Z$/, 'Z');
 

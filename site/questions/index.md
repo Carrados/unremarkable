@@ -81,6 +81,12 @@ A domain registered with Cloudflare uses Cloudflare to direct its visitors. You 
 
 Yes, two ways. Any developer, or an AI agent you trust, can follow the handover note. Or you can take your own copy of our publishing agent, set up in your own Claude account, and carry on asking for changes in your in-tray as before. That is a one-off price, on [Prices](https://unremarkable.me/prices/#take-your-own-agent).
 
+## Asking a question
+
+### How do I ask something that isn't answered here?
+
+Email [hey@unremarkable.me](mailto:hey@unremarkable.me). A person reads every email. Unremarkable isn't taking work yet, so for now it's for talking about the idea.
+
 ## Where these figures come from
 
 Checked against GitHub's and Cloudflare's own pages on 10 November 2026. Prices change, so we check them again before you buy anything.
@@ -105,3 +111,5 @@ Licensed under [Creative Commons Attribution-ShareAlike 4.0](https://creativecom
 Built to [Zero Information Casualty v1.7](https://zeroinformationcasualty.org/)
 
 For agents: [llms.txt](https://unremarkable.me/llms.txt)
+
+[Privacy](https://unremarkable.me/privacy/)

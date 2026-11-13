@@ -20,6 +20,7 @@ This file, /llms-full.txt and the Markdown mirrors are generated from the site's
 - [A worked example](https://unremarkable.me/worked-example/): A real intention-based publishing job, start to finish, with the receipt the agent wrote. Nothing on the page publishes anything. Markdown: https://unremarkable.me/worked-example/index.md
 - [Accessibility statement](https://unremarkable.me/accessibility/): How this site meets ZIC v1.7 and its agent surface. Markdown: https://unremarkable.me/accessibility/index.md
 - [What is web accessibility?](https://unremarkable.me/what-is-accessibility/): What web accessibility is, a short introduction quoted from W3C WAI, how Unremarkable builds for it, and further reading. Markdown: https://unremarkable.me/what-is-accessibility/index.md
+- [Privacy](https://unremarkable.me/privacy/): What the fix form keeps, how long reports are kept (12 months), and how to have one deleted. Markdown: https://unremarkable.me/privacy/index.md
 - [As if](https://unremarkable.me/as-if/): The As If standard: this site is design fiction, what is real here and what is not. Markdown: https://unremarkable.me/as-if/index.md
 
 ## Optional

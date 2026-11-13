@@ -15,7 +15,7 @@ Menu:
 
 ![Charli, smiling, in a sunny coffee shop, in a pink shirt and pink trainers.](https://unremarkable.me/pictures/charli-full.webp) Charli. Photo tidied up with AI.
 
-I'm Charli. I build Unremarkable's websites, and I use a screen reader every day.
+I'm [Charli-Jo Tyrer](https://charli-jo.com/), Charli for short. I build Unremarkable's websites, and I use a screen reader every day.
 
 That's why every page I build is heard before it goes live. I listen to it the way many of the people who use it will: reading from top to bottom, moving by headings, tabbing through the links. Most websites are made by eye and checked for accessibility at the end, if at all. Mine start with the ear.
 
@@ -33,7 +33,7 @@ Every site listed under [Our work](https://unremarkable.me/#our-work) is mine, a
 
 ## Hear what I hear
 
-This is what NVDA, my screen reader, said as I read this page from top to bottom on 10 November 2026, at 14:03. It's how I check every page before it goes live. A recording is on its way, so you'll be able to hear it too.
+This is what NVDA, my screen reader, said as I read this page from top to bottom on 10 November 2026, at 14:03. The page has changed a little since, so some lines differ from what you'll hear now. It's how I check every page before it goes live. A recording is on its way, so you'll be able to hear it too.
 
 1. same page link Skip to main content
 2. banner landmark visited link Unremarkable
@@ -83,6 +83,8 @@ Tell me what people come to you to do. That is where we start.
 
 [Start a website](https://unremarkable.me/start/)
 
+Want to talk about this idea first? Email me at [hey@unremarkable.me](mailto:hey@unremarkable.me). Unremarkable isn't taking work yet, so this is for talking, not buying.
+
 ---
 
 This site is Unremarkable
@@ -94,3 +96,5 @@ Licensed under [Creative Commons Attribution-ShareAlike 4.0](https://creativecom
 Built to [Zero Information Casualty v1.7](https://zeroinformationcasualty.org/)
 
 For agents: [llms.txt](https://unremarkable.me/llms.txt)
+
+[Privacy](https://unremarkable.me/privacy/)

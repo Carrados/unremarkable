@@ -84,3 +84,5 @@ Licensed under [Creative Commons Attribution-ShareAlike 4.0](https://creativecom
 Built to [Zero Information Casualty v1.7](https://zeroinformationcasualty.org/)
 
 For agents: [llms.txt](https://unremarkable.me/llms.txt)
+
+[Privacy](https://unremarkable.me/privacy/)
