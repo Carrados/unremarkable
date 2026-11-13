@@ -262,7 +262,8 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const { pathname } = url;
-    // One address for the site: www goes to the bare domain.
+    // One address for the site: www goes to the bare domain. For plain pages a Cloudflare Redirect Rule
+    // does this before the Worker; this catches www requests for the forms.
     if (url.hostname === 'www.unremarkable.me') {
       url.hostname = 'unremarkable.me';
       return Response.redirect(url.toString(), 301);
