@@ -10,7 +10,11 @@
     "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page",
-    "run_worker_first": true
+    // Only the forms run the Worker. Every other page is a plain file, which Cloudflare serves free
+    // and without limit, and keeps serving even if the Worker's free allowance runs out.
+    // Security headers for those files come from site/_headers. The www redirect is a Cloudflare
+    // Redirect Rule on the zone, because a plain file never reaches the Worker's own redirect.
+    "run_worker_first": ["/fix", "/fix/*", "/start", "/start/*", "/phix/*"]
   },
   "d1_databases": [
     {
