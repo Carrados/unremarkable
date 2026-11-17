@@ -253,7 +253,17 @@ function toMarkdown(html) {
     .replace(/\s+/g, ' ')
     .trim();
   const blocks = [];
-  html = html.replace(/<\/?section[^>]*>/g, '');
+  // Visible form fields keep their label before the hint in the Markdown.
+  // The hidden spam trap sits outside these field wrappers.
+  html = html.replace(/<div class="field">([\s\S]*?)<\/div>/g, (_, field) => {
+    const control = field.match(/<(?:input|textarea)\b[^>]*>/)?.[0] || '';
+    const status = /\srequired(?=[\s=>])/.test(control) ? 'required' : 'optional';
+    return field.replace(/<label\b[^>]*>([\s\S]*?)<\/label>/, (_, label) => {
+      const wording = inline(label);
+      const suffix = wording.endsWith('(' + status + ')') ? '' : ' (' + status + ')';
+      return '<p><strong>' + wording + suffix + '</strong></p>';
+    });
+  }).replace(/<\/?section[^>]*>/g, '');
   for (const [, tag, body] of html.matchAll(/<(h2|h3|p|ul|ol|blockquote|figure)\b[^>]*>([\s\S]*?)<\/\1>/g)) {
     if (tag === 'figure') blocks.push(inline(body.replace(/<figcaption>([\s\S]*?)<\/figcaption>/, ' $1')));
     else if (tag === 'h2') blocks.push(`## ${inline(body)}`);
