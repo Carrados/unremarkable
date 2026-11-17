@@ -303,9 +303,19 @@ Tell us what people come to you to do. That is where we start.
 
 Unremarkable isn't taking work yet, and this form keeps nothing. When you send it, what you wrote is checked and then thrown away, and you'll see what would happen next. Nobody will reply.
 
+**Your name (required)**
+
+**Your organisation (required)**
+
+**Your email address (required)**
+
 Only so we could reply. Here, it isn't kept.
 
+**What do people come to you to do? (required)**
+
 For example, "book a place on a course", "find out if we can help", "choose a holiday cottage".
+
+**Anything else we should know? (optional)**
 
 Your current website, if you have one, or a date you need to be live by.
 
